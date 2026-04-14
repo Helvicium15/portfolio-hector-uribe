@@ -1,0 +1,525 @@
+/* ============================================================
+   VIDEO PLAYBACK RATE
+   ============================================================ */
+document.querySelector('.desktop-video').playbackRate = 0.75;
+
+/* ============================================================
+   PROJECT DATA
+   ============================================================ */
+const projects = [
+
+  /* ── COLUMNA A (x ≈ 62) — UX/UI ──────────────────────────── */
+  {
+    id: 1, name: 'Silly Crab', cat: 'Web Dev · React',
+    img: 'img/projects/silly-crab.png',
+    url: 'https://silly-crab-sc75.vercel.app/',
+    desc: 'Aplicación React animada con UI playful y personajes interactivos.',
+    x: 62, y: 12
+  },
+  {
+    id: 2, name: 'Squishy Savings', cat: 'UX/UI · Web App',
+    img: 'img/projects/mosaic-savings.jpg',
+    url: 'https://squishy-savings-app.vercel.app/',
+    desc: 'App de ahorro con diseño UX entretenido y visual.',
+    x: 62, y: 30
+  },
+  {
+    id: 9, name: 'SchwimmSpass', cat: 'UX/UI · Mobile',
+    img: 'img/projects/mobile.png',
+    url: '../schwimmspass-mobile.html',
+    desc: 'Diseño de app móvil para una escuela de natación.',
+    x: 62, y: 50
+  },
+  {
+    id: 19, name: 'Only Franz', cat: 'UX/UI · Recipe App',
+    img: 'img/projects/onlyfranz.png',
+    url: 'https://onlyfranz.lovable.app',
+    desc: 'App de recetas con estilo editorial cálido.',
+    x: 62, y: 68
+  },
+
+  /* ── COLUMNA B (x ≈ 73) — UX/UI ──────────────────────────── */
+  {
+    id: 3, name: 'SentinelOne', cat: 'UX/UI · Dashboard',
+    img: 'img/projects/mosaic-sentinel.png',
+    url: 'https://sentinel-2025.vercel.app/',
+    desc: 'Rediseño de dashboard de ciberseguridad con dark UI moderna.',
+    x: 72, y: 20
+  },
+  {
+    id: 18, name: 'EcoThread', cat: 'UX/UI · E-Commerce',
+    img: 'img/projects/ecothread.png',
+    url: 'https://ecothread.lovable.app',
+    desc: 'Diseño UX de e-commerce para moda sostenible.',
+    x: 72, y: 38
+  },
+  {
+    id: 17, name: 'Obsidian', cat: 'UX/UI · Landing Page',
+    img: 'img/projects/obsidian.png',
+    url: 'https://obsidian-rise-shine.lovable.app',
+    desc: 'Landing page de crypto con UI oscura y premium.',
+    x: 72, y: 57
+  },
+  {
+    id: 6, name: 'Vegetables Calendar', cat: 'Grafikdesign · Print',
+    img: 'img/projects/vegetables-calendar.png',
+    url: 'https://www.behance.net/gallery/162725755/VEGETABLES-SEASONAL-CALENDAR-2024',
+    desc: 'Calendario estacional de verduras 2024, diseño para impresión.',
+    x: 72, y: 74
+  },
+
+  /* ── CLÚSTER DISEÑO/FOTO — 2×2 extremo derecho ────────────── */
+  {
+    id: 4, name: 'Photography', cat: 'Fotografie · Unsplash',
+    img: 'img/projects/photography.png',
+    url: 'https://unsplash.com/de/@helvicium',
+    desc: 'Fotografía creativa de retrato y street en Unsplash.',
+    x: 81, y: 11
+  },
+  {
+    id: 5, name: 'Branding', cat: 'Grafikdesign · Logo',
+    img: 'img/projects/logo-collection.jpg',
+    url: '../logo-collection.html',
+    desc: 'Identidades de marca para AeroLeaf, NordWand y SüßMund.',
+    x: 90, y: 11
+  },
+  {
+    id: 7, name: 'Posters', cat: 'Grafikdesign · Poster',
+    img: 'img/projects/posters.jpg',
+    url: 'https://www.behance.net/hectoruribe2',
+    desc: 'Serie de pósters de diseño gráfico con estética bold.',
+    x: 81, y: 34,
+    mosaic: [
+      'img/projects/mosaic-smile.png',
+      'img/projects/mosaic-sweet.png',
+      'img/projects/mosaic-metaball.png',
+    ]
+  },
+  {
+    id: 8, name: '3D Models', cat: '3D · Sketchfab',
+    img: 'img/projects/3D_model.png',
+    url: 'https://sketchfab.com/hectorz151',
+    desc: 'Modelos y esculturas 3D publicados en Sketchfab.',
+    x: 81, y: 58,
+    mosaic: [
+      'img/projects/mosaic-robot.png',
+      'img/projects/mosaic-candy-gun.png',
+      'img/projects/mosaic-frog.png',
+      'img/projects/mosaic-aztec.png',
+    ]
+  },
+];
+
+/* ============================================================
+   INIT
+   ============================================================ */
+const iconsField       = document.getElementById('iconsField');
+const windowsContainer = document.getElementById('windowsContainer');
+const overlay          = document.getElementById('overlay');
+
+let activeWin = null;
+
+/* ============================================================
+   GET INFO PANEL
+   ============================================================ */
+const infoPanel = document.getElementById('infoPanel');
+const infoPanelBar = document.getElementById('infoPanelBar');
+
+// Collapsible sections
+document.querySelectorAll('.info-sec-title').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = document.getElementById(btn.dataset.target);
+    const tri  = btn.querySelector('.sec-tri');
+    const isOpen = !body.classList.contains('hidden');
+    if (isOpen) {
+      body.classList.add('hidden');
+      tri.textContent = '▶';
+      btn.classList.remove('open');
+    } else {
+      body.classList.remove('hidden');
+      tri.textContent = '▼';
+      btn.classList.add('open');
+    }
+  });
+});
+
+// Close button hides the panel
+document.getElementById('infoPanelClose').addEventListener('click', () => {
+  infoPanel.style.transition = 'opacity 0.18s, transform 0.18s';
+  infoPanel.style.opacity = '0';
+  infoPanel.style.transform = 'scale(0.92)';
+  setTimeout(() => { infoPanel.style.display = 'none'; }, 200);
+});
+
+// Drag the panel
+makeDraggableEl(infoPanel, infoPanelBar);
+
+function makeDraggableEl(el, handle) {
+  let startX, startY, startLeft, startTop, dragging = false;
+
+  handle.addEventListener('mousedown', (e) => {
+    if (e.target.classList.contains('wc')) return;
+    dragging = true;
+    startX    = e.clientX;
+    startY    = e.clientY;
+    const rect = el.getBoundingClientRect();
+    startLeft = rect.left;
+    startTop  = rect.top;
+    el.style.transition = 'none';
+    el.style.right = 'auto';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    let newLeft = startLeft + (e.clientX - startX);
+    let newTop  = startTop  + (e.clientY - startY);
+    newLeft = Math.max(0, Math.min(window.innerWidth  - el.offsetWidth,  newLeft));
+    newTop  = Math.max(0, Math.min(window.innerHeight - el.offsetHeight, newTop));
+    el.style.left = newLeft + 'px';
+    el.style.top  = newTop  + 'px';
+  });
+
+  document.addEventListener('mouseup', () => { dragging = false; });
+}
+
+/* ============================================================
+   BUILD ICONS
+   ============================================================ */
+projects.forEach((p) => {
+  const icon = document.createElement('div');
+  icon.className = 'project-icon';
+  if (p.mosaic) icon.classList.add('has-mosaic');
+  icon.style.left = p.x + '%';
+  icon.style.top  = p.y + '%';
+
+  const mosaicHTML = p.mosaic ? `
+    <div class="icon-mosaic${p.mosaic.length === 3 ? ' mosaic-3' : ''}">
+      ${p.mosaic.map(src => `<img src="${src}" loading="lazy">`).join('')}
+    </div>
+  ` : '';
+
+  icon.innerHTML = `
+    ${mosaicHTML}
+    <div class="icon-thumb">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+    </div>
+    <span class="icon-label">${p.name}</span>
+  `;
+
+  icon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openWindow(p, icon);
+  });
+
+  iconsField.appendChild(icon);
+});
+
+/* ============================================================
+   BUILD & OPEN WINDOWS
+   ============================================================ */
+function openWindow(p, iconEl) {
+  // Close any existing window
+  if (activeWin) closeWindow(activeWin, false);
+
+  // Create window element
+  const win = document.createElement('div');
+  win.className = 'project-win';
+  win.id = 'win-' + p.id;
+  win.innerHTML = `
+    <div class="win-bar" id="winBar-${p.id}">
+      <div class="win-controls">
+        <span class="wc red"  data-close="true"></span>
+        <span class="wc yellow"></span>
+        <span class="wc green"></span>
+      </div>
+      <span class="win-title">${p.name}</span>
+    </div>
+    <div class="win-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+    </div>
+    <div class="win-info">
+      <span class="win-cat">${p.cat}</span>
+      <h3 class="win-name">${p.name}</h3>
+      <p class="win-desc">${p.desc}</p>
+      <a href="${p.url}" class="win-btn" target="_blank" rel="noopener">
+        Öffnen
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </div>
+  `;
+
+  windowsContainer.appendChild(win);
+
+  // Position: near icon, offset to not cover it
+  const iconRect = iconEl.getBoundingClientRect();
+  let left = iconRect.right + 12;
+  let top  = iconRect.top - 20;
+
+  // Clamp to viewport
+  const winW = 330, winH = 320;
+  if (left + winW > window.innerWidth  - 16) left = iconRect.left - winW - 12;
+  if (left < 16)                              left = 16;
+  if (top + winH > window.innerHeight - 80)   top  = window.innerHeight - winH - 80;
+  if (top < 16)                               top  = 16;
+
+  win.style.left = left + 'px';
+  win.style.top  = top  + 'px';
+
+  // Activate
+  requestAnimationFrame(() => {
+    win.classList.add('active');
+  });
+
+  overlay.classList.add('active');
+  activeWin = win;
+
+  // Close button
+  win.querySelector('.wc.red').addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeWindow(win);
+  });
+
+  // Prevent link from closing overlay
+  win.querySelector('.win-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  // Drag
+  makeDraggable(win, win.querySelector('.win-bar'));
+
+  // Stop overlay click from propagating through window
+  win.addEventListener('click', (e) => e.stopPropagation());
+}
+
+function closeWindow(win, clearActive = true) {
+  win.style.animation = 'none';
+  win.style.opacity   = '0';
+  win.style.transform = 'scale(0.9) translateY(6px)';
+  win.style.transition = 'opacity 0.18s, transform 0.18s';
+  setTimeout(() => win.remove(), 200);
+  overlay.classList.remove('active');
+  if (clearActive) activeWin = null;
+}
+
+// Close on overlay click
+overlay.addEventListener('click', () => {
+  if (activeWin) closeWindow(activeWin);
+});
+
+/* ============================================================
+   DRAG
+   ============================================================ */
+function makeDraggable(win, handle) {
+  let startX, startY, startLeft, startTop;
+  let dragging = false;
+
+  handle.addEventListener('mousedown', (e) => {
+    if (e.target.dataset.close) return;
+    dragging = true;
+    startX    = e.clientX;
+    startY    = e.clientY;
+    startLeft = parseInt(win.style.left) || 0;
+    startTop  = parseInt(win.style.top)  || 0;
+    win.style.transition = 'none';
+    win.style.zIndex     = '250';
+    handle.style.cursor  = 'grabbing';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    let newLeft = startLeft + dx;
+    let newTop  = startTop  + dy;
+    // Keep within viewport
+    newLeft = Math.max(0, Math.min(window.innerWidth  - 330, newLeft));
+    newTop  = Math.max(0, Math.min(window.innerHeight - 60,  newTop));
+    win.style.left = newLeft + 'px';
+    win.style.top  = newTop  + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.style.cursor = 'grab';
+  });
+
+  // Touch support
+  handle.addEventListener('touchstart', (e) => {
+    if (e.target.dataset.close) return;
+    const t = e.touches[0];
+    dragging  = true;
+    startX    = t.clientX;
+    startY    = t.clientY;
+    startLeft = parseInt(win.style.left) || 0;
+    startTop  = parseInt(win.style.top)  || 0;
+    win.style.transition = 'none';
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    win.style.left = Math.max(0, startLeft + t.clientX - startX) + 'px';
+    win.style.top  = Math.max(0, startTop  + t.clientY - startY) + 'px';
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => { dragging = false; });
+}
+
+/* ============================================================
+   SKILLS WINDOW
+   ============================================================ */
+const skillsWin    = document.getElementById('skillsWin');
+const skillsBar    = document.getElementById('skillsBar');
+const skillsClose  = document.getElementById('skillsClose');
+const dockSkillsBtn = document.getElementById('dockSkillsBtn');
+const skillsSearch = document.getElementById('skillsSearch');
+const skillsCount  = document.getElementById('skillsCount');
+
+// Drag
+makeDraggableEl(skillsWin, skillsBar);
+
+// Dock button → siempre abre
+dockSkillsBtn.addEventListener('click', () => {
+  skillsWin.classList.remove('hidden');
+});
+
+// Botón rojo → cierra con animación
+skillsClose.addEventListener('click', (e) => {
+  e.stopPropagation();
+  skillsWin.classList.add('hidden');
+});
+
+// Prevent project overlay from propagating through window
+skillsWin.addEventListener('click', e => e.stopPropagation());
+
+// Category filter
+document.querySelectorAll('.skills-cat').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.skills-cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterSkills();
+  });
+});
+
+// Search filter
+skillsSearch.addEventListener('input', filterSkills);
+
+function filterSkills() {
+  const cat   = document.querySelector('.skills-cat.active').dataset.cat;
+  const query = skillsSearch.value.toLowerCase().trim();
+  const items = document.querySelectorAll('.skill-item');
+  let visible = 0;
+
+  items.forEach(item => {
+    const matchCat  = cat === 'all' || item.dataset.cat === cat;
+    const matchName = !query || item.dataset.name.includes(query);
+    if (matchCat && matchName) {
+      item.classList.remove('hidden');
+      visible++;
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+
+  const single = currentLang === 'de' ? 'Programm' : 'Program';
+  const plural  = currentLang === 'de' ? 'Programme' : 'Programs';
+  skillsCount.textContent = visible === 1 ? `1 ${single}` : `${visible} ${plural}`;
+}
+
+/* ============================================================
+   LANGUAGE TOGGLE
+   ============================================================ */
+let currentLang = 'de';
+
+const translations = {
+  de: {
+    'tags':         'Schlagwörter hinzufügen…',
+    'sec-general':  ' Allgemein:',
+    'key-rolle':    'Rolle:',
+    'val-rolle':    'Mediengestalter',
+    'key-standort': 'Standort:',
+    'key-herkunft': 'Herkunft:',
+    'val-herkunft': 'Mexikanische Wurzeln',
+    'key-sprachen': 'Sprachen:',
+    'key-erstellt': 'Erstellt:',
+    'key-geaendert':'Geändert:',
+    'val-geaendert':'Täglich ✦',
+    'sec-about':    ' Über mich:',
+    'about-1':      'Ein leidenschaftlicher Mediengestalter mit mexikanischen Wurzeln, der in Deutschland lebt und arbeitet. Ich verbinde kreatives Denken mit technischer Präzision.',
+    'about-2':      'Mit Erfahrung in UX/UI Design, 3D Modellierung, Fotografie und Webentwicklung bringe ich Ideen zum Leben — und schaffe Werke, die Eindruck hinterlassen.',
+    'sec-share':    ' Teilen & Berechtigungen:',
+    'favs':         'Favoriten',
+    'all':          'Alle',
+    'search-ph':    'Suchen…',
+    'win-open':     'Öffnen',
+  },
+  en: {
+    'tags':         'Add Tags…',
+    'sec-general':  ' General:',
+    'key-rolle':    'Role:',
+    'val-rolle':    'Media Designer',
+    'key-standort': 'Location:',
+    'key-herkunft': 'Origin:',
+    'val-herkunft': 'Mexican Roots',
+    'key-sprachen': 'Languages:',
+    'key-erstellt': 'Created:',
+    'key-geaendert':'Modified:',
+    'val-geaendert':'Daily ✦',
+    'sec-about':    ' About me:',
+    'about-1':      'A passionate media designer with Mexican roots, living and working in Germany. I combine creative thinking with technical precision.',
+    'about-2':      'With experience in UX/UI design, 3D modeling, photography, and web development, I bring ideas to life — creating work that leaves a lasting impression.',
+    'sec-share':    ' Sharing & Permissions:',
+    'favs':         'Favorites',
+    'all':          'All',
+    'search-ph':    'Search…',
+    'win-open':     'Open',
+  }
+};
+
+function applyLanguage(lang) {
+  // Text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key] !== undefined) {
+      el.textContent = translations[lang][key];
+    }
+  });
+
+  // Placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.dataset.i18nPh;
+    if (translations[lang][key] !== undefined) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+
+  // Project window open button (if open)
+  document.querySelectorAll('.win-btn').forEach(btn => {
+    const svg = btn.querySelector('svg');
+    btn.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+    btn.insertBefore(document.createTextNode(translations[lang]['win-open'] + ' '), svg);
+  });
+
+  // Skills count
+  filterSkills();
+
+  // Toggle button UI
+  const btn = document.getElementById('langToggle');
+  if (lang === 'de') {
+    btn.querySelector('.lang-flag').textContent = '🇩🇪';
+    btn.querySelector('.lang-label').textContent = 'DE';
+  } else {
+    btn.querySelector('.lang-flag').textContent = '🇬🇧';
+    btn.querySelector('.lang-label').textContent = 'EN';
+  }
+
+  document.documentElement.lang = lang;
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  currentLang = currentLang === 'de' ? 'en' : 'de';
+  applyLanguage(currentLang);
+});
