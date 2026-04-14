@@ -381,9 +381,16 @@ const skillsCount  = document.getElementById('skillsCount');
 // Drag
 makeDraggableEl(skillsWin, skillsBar);
 
-// Dock button → siempre abre
+// Dock button → abre o sacude si ya está visible
 dockSkillsBtn.addEventListener('click', () => {
-  skillsWin.classList.remove('hidden');
+  if (!skillsWin.classList.contains('hidden')) {
+    skillsWin.classList.remove('shake');
+    void skillsWin.offsetWidth; // reflow para reiniciar animación
+    skillsWin.classList.add('shake');
+    skillsWin.addEventListener('animationend', () => skillsWin.classList.remove('shake'), { once: true });
+  } else {
+    skillsWin.classList.remove('hidden');
+  }
 });
 
 // Botón rojo → cierra con animación
