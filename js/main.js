@@ -26,7 +26,7 @@ const projects = [
   {
     id: 9, name: 'SchwimmSpass', cat: 'UX/UI · Mobile',
     img: 'img/projects/mobile.png',
-    url: '../schwimmspass-mobile.html',
+    url: 'schwimmspass-mobile.html',
     desc: 'Diseño de app móvil para una escuela de natación.',
     x: 62, y: 50
   },
@@ -79,7 +79,7 @@ const projects = [
   {
     id: 5, name: 'Branding', cat: 'Grafikdesign · Logo',
     img: 'img/projects/logo-collection.jpg',
-    url: '../logo-collection.html',
+    url: 'logo-collection.html',
     desc: 'Identidades de marca para AeroLeaf, NordWand y SüßMund.',
     x: 90, y: 11
   },
