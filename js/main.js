@@ -718,8 +718,8 @@ if (isMobile()) {
   });
 
   /* ── Skills window ──────────────────────────────────────── */
-  // Tap the titlebar or empty area to expand; tapping items works normally
-  document.getElementById('skillsBar').addEventListener('click', (e) => {
+  // Tap anywhere on the card to expand
+  skillsWin.addEventListener('click', (e) => {
     if (skillsWin.classList.contains('mobile-expanded')) return;
     expandPanel(skillsWin);
     scheduleAutoCollapse(skillsWin, () => skillsTimer, v => { skillsTimer = v; });
