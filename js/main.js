@@ -226,14 +226,34 @@ function makeDraggableEl(el, handle) {
 }
 
 /* ============================================================
+   MOBILE LAYOUT — 3-column grid positions
+   ============================================================ */
+const mobilePos = {
+  1:  { x: 18, y: 11 }, // Silly Crab
+  2:  { x: 18, y: 28 }, // Squishy Savings
+  9:  { x: 18, y: 47 }, // SchwimmSpass
+  19: { x: 18, y: 65 }, // Only Franz
+  3:  { x: 50, y: 11 }, // SentinelOne
+  18: { x: 50, y: 28 }, // EcoThread
+  17: { x: 50, y: 47 }, // Obsidian
+  6:  { x: 50, y: 65 }, // Vegetables Calendar
+  4:  { x: 82, y: 11 }, // Photography
+  5:  { x: 82, y: 28 }, // Branding
+  7:  { x: 82, y: 47 }, // Posters
+  8:  { x: 82, y: 65 }, // 3D Models
+};
+
+/* ============================================================
    BUILD ICONS
    ============================================================ */
 projects.forEach((p) => {
   const icon = document.createElement('div');
   icon.className = 'project-icon';
   if (p.mosaic) icon.classList.add('has-mosaic');
-  icon.style.left = p.x + '%';
-  icon.style.top  = p.y + '%';
+
+  const pos = isMobile() && mobilePos[p.id] ? mobilePos[p.id] : { x: p.x, y: p.y };
+  icon.style.left = pos.x + '%';
+  icon.style.top  = pos.y + '%';
 
   const mosaicHTML = p.mosaic ? `
     <div class="icon-mosaic${p.mosaic.length === 3 ? ' mosaic-3' : ''}">
@@ -332,19 +352,52 @@ function openWindow(p, iconEl) {
     e.stopPropagation();
   });
 
-  // Drag
-  makeDraggable(win, win.querySelector('.win-bar'));
+  // Drag (desktop only)
+  if (!isMobile()) makeDraggable(win, win.querySelector('.win-bar'));
+
+  // Swipe down to close on mobile
+  if (isMobile()) {
+    const bar = win.querySelector('.win-bar');
+    let startY = 0, currentY = 0, dragging = false;
+    bar.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+      dragging = true;
+      win.style.transition = 'none';
+    }, { passive: true });
+    document.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      currentY = e.touches[0].clientY - startY;
+      if (currentY > 0) win.style.transform = `translateY(${currentY}px)`;
+    }, { passive: true });
+    document.addEventListener('touchend', () => {
+      if (!dragging) return;
+      dragging = false;
+      if (currentY > 80) {
+        closeWindow(win);
+      } else {
+        win.style.transition = 'transform 0.3s cubic-bezier(0.16,1,0.3,1)';
+        win.style.transform = 'translateY(0)';
+      }
+      currentY = 0;
+    });
+  }
 
   // Stop overlay click from propagating through window
   win.addEventListener('click', (e) => e.stopPropagation());
 }
 
 function closeWindow(win, clearActive = true) {
-  win.style.animation = 'none';
-  win.style.opacity   = '0';
-  win.style.transform = 'scale(0.9) translateY(6px)';
-  win.style.transition = 'opacity 0.18s, transform 0.18s';
-  setTimeout(() => win.remove(), 200);
+  if (isMobile()) {
+    win.style.transition = 'transform 0.32s cubic-bezier(0.4,0,1,1)';
+    win.style.transform = 'translateY(100%)';
+    setTimeout(() => win.remove(), 340);
+  } else {
+    win.style.animation = 'none';
+    win.style.opacity   = '0';
+    win.style.transform = 'scale(0.9) translateY(6px)';
+    win.style.transition = 'opacity 0.18s, transform 0.18s';
+    setTimeout(() => win.remove(), 200);
+  }
   overlay.classList.remove('active');
   if (clearActive) activeWin = null;
 }

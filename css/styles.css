@@ -1076,64 +1076,74 @@ button.dock-icon {
 }
 
 /* ============================================================
+   MOBILE BOTTOM-SHEET SLIDE-UP ANIMATION
+   ============================================================ */
+@keyframes sheetSlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ============================================================
    RESPONSIVE — mobile
    ============================================================ */
 @media (max-width: 768px) {
 
-  /* Video: full screen, no decorative frame */
+  /* ── Video: full screen ──────────────────────────────────── */
   .desktop-video-wrapper {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    top: 0;
-    left: 0;
-    transform: none;
-    box-shadow: none;
+    width: 100%; height: 100%;
+    border-radius: 0; top: 0; left: 0;
+    transform: none; box-shadow: none;
   }
   .desktop-video-wrapper::before { display: none; }
 
-  /* Info panel → bottom sheet */
+  /* ── Mobile backdrop ─────────────────────────────────────── */
+  .mobile-backdrop { display: block; }
+
+  /* ── Mobile-only dock items ──────────────────────────────── */
+  .dock-mobile-only { display: flex; }
+
+  /* ── Language toggle → top right ────────────────────────── */
+  .lang-toggle {
+    top: 14px; bottom: auto; right: 14px;
+    padding: 6px 13px; font-size: 11.5px;
+    border-radius: 18px;
+  }
+
+  /* ── Info panel → bottom sheet ───────────────────────────── */
   .info-panel {
     position: fixed !important;
-    top: auto !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    top: auto !important; left: 0 !important;
+    right: 0 !important; bottom: 0 !important;
     width: 100% !important;
-    max-height: 85vh;
-    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
+    border-radius: 22px 22px 0 0;
     border: none;
-    border-top: 1px solid rgba(0,0,0,0.12);
+    border-top: 1px solid rgba(0,0,0,0.1);
     overflow-y: auto;
     z-index: 400;
     transform: translateY(100%);
-    transition: transform 0.38s cubic-bezier(0.16,1,0.3,1);
-    box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 -12px 48px rgba(0,0,0,0.4);
   }
-  .info-panel.mobile-open {
-    transform: translateY(0);
-  }
+  .info-panel.mobile-open { transform: translateY(0); }
   .sheet-handle { display: block; }
   .info-titlebar { cursor: default; }
+  .info-photo { height: 160px; }
 
-  /* Skills window → bottom sheet */
+  /* ── Skills window → bottom sheet ───────────────────────── */
   .skills-win {
     position: fixed !important;
-    top: auto !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    height: 82vh !important;
-    border-radius: 20px 20px 0 0;
+    top: auto !important; left: 0 !important;
+    right: 0 !important; bottom: 0 !important;
+    width: 100% !important; height: 84vh !important;
+    border-radius: 22px 22px 0 0;
     border: none;
-    border-top: 1px solid rgba(0,0,0,0.12);
+    border-top: 1px solid rgba(0,0,0,0.1);
     z-index: 400;
-    box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
-    /* Override desktop hidden state */
+    box-shadow: 0 -12px 48px rgba(0,0,0,0.4);
     transform: translateY(100%) !important;
     opacity: 1 !important;
-    transition: transform 0.38s cubic-bezier(0.16,1,0.3,1) !important;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1) !important;
   }
   .skills-win:not(.hidden) {
     transform: translateY(0) !important;
@@ -1145,62 +1155,103 @@ button.dock-icon {
   }
   .skills-titlebar { cursor: default; }
 
-  /* Mobile backdrop visible */
-  .mobile-backdrop { display: block; }
-
-  /* Mobile-only dock items visible */
-  .dock-mobile-only { display: flex; }
-
-  /* Language toggle → top right */
-  .lang-toggle {
-    top: 16px;
-    bottom: auto;
-    right: 16px;
-    padding: 7px 14px;
-    font-size: 12px;
+  /* Skills sidebar → horizontal chip tabs */
+  .skills-body { flex-direction: column; }
+  .skills-sidebar {
+    width: 100%; height: auto;
+    display: flex; flex-direction: row;
+    align-items: center; gap: 4px;
+    overflow-x: auto; overflow-y: hidden;
+    padding: 8px 10px;
+    border-right: none;
+    border-bottom: 1px solid #bbb;
+    scrollbar-width: none;
+    flex-shrink: 0;
+  }
+  .skills-sidebar::-webkit-scrollbar { display: none; }
+  .skills-sidebar-heading { display: none; }
+  .skills-cat {
+    flex-shrink: 0; width: auto;
+    padding: 5px 13px; border-radius: 16px;
+    margin: 0; white-space: nowrap; font-size: 11px;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    padding: 12px 8px;
   }
 
-  /* Project icons: smaller */
-  .icon-thumb { width: 58px; height: 58px; border-radius: 13px; }
-  .icon-label { font-size: 9px; max-width: 66px; }
-  .icon-mosaic {
-    width: 132px; height: 132px;
-  }
-  .icon-mosaic.mosaic-3 { width: 124px; height: 118px; }
-  .icon-mosaic.mosaic-3 img { width: 54px; height: 54px; border-radius: 10px; }
-
-  /* Project windows: centered, full width */
+  /* ── Project windows → bottom sheet ─────────────────────── */
   .project-win {
-    width: calc(100vw - 24px) !important;
-    left: 12px !important;
-    right: 12px !important;
-    top: auto !important;
-    bottom: 90px !important;
-    max-height: calc(100vh - 140px);
-    overflow-y: auto;
+    position: fixed !important;
+    width: 100% !important;
+    left: 0 !important; right: 0 !important;
+    bottom: 0 !important; top: auto !important;
+    border-radius: 24px 24px 0 0 !important;
+    border: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    max-height: 88vh;
+    overflow: hidden;
+    box-shadow: 0 -12px 48px rgba(0,0,0,0.55) !important;
   }
+  .project-win.active {
+    animation: sheetSlideUp 0.42s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  /* Handle pill on win-bar */
+  .win-bar::before {
+    content: '';
+    display: block;
+    width: 38px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    position: absolute;
+    top: 7px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .win-bar { position: relative; cursor: default; padding-top: 20px; }
+  .win-img  { height: 195px; }
+  .win-info { padding: 14px 18px 20px; }
+  .win-name { font-size: 18px; }
+  .win-desc { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .win-btn  {
+    width: 100%; justify-content: center;
+    padding: 11px 16px; font-size: 14px;
+    border-radius: 12px; margin-top: 12px;
+  }
+  /* Bigger close tap target */
+  .wc.red { width: 14px; height: 14px; }
 
-  /* Name tag adjustments */
-  .name-tag span:first-child { font-size: 0.68rem; letter-spacing: 0.2em; }
+  /* ── Project icons ───────────────────────────────────────── */
+  .icon-thumb { width: 60px; height: 60px; border-radius: 13px; }
+  .icon-label { font-size: 9px; max-width: 68px; }
+  /* Hide mosaics on mobile for cleaner look */
+  .icon-mosaic { display: none !important; }
+
+  /* ── Name tag ────────────────────────────────────────────── */
+  .name-tag span:first-child { font-size: 0.65rem; letter-spacing: 0.18em; }
   .name-role { display: none; }
 
-  /* Dock: tighter */
-  .dock-inner { gap: 7px; padding: 8px 14px 7px; }
-  .dock-app   { width: 38px; height: 38px; border-radius: 10px; }
-  .dock-app img, .dock-app svg { width: 55%; height: 55%; }
+  /* ── Dock ────────────────────────────────────────────────── */
+  .dock-inner { gap: 6px; padding: 8px 12px 7px; }
+  .dock-app   { width: 40px; height: 40px; border-radius: 11px; }
+  .dock-app img { width: 60%; height: 60%; }
+  .dock-app svg { width: 20px; height: 20px; }
   .dock-label { font-size: 8px; }
-  .dock-sep   { height: 30px; }
+  .dock-sep   { height: 28px; }
+  .dock-icon:hover { transform: translateY(-6px) scale(1.15); }
 }
 
 /* ============================================================
-   RESPONSIVE — small mobile
+   RESPONSIVE — small mobile (≤ 430px)
    ============================================================ */
 @media (max-width: 430px) {
-  .icon-thumb { width: 50px; height: 50px; border-radius: 11px; }
-  .icon-label { font-size: 8.5px; max-width: 58px; }
-  .dock-inner { gap: 5px; padding: 7px 10px 6px; }
-  .dock-app   { width: 34px; height: 34px; border-radius: 9px; }
+  .icon-thumb { width: 52px; height: 52px; border-radius: 12px; }
+  .dock-inner { gap: 4px; padding: 7px 8px 6px; }
+  .dock-app   { width: 36px; height: 36px; border-radius: 10px; }
+  .dock-app img, .dock-app svg { width: 56%; height: 56%; }
   .dock-label { font-size: 7.5px; }
-  .skills-win { height: 88vh !important; }
-  .info-panel { max-height: 90vh; }
+  .skills-win { height: 90vh !important; }
+  .info-panel { max-height: 92vh; }
+  .win-img    { height: 170px; }
+  .win-name   { font-size: 17px; }
+  .lang-toggle { padding: 5px 11px; font-size: 11px; }
 }
