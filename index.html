@@ -23,6 +23,7 @@
 
     <!-- macOS Get Info panel -->
     <div class="info-panel" id="infoPanel">
+      <div class="sheet-handle"></div>
       <div class="info-titlebar" id="infoPanelBar">
         <div class="win-controls">
           <span class="wc red" id="infoPanelClose"></span>
@@ -95,6 +96,7 @@
 
     <!-- ══ SKILLS FINDER WINDOW ══════════════════════════════ -->
     <div class="skills-win" id="skillsWin">
+      <div class="sheet-handle"></div>
 
       <!-- Title bar -->
       <div class="skills-titlebar" id="skillsBar">
@@ -236,6 +238,9 @@
       </div>
     </div>
 
+    <!-- Mobile sheet backdrop -->
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
     <!-- Language toggle -->
     <button class="lang-toggle" id="langToggle" aria-label="Sprache wechseln">
       <span class="lang-flag">🇩🇪</span>
@@ -245,6 +250,16 @@
     <!-- Dock -->
     <div class="dock">
       <div class="dock-inner">
+
+        <!-- Profile toggle (mobile only) -->
+        <button class="dock-icon dock-mobile-only" id="dockProfileBtn" aria-label="Profil öffnen">
+          <div class="dock-app" style="background:linear-gradient(145deg,#1a1a2e,#4a4a8a)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <span class="dock-label">Profil</span>
+        </button>
+
+        <div class="dock-sep dock-mobile-only"></div>
 
         <!-- Skills toggle -->
         <button class="dock-icon" id="dockSkillsBtn" aria-label="Skills öffnen">

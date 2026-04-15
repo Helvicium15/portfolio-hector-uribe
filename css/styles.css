@@ -1035,20 +1035,172 @@ button.dock-icon {
 }
 
 /* ============================================================
-   RESPONSIVE — tablet / mobile
+   MOBILE SHEET HANDLE
    ============================================================ */
-@media (max-width: 768px) {
-  .icon-thumb { width: 52px; height: 52px; border-radius: 12px; }
-  .icon-label  { font-size: 9px; max-width: 60px; }
-  .project-win { width: 88vw; }
-  .name-tag span:first-child { font-size: 0.7rem; letter-spacing: 0.25em; }
-  .name-role { display: none; }
-  .dock-app  { width: 36px; height: 36px; border-radius: 9px; }
-  .dock-label { font-size: 8px; }
+.sheet-handle {
+  display: none;
+  width: 36px;
+  height: 4px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 2px;
+  margin: 8px auto 0;
+  flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .icon-thumb { width: 44px; height: 44px; border-radius: 10px; }
-  .dock-inner { gap: 4px; padding: 7px 10px 6px; }
-  .dock-app   { width: 32px; height: 32px; }
+/* Mobile-only dock items hidden on desktop */
+.dock-mobile-only { display: none; }
+
+/* Mobile backdrop */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 380;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.mobile-backdrop.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   RESPONSIVE — tablet
+   ============================================================ */
+@media (max-width: 1024px) {
+  .skills-win { width: 460px; left: 320px; }
+}
+
+/* ============================================================
+   RESPONSIVE — mobile
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* Video: full screen, no decorative frame */
+  .desktop-video-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+    box-shadow: none;
+  }
+  .desktop-video-wrapper::before { display: none; }
+
+  /* Info panel → bottom sheet */
+  .info-panel {
+    position: fixed !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-height: 85vh;
+    border-radius: 20px 20px 0 0;
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    overflow-y: auto;
+    z-index: 400;
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
+  }
+  .info-panel.mobile-open {
+    transform: translateY(0);
+  }
+  .sheet-handle { display: block; }
+  .info-titlebar { cursor: default; }
+
+  /* Skills window → bottom sheet */
+  .skills-win {
+    position: fixed !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 82vh !important;
+    border-radius: 20px 20px 0 0;
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    z-index: 400;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
+    /* Override desktop hidden state */
+    transform: translateY(100%) !important;
+    opacity: 1 !important;
+    transition: transform 0.38s cubic-bezier(0.16,1,0.3,1) !important;
+  }
+  .skills-win:not(.hidden) {
+    transform: translateY(0) !important;
+    pointer-events: all !important;
+  }
+  .skills-win.hidden {
+    transform: translateY(100%) !important;
+    pointer-events: none !important;
+  }
+  .skills-titlebar { cursor: default; }
+
+  /* Mobile backdrop visible */
+  .mobile-backdrop { display: block; }
+
+  /* Mobile-only dock items visible */
+  .dock-mobile-only { display: flex; }
+
+  /* Language toggle → top right */
+  .lang-toggle {
+    top: 16px;
+    bottom: auto;
+    right: 16px;
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  /* Project icons: smaller */
+  .icon-thumb { width: 58px; height: 58px; border-radius: 13px; }
+  .icon-label { font-size: 9px; max-width: 66px; }
+  .icon-mosaic {
+    width: 132px; height: 132px;
+  }
+  .icon-mosaic.mosaic-3 { width: 124px; height: 118px; }
+  .icon-mosaic.mosaic-3 img { width: 54px; height: 54px; border-radius: 10px; }
+
+  /* Project windows: centered, full width */
+  .project-win {
+    width: calc(100vw - 24px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    bottom: 90px !important;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+
+  /* Name tag adjustments */
+  .name-tag span:first-child { font-size: 0.68rem; letter-spacing: 0.2em; }
+  .name-role { display: none; }
+
+  /* Dock: tighter */
+  .dock-inner { gap: 7px; padding: 8px 14px 7px; }
+  .dock-app   { width: 38px; height: 38px; border-radius: 10px; }
+  .dock-app img, .dock-app svg { width: 55%; height: 55%; }
+  .dock-label { font-size: 8px; }
+  .dock-sep   { height: 30px; }
+}
+
+/* ============================================================
+   RESPONSIVE — small mobile
+   ============================================================ */
+@media (max-width: 430px) {
+  .icon-thumb { width: 50px; height: 50px; border-radius: 11px; }
+  .icon-label { font-size: 8.5px; max-width: 58px; }
+  .dock-inner { gap: 5px; padding: 7px 10px 6px; }
+  .dock-app   { width: 34px; height: 34px; border-radius: 9px; }
+  .dock-label { font-size: 7.5px; }
+  .skills-win { height: 88vh !important; }
+  .info-panel { max-height: 90vh; }
 }

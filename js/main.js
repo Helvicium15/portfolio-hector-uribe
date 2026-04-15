@@ -116,8 +116,10 @@ const projects = [
 const iconsField       = document.getElementById('iconsField');
 const windowsContainer = document.getElementById('windowsContainer');
 const overlay          = document.getElementById('overlay');
+const mobileBackdrop   = document.getElementById('mobileBackdrop');
 
 let activeWin = null;
+const isMobile = () => window.innerWidth <= 768;
 
 /* ============================================================
    GET INFO PANEL
@@ -145,13 +147,53 @@ document.querySelectorAll('.info-sec-title').forEach(btn => {
 
 // Close button hides the panel
 document.getElementById('infoPanelClose').addEventListener('click', () => {
-  infoPanel.style.transition = 'opacity 0.18s, transform 0.18s';
-  infoPanel.style.opacity = '0';
-  infoPanel.style.transform = 'scale(0.92)';
-  setTimeout(() => { infoPanel.style.display = 'none'; }, 200);
+  if (isMobile()) {
+    closeMobileSheet(infoPanel);
+  } else {
+    infoPanel.style.transition = 'opacity 0.18s, transform 0.18s';
+    infoPanel.style.opacity = '0';
+    infoPanel.style.transform = 'scale(0.92)';
+    setTimeout(() => { infoPanel.style.display = 'none'; }, 200);
+  }
 });
 
-// Drag the panel
+// Mobile profile dock button
+document.getElementById('dockProfileBtn').addEventListener('click', () => {
+  if (infoPanel.classList.contains('mobile-open')) {
+    closeMobileSheet(infoPanel);
+  } else {
+    openMobileSheet(infoPanel);
+  }
+});
+
+// Mobile sheet helpers
+function openMobileSheet(el) {
+  // Close any other open sheet first
+  document.querySelectorAll('.info-panel.mobile-open').forEach(s => {
+    if (s !== el) closeMobileSheet(s);
+  });
+  if (!skillsWin.classList.contains('hidden') && el !== skillsWin) {
+    skillsWin.classList.add('hidden');
+  }
+  el.classList.add('mobile-open');
+  mobileBackdrop.classList.add('active');
+}
+
+function closeMobileSheet(el) {
+  el.classList.remove('mobile-open');
+  // also covers skills win
+  skillsWin.classList.add('hidden');
+  mobileBackdrop.classList.remove('active');
+}
+
+// Backdrop closes sheets on mobile
+mobileBackdrop.addEventListener('click', () => {
+  infoPanel.classList.remove('mobile-open');
+  skillsWin.classList.add('hidden');
+  mobileBackdrop.classList.remove('active');
+});
+
+// Drag the panel (desktop only)
 makeDraggableEl(infoPanel, infoPanelBar);
 
 function makeDraggableEl(el, handle) {
@@ -251,17 +293,22 @@ function openWindow(p, iconEl) {
 
   windowsContainer.appendChild(win);
 
-  // Position: near icon, offset to not cover it
-  const iconRect = iconEl.getBoundingClientRect();
-  let left = iconRect.right + 12;
-  let top  = iconRect.top - 20;
-
-  // Clamp to viewport
-  const winW = 330, winH = 320;
-  if (left + winW > window.innerWidth  - 16) left = iconRect.left - winW - 12;
-  if (left < 16)                              left = 16;
-  if (top + winH > window.innerHeight - 80)   top  = window.innerHeight - winH - 80;
-  if (top < 16)                               top  = 16;
+  // Position: centered on mobile, near icon on desktop
+  let left, top;
+  if (isMobile()) {
+    left = 12;
+    top  = window.innerHeight - 420;
+    if (top < 60) top = 60;
+  } else {
+    const iconRect = iconEl.getBoundingClientRect();
+    left = iconRect.right + 12;
+    top  = iconRect.top - 20;
+    const winW = 330, winH = 320;
+    if (left + winW > window.innerWidth  - 16) left = iconRect.left - winW - 12;
+    if (left < 16)                              left = 16;
+    if (top + winH > window.innerHeight - 80)   top  = window.innerHeight - winH - 80;
+    if (top < 16)                               top  = 16;
+  }
 
   win.style.left = left + 'px';
   win.style.top  = top  + 'px';
@@ -384,12 +431,20 @@ makeDraggableEl(skillsWin, skillsBar);
 // Dock button → abre o sacude si ya está visible
 dockSkillsBtn.addEventListener('click', () => {
   if (!skillsWin.classList.contains('hidden')) {
-    skillsWin.classList.remove('shake');
-    void skillsWin.offsetWidth; // reflow para reiniciar animación
-    skillsWin.classList.add('shake');
-    skillsWin.addEventListener('animationend', () => skillsWin.classList.remove('shake'), { once: true });
+    if (isMobile()) {
+      skillsWin.classList.add('hidden');
+      mobileBackdrop.classList.remove('active');
+    } else {
+      skillsWin.classList.remove('shake');
+      void skillsWin.offsetWidth;
+      skillsWin.classList.add('shake');
+      skillsWin.addEventListener('animationend', () => skillsWin.classList.remove('shake'), { once: true });
+    }
   } else {
+    // Close info panel sheet if open on mobile
+    if (isMobile()) infoPanel.classList.remove('mobile-open');
     skillsWin.classList.remove('hidden');
+    if (isMobile()) mobileBackdrop.classList.add('active');
   }
 });
 
