@@ -229,18 +229,19 @@ function makeDraggableEl(el, handle) {
    MOBILE LAYOUT — 3-column grid positions
    ============================================================ */
 const mobilePos = {
-  1:  { x: 18, y: 11 }, // Silly Crab
-  2:  { x: 18, y: 28 }, // Squishy Savings
-  9:  { x: 18, y: 47 }, // SchwimmSpass
-  19: { x: 18, y: 65 }, // Only Franz
-  3:  { x: 50, y: 11 }, // SentinelOne
-  18: { x: 50, y: 28 }, // EcoThread
-  17: { x: 50, y: 47 }, // Obsidian
-  6:  { x: 50, y: 65 }, // Vegetables Calendar
-  4:  { x: 82, y: 11 }, // Photography
-  5:  { x: 82, y: 28 }, // Branding
-  7:  { x: 82, y: 47 }, // Posters
-  8:  { x: 82, y: 65 }, // 3D Models
+  // Icons placed below the top widgets (~35% from top)
+  1:  { x: 18, y: 40 }, // Silly Crab
+  2:  { x: 18, y: 55 }, // Squishy Savings
+  9:  { x: 18, y: 68 }, // SchwimmSpass
+  19: { x: 18, y: 80 }, // Only Franz
+  3:  { x: 50, y: 40 }, // SentinelOne
+  18: { x: 50, y: 55 }, // EcoThread
+  17: { x: 50, y: 68 }, // Obsidian
+  6:  { x: 50, y: 80 }, // Vegetables Calendar
+  4:  { x: 82, y: 40 }, // Photography
+  5:  { x: 82, y: 55 }, // Branding
+  7:  { x: 82, y: 68 }, // Posters
+  8:  { x: 82, y: 80 }, // 3D Models
 };
 
 /* ============================================================
@@ -481,23 +482,16 @@ const skillsCount  = document.getElementById('skillsCount');
 // Drag
 makeDraggableEl(skillsWin, skillsBar);
 
-// Dock button → abre o sacude si ya está visible
+// Dock button → shakes if visible, opens if hidden
 dockSkillsBtn.addEventListener('click', () => {
   if (!skillsWin.classList.contains('hidden')) {
-    if (isMobile()) {
-      skillsWin.classList.add('hidden');
-      mobileBackdrop.classList.remove('active');
-    } else {
-      skillsWin.classList.remove('shake');
-      void skillsWin.offsetWidth;
-      skillsWin.classList.add('shake');
-      skillsWin.addEventListener('animationend', () => skillsWin.classList.remove('shake'), { once: true });
-    }
+    // Shake the window (on mobile it's always visible; on desktop it may be open)
+    skillsWin.classList.remove('shake');
+    void skillsWin.offsetWidth;
+    skillsWin.classList.add('shake');
+    skillsWin.addEventListener('animationend', () => skillsWin.classList.remove('shake'), { once: true });
   } else {
-    // Close info panel sheet if open on mobile
-    if (isMobile()) infoPanel.classList.remove('mobile-open');
     skillsWin.classList.remove('hidden');
-    if (isMobile()) mobileBackdrop.classList.add('active');
   }
 });
 
@@ -638,3 +632,13 @@ document.getElementById('langToggle').addEventListener('click', () => {
   currentLang = currentLang === 'de' ? 'en' : 'de';
   applyLanguage(currentLang);
 });
+
+/* ============================================================
+   MOBILE INIT — show panels on load (they are always-on widgets)
+   ============================================================ */
+if (isMobile()) {
+  // Skills window is always visible on mobile — remove hidden class
+  skillsWin.classList.remove('hidden');
+  // Ensure info panel is always visible (no bottom-sheet offset)
+  infoPanel.classList.add('mobile-open');
+}
