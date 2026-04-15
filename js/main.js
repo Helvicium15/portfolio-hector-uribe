@@ -642,3 +642,94 @@ if (isMobile()) {
   // Ensure info panel is always visible (no bottom-sheet offset)
   infoPanel.classList.add('mobile-open');
 }
+
+/* ============================================================
+   MOBILE — TAP TO EXPAND / AUTO-COLLAPSE PANELS
+   ============================================================ */
+(function () {
+  if (!isMobile()) return;
+
+  let infoTimer   = null;
+  let skillsTimer = null;
+
+  const EASE_IN  = 'all 0.38s cubic-bezier(0.16,1,0.3,1)';
+  const EASE_OUT = 'all 0.3s cubic-bezier(0.4,0,1,1)';
+
+  /* ── helpers ───────────────────────────────────────────── */
+  function expandPanel(panel) {
+    panel.style.transition = EASE_IN;
+    panel.classList.add('mobile-expanded');
+    // Show the red close button
+    const ctrl = panel.querySelector('.win-controls');
+    if (ctrl) ctrl.style.display = 'flex';
+    document.body.classList.add('panel-expanded');
+  }
+
+  function collapsePanel(panel) {
+    clearTimeout(panel === infoPanel ? infoTimer : skillsTimer);
+    panel.style.transition = EASE_OUT;
+    panel.classList.remove('mobile-expanded');
+    document.body.classList.remove('panel-expanded');
+    // Hide the red close button again after transition
+    setTimeout(() => {
+      const ctrl = panel.querySelector('.win-controls');
+      if (ctrl) ctrl.style.display = '';
+      panel.style.transition = '';
+    }, 320);
+  }
+
+  function triggerPop(btn, onDone) {
+    btn.classList.remove('pop');
+    void btn.offsetWidth; // reflow to restart animation
+    btn.classList.add('pop');
+    btn.addEventListener('animationend', () => {
+      btn.classList.remove('pop');
+      onDone();
+    }, { once: true });
+  }
+
+  function scheduleAutoCollapse(panel, getTimer, setTimer) {
+    clearTimeout(getTimer());
+    setTimer(setTimeout(() => {
+      if (!panel.classList.contains('mobile-expanded')) return; // already closed
+      const closeBtn = panel.querySelector('.wc.red');
+      if (closeBtn) {
+        // Pop the button as a hint, then collapse
+        triggerPop(closeBtn, () => collapsePanel(panel));
+      } else {
+        collapsePanel(panel);
+      }
+    }, 10000));
+  }
+
+  /* ── Info panel ─────────────────────────────────────────── */
+  infoPanel.addEventListener('click', (e) => {
+    if (infoPanel.classList.contains('mobile-expanded')) return; // already expanded
+    expandPanel(infoPanel);
+    scheduleAutoCollapse(infoPanel, () => infoTimer, v => { infoTimer = v; });
+    e.stopPropagation();
+  });
+
+  document.getElementById('infoPanelClose').addEventListener('click', (e) => {
+    if (infoPanel.classList.contains('mobile-expanded')) {
+      collapsePanel(infoPanel);
+      e.stopPropagation();
+    }
+  });
+
+  /* ── Skills window ──────────────────────────────────────── */
+  // Tap the titlebar or empty area to expand; tapping items works normally
+  document.getElementById('skillsBar').addEventListener('click', (e) => {
+    if (skillsWin.classList.contains('mobile-expanded')) return;
+    expandPanel(skillsWin);
+    scheduleAutoCollapse(skillsWin, () => skillsTimer, v => { skillsTimer = v; });
+    e.stopPropagation();
+  });
+
+  document.getElementById('skillsClose').addEventListener('click', (e) => {
+    if (skillsWin.classList.contains('mobile-expanded')) {
+      collapsePanel(skillsWin);
+      e.stopPropagation();
+    }
+  });
+}());

@@ -1102,6 +1102,9 @@ button.dock-icon {
   /* ── Mobile-only dock profile button — hide (panel always shown) */
   #dockProfileBtn { display: none !important; }
 
+  /* ── Skills dock icon — hidden on mobile (Skills is always-on widget) */
+  #dockSkillsBtn  { display: none !important; }
+
   /* ── Language toggle → above dock, bottom-right ─────────── */
   .lang-toggle {
     top: auto; bottom: 80px; right: 12px;
@@ -1122,8 +1125,9 @@ button.dock-icon {
     overflow-y: auto !important;
     z-index: 320 !important;
     transform: translateY(0) !important;
-    transition: none !important;
+    transition: none;
     box-shadow: 0 4px 20px rgba(0,0,0,0.45) !important;
+    cursor: pointer;
   }
   /* Always visible — ignore open/close classes on mobile */
   .info-panel.mobile-open,
@@ -1162,9 +1166,10 @@ button.dock-icon {
     z-index: 318 !important;
     transform: translateY(0) !important;
     opacity: 1 !important;
-    transition: none !important;
+    transition: none;
     overflow: hidden !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+    cursor: pointer;
   }
   /* Always visible — ignore hidden class on mobile */
   .skills-win.hidden,
@@ -1284,4 +1289,77 @@ button.dock-icon {
   .win-img    { height: 170px; }
   .win-name   { font-size: 17px; }
   .lang-toggle { padding: 5px 11px; font-size: 11px; bottom: 76px; }
+}
+
+/* ============================================================
+   MOBILE — EXPANDED PANEL STATES  (full-screen iPhone modal)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ── Info panel expanded ─────────────────────────────────── */
+  .info-panel.mobile-expanded {
+    top: 0 !important; right: 0 !important;
+    left: 0 !important; bottom: 0 !important;
+    width: 100% !important;
+    max-height: 100dvh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    z-index: 500 !important;
+    cursor: default;
+  }
+  .info-panel.mobile-expanded .win-controls  { display: flex !important; }
+  .info-panel.mobile-expanded .info-titlebar { padding: 10px 14px !important; min-height: 40px; cursor: default; }
+  .info-panel.mobile-expanded .info-photo    { height: 190px !important; }
+  .info-panel.mobile-expanded .info-photo img { border-radius: 10px; }
+  .info-panel.mobile-expanded .info-name     { font-size: 17px !important; }
+  .info-panel.mobile-expanded .info-role     { font-size: 12px !important; }
+  .info-panel.mobile-expanded .info-tag      { font-size: 11px !important; padding: 3px 9px !important; }
+  .info-panel.mobile-expanded .info-tags-bar { padding: 7px 14px 8px !important; gap: 5px; }
+  .info-panel.mobile-expanded .info-section:nth-child(n+3) { display: block !important; }
+  .info-panel.mobile-expanded .info-section  { padding: 8px 14px 10px !important; }
+  .info-panel.mobile-expanded .info-sec-title { font-size: 11px !important; padding: 4px 0 !important; }
+  .info-panel.mobile-expanded .info-kv       { font-size: 11px !important; padding: 2px 0 !important; gap: 4px; }
+  .info-panel.mobile-expanded .info-key      { font-size: 11px !important; }
+  .info-panel.mobile-expanded .info-val      { font-size: 11px !important; }
+
+  /* ── Skills window expanded ──────────────────────────────── */
+  .skills-win.mobile-expanded {
+    top: 0 !important; left: 0 !important;
+    right: 0 !important; bottom: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    z-index: 500 !important;
+    cursor: default;
+  }
+  .skills-win.mobile-expanded .win-controls   { display: flex !important; }
+  .skills-win.mobile-expanded .skills-titlebar { padding: 10px 14px !important; min-height: 40px; cursor: default; }
+  .skills-win.mobile-expanded .skills-body    { height: calc(100dvh - 42px); }
+  .skills-win.mobile-expanded .skills-cat     { font-size: 11px !important; padding: 4px 12px !important; }
+  .skills-win.mobile-expanded .skills-grid    {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)) !important;
+    padding: 10px 8px !important; gap: 8px !important;
+  }
+  .skills-win.mobile-expanded .skill-icon     { width: 38px !important; height: 38px !important; }
+  .skills-win.mobile-expanded .skill-name     { font-size: 10.5px !important; }
+  .skills-win.mobile-expanded .skills-search  { padding: 6px 10px !important; }
+  .skills-win.mobile-expanded .skills-search input { font-size: 12px !important; padding: 5px 8px !important; }
+
+  /* Prevent touch scroll on background when panel is expanded */
+  body.panel-expanded { overflow: hidden; }
+}
+
+/* ============================================================
+   RED CLOSE BUTTON — POP HINT ANIMATION
+   ============================================================ */
+@keyframes btnPop {
+  0%   { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,60,60,0); }
+  30%  { transform: scale(1.75); box-shadow: 0 0 0 5px rgba(255,60,60,0.35); }
+  60%  { transform: scale(0.82); }
+  80%  { transform: scale(1.15); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,60,60,0); }
+}
+.wc.red.pop {
+  animation: btnPop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
