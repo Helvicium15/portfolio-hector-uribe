@@ -8,7 +8,7 @@ document.querySelector('.desktop-video').playbackRate = 0.75;
    ============================================================ */
 const projects = [
 
-  /* ── COLUMNA A (x ≈ 62) — UX/UI ──────────────────────────── */
+  /* ── COL 1 (x=62) ─────────────────────────────────────────── */
   {
     id: 1, name: 'Silly Crab',
     cat_de: 'Web Dev · React', cat_en: 'Web Dev · React',
@@ -16,7 +16,7 @@ const projects = [
     url: 'https://silly-crab-sc75.vercel.app/',
     desc_de: 'Animierte React-App mit spielerischer UI und interaktiven Charakteren.',
     desc_en: 'Animated React app with playful UI and interactive characters.',
-    x: 62, y: 12
+    x: 62, y: 8
   },
   {
     id: 2, name: 'Squishy Savings',
@@ -25,7 +25,7 @@ const projects = [
     url: 'https://squishy-savings-app.vercel.app/',
     desc_de: 'Spar-App mit unterhaltsamem und visuellem UX-Design.',
     desc_en: 'Savings app with fun and visual UX design.',
-    x: 62, y: 30
+    x: 62, y: 28
   },
   {
     id: 9, name: 'SchwimmSpass',
@@ -34,7 +34,7 @@ const projects = [
     url: 'schwimmspass.html',
     desc_de: 'Mobile-App-Design für eine Schwimmschule.',
     desc_en: 'Mobile app design for a swimming school.',
-    x: 62, y: 50
+    x: 62, y: 48
   },
   {
     id: 19, name: 'Only Franz',
@@ -46,7 +46,7 @@ const projects = [
     x: 62, y: 68
   },
 
-  /* ── COLUMNA B (x ≈ 73) — UX/UI ──────────────────────────── */
+  /* ── COL 2 (x=74) ─────────────────────────────────────────── */
   {
     id: 3, name: 'SentinelOne',
     cat_de: 'UX/UI · Dashboard', cat_en: 'UX/UI · Dashboard',
@@ -54,7 +54,7 @@ const projects = [
     url: 'https://sentinel-2025.vercel.app/',
     desc_de: 'Redesign eines Cybersecurity-Dashboards mit moderner Dark UI.',
     desc_en: 'Cybersecurity dashboard redesign with modern dark UI.',
-    x: 72, y: 20
+    x: 74, y: 8
   },
   {
     id: 18, name: 'EcoThread',
@@ -63,7 +63,7 @@ const projects = [
     url: 'https://ecothread.lovable.app',
     desc_de: 'E-Commerce UX-Design für nachhaltige Mode.',
     desc_en: 'E-commerce UX design for sustainable fashion.',
-    x: 72, y: 38
+    x: 74, y: 28
   },
   {
     id: 17, name: 'Obsidian',
@@ -72,7 +72,7 @@ const projects = [
     url: 'https://obsidian-rise-shine.lovable.app',
     desc_de: 'Crypto-Landingpage mit dunkler, Premium-UI.',
     desc_en: 'Crypto landing page with dark, premium UI.',
-    x: 72, y: 57
+    x: 74, y: 48
   },
   {
     id: 6, name: 'Vegetables Calendar',
@@ -81,10 +81,10 @@ const projects = [
     url: 'https://www.behance.net/gallery/162725755/VEGETABLES-SEASONAL-CALENDAR-2024',
     desc_de: 'Saisonaler Gemüsekalender 2024, Printdesign.',
     desc_en: 'Seasonal vegetables calendar 2024, print design.',
-    x: 72, y: 74
+    x: 74, y: 68
   },
 
-  /* ── CLÚSTER DISEÑO/FOTO — 2×2 extremo derecho ────────────── */
+  /* ── COL 3 (x=86) ─────────────────────────────────────────── */
   {
     id: 4, name: 'Photography',
     cat_de: 'Fotografie · Unsplash', cat_en: 'Photography · Unsplash',
@@ -92,7 +92,7 @@ const projects = [
     url: 'https://unsplash.com/de/@helvicium',
     desc_de: 'Kreative Porträt- und Street-Fotografie auf Unsplash.',
     desc_en: 'Creative portrait and street photography on Unsplash.',
-    x: 81, y: 11
+    x: 86, y: 8
   },
   {
     id: 5, name: 'Branding',
@@ -101,7 +101,7 @@ const projects = [
     url: 'branding.html',
     desc_de: 'Markenidentitäten für AeroLeaf, NordWand und SüßMund.',
     desc_en: 'Brand identities for AeroLeaf, NordWand and SüßMund.',
-    x: 90, y: 11
+    x: 86, y: 28
   },
   {
     id: 7, name: 'Posters',
@@ -110,7 +110,7 @@ const projects = [
     url: 'https://www.behance.net/hectoruribe2',
     desc_de: 'Grafikdesign-Posterserie mit kühner Ästhetik.',
     desc_en: 'Graphic design poster series with bold aesthetics.',
-    x: 81, y: 34,
+    x: 86, y: 48,
     mosaic: [
       'img/projects/mosaic-smile.webp',
       'img/projects/mosaic-sweet.webp',
@@ -124,7 +124,7 @@ const projects = [
     url: 'https://sketchfab.com/hectorz151',
     desc_de: '3D-Modelle und Skulpturen auf Sketchfab veröffentlicht.',
     desc_en: '3D models and sculptures published on Sketchfab.',
-    x: 81, y: 58,
+    x: 86, y: 68,
     mosaic: [
       'img/projects/mosaic-robot.webp',
       'img/projects/mosaic-candy-gun.webp',
@@ -295,63 +295,13 @@ projects.forEach((p) => {
   `;
 
   icon.addEventListener('click', (e) => {
-    if (icon._wasDragged) { icon._wasDragged = false; return; }
     e.stopPropagation();
     openWindow(p, icon);
   });
 
   iconsField.appendChild(icon);
-
-  // Desktop drag — icons are repositionable like macOS desktop
-  if (!isMobile()) makeIconDraggable(icon);
 });
 
-function makeIconDraggable(icon) {
-  let startX, startY, startLeft, startTop;
-  let active = false;
-
-  icon.addEventListener('mousedown', (e) => {
-    if (e.button !== 0) return;
-    e.preventDefault();
-
-    startX = e.clientX;
-    startY = e.clientY;
-    active = true;
-    icon._wasDragged = false;
-  });
-
-  document.addEventListener('mousemove', (e) => {
-    if (!active) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-
-    // Convert % → px only once, at the moment drag actually begins
-    if (!icon._wasDragged && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
-      const field = iconsField.getBoundingClientRect();
-      const cur   = icon.getBoundingClientRect();
-      startLeft = cur.left - field.left;
-      startTop  = cur.top  - field.top;
-      icon.style.left = startLeft + 'px';
-      icon.style.top  = startTop  + 'px';
-      icon._wasDragged = true;
-      icon.classList.add('dragging');
-    }
-
-    if (icon._wasDragged) {
-      const field = iconsField.getBoundingClientRect();
-      const maxL  = field.width  - icon.offsetWidth;
-      const maxT  = field.height - icon.offsetHeight - 60;
-      icon.style.left = Math.max(0, Math.min(startLeft + dx, maxL)) + 'px';
-      icon.style.top  = Math.max(0, Math.min(startTop  + dy, maxT)) + 'px';
-    }
-  });
-
-  document.addEventListener('mouseup', () => {
-    if (!active) return;
-    active = false;
-    icon.classList.remove('dragging');
-  });
-}
 
 /* ============================================================
    BUILD & OPEN WINDOWS
