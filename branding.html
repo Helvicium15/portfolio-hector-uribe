@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Branding — Hector Uribe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #080810;
+      --bg-card:     rgba(255,255,255,0.035);
+      --bg-alt:      rgba(255,255,255,0.06);
+      --border:      rgba(255,255,255,0.09);
+      --fg:          rgba(255,255,255,0.93);
+      --fg-muted:    rgba(255,255,255,0.48);
+      --accent:      #2F54EB;
+      --accent-light:#6B8EFF;
+      --radius:      14px;
+      --font-body:   'Inter', -apple-system, sans-serif;
+      --font-display:'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+    }
+
+    /* ── Back button ─────────────────────────────────────────── */
+    .back-btn {
+      position: fixed;
+      top: 18px; left: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px 8px 12px;
+      background: rgba(15,15,30,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      color: var(--fg-muted);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      z-index: 100;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      color: var(--fg);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(25,25,50,0.9);
+    }
+    .back-btn svg { transition: transform 0.2s; flex-shrink: 0; }
+    .back-btn:hover svg { transform: translateX(-3px); }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 62vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 0 4rem;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,16,0.55) 0%,
+        rgba(8,8,16,0.2) 40%,
+        rgba(8,8,16,0.9) 100%
+      );
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-light);
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .eyebrow-line {
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--accent-light);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--fg);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+    .hero-desc {
+      color: var(--fg-muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 580px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+
+    /* ── Main content ────────────────────────────────────────── */
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--fg-muted);
+      font-family: var(--font-display);
+      font-size: 0.66rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Case study card ─────────────────────────────────────── */
+    .case {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 3rem;
+      transition: border-color 0.3s;
+    }
+    .case:hover { border-color: rgba(47,84,235,0.3); }
+
+    .case-hero-img {
+      width: 100%;
+      aspect-ratio: 16 / 6;
+      object-fit: cover;
+      display: block;
+    }
+    .case-body { padding: 2.5rem; }
+    .case-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .case-cat {
+      font-family: var(--font-display);
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .case-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .case-concept {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      font-style: italic;
+    }
+    .case-concept::before { content: '"'; opacity: 0.55; }
+    .case-concept::after  { content: '"'; opacity: 0.55; }
+    .case-desc {
+      color: var(--fg-muted);
+      font-size: 0.92rem;
+      line-height: 1.78;
+      max-width: 540px;
+    }
+    .case-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .case-img-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .case-img-wrap.tall { grid-row: span 2; }
+    .case-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .case-img-wrap:hover img { transform: scale(1.03); }
+
+    .case-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .case-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: var(--font-display);
+    }
+
+    /* ── Footer note ─────────────────────────────────────────── */
+    .note {
+      margin-top: 1rem;
+      padding: 1.75rem 2rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+    }
+    .note-title {
+      font-family: var(--font-display);
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 0.6rem;
+    }
+    .note p {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .note a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .note a:hover { color: var(--accent-light); }
+
+    /* ── Bottom back bar ─────────────────────────────────────── */
+    .bottom-bar {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+    .bottom-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      color: var(--fg-muted);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .bottom-back:hover {
+      color: var(--fg);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+    }
+    .bottom-back svg { transition: transform 0.2s; }
+    .bottom-back:hover svg { transform: translateX(-3px); }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { min-height: 55vh; padding-bottom: 3rem; }
+      .hero-content { padding: 0 1.25rem; }
+      .hero-stats { gap: 1.75rem; }
+      .content { padding: 3.5rem 1.25rem 5rem; }
+      .case-body { padding: 1.5rem; }
+      .case-images { grid-template-columns: 1fr; }
+      .case-img-wrap.tall { grid-row: span 1; }
+      .case-header { flex-direction: column; gap: 1rem; }
+      .back-btn { top: 12px; left: 12px; font-size: 11px; padding: 7px 13px 7px 10px; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { flex-wrap: wrap; gap: 1.25rem; }
+      .stat-num { font-size: 1.4rem; }
+      .case-name { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Fixed back button ─────────────────────────────────── -->
+  <a href="index.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+    Portfolio
+  </a>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="img/Firefly_liquid.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="eyebrow">
+        <span class="eyebrow-line"></span>
+        Grafikdesign · Branding
+      </div>
+      <h1 class="hero-title">Branding</h1>
+      <p class="hero-desc">
+        Eine Auswahl an Logo-Designs und visuellen Identitäten für Marken aus verschiedenen Branchen —
+        von Konzept über Typografie bis zur finalen Anwendung.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-num">12+</span>
+          <span class="stat-label">Logos</span>
+        </div>
+        <div>
+          <span class="stat-num">5</span>
+          <span class="stat-label">Branchen</span>
+        </div>
+        <div>
+          <span class="stat-num">3+</span>
+          <span class="stat-label">Jahre</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Case studies ─────────────────────────────────────── -->
+  <main class="content">
+
+    <div class="section-label">Featured Case Studies</div>
+
+    <!-- AeroLeaf -->
+    <div class="case">
+      <img src="img/projects/AeroLeaf_01.jpg" alt="AeroLeaf Brand Mockup" class="case-hero-img">
+      <div class="case-body">
+        <div class="case-header">
+          <div>
+            <span class="case-cat" style="color:#39FF14;">AgriTech · Urban Vertical Farming</span>
+            <div class="case-name">AeroLeaf</div>
+            <div class="case-concept" style="border:1px solid rgba(57,255,20,0.3); color:#39FF14;">Where nature meets German engineering.</div>
+          </div>
+          <p class="case-desc">
+            A Berlin-based tech startup designing smart hydroponic systems for growing vegetables in small apartments
+            and offices without direct natural light. Targeting eco-conscious urban professionals (25–40), the brand
+            embodies innovation, cleanliness, efficiency, and a futuristic yet organic personality.
+          </p>
+        </div>
+        <div class="case-images">
+          <div class="case-img-wrap tall">
+            <img src="img/projects/AeroLeaf_03.jpg" alt="AeroLeaf Product in Berlin">
+          </div>
+          <div class="case-img-wrap">
+            <img src="img/projects/AeroLeaf_02.jpg" alt="AeroLeaf Brand Style Guide">
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Brand Identity</span>
+          <span class="case-tag">Logo Design</span>
+          <span class="case-tag">Style Guide</span>
+          <span class="case-tag">AgriTech</span>
+          <span class="case-tag">Berlin</span>
+          <span class="case-tag">Sustainable</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NordWand -->
+    <div class="case">
+      <img src="img/projects/NordWand_01.jpg" alt="NordWand Jacket Mockup" class="case-hero-img">
+      <div class="case-body">
+        <div class="case-header">
+          <div>
+            <span class="case-cat" style="color:#E8601F;">Outdoor Fashion · Mountain Apparel</span>
+            <div class="case-name">NordWand</div>
+            <div class="case-concept" style="border:1px solid rgba(232,96,31,0.3); color:#E8601F;">Protection against the elements.</div>
+          </div>
+          <p class="case-desc">
+            A Hamburg-based premium technical clothing brand for extreme climates, focused on 100% recycled materials
+            and urban monochromatic aesthetics. Targeting adventurers, climbers, and rainy city dwellers who value the
+            'Gorpcore' aesthetic. The brand embodies resilience, stoicism, and minimalism.
+          </p>
+        </div>
+        <div class="case-images">
+          <div class="case-img-wrap tall">
+            <img src="img/projects/NordWand_03.jpg" alt="NordWand Logo">
+          </div>
+          <div class="case-img-wrap">
+            <img src="img/projects/NordWand_02.jpg" alt="NordWand Brand Identity Guidelines">
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Brand Identity</span>
+          <span class="case-tag">Logo Design</span>
+          <span class="case-tag">Style Guide</span>
+          <span class="case-tag">Outdoor Fashion</span>
+          <span class="case-tag">Hamburg</span>
+          <span class="case-tag">Sustainable</span>
+          <span class="case-tag">Gorpcore</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SüßMund -->
+    <div class="case">
+      <img src="img/projects/Sussmund_03.jpg" alt="SüßMund Pâtisserie Store" class="case-hero-img">
+      <div class="case-body">
+        <div class="case-header">
+          <div>
+            <span class="case-cat" style="color:#FA8AB4;">Gastronomy · Fine Pastry</span>
+            <div class="case-name">SüßMund Pâtisserie</div>
+            <div class="case-concept" style="border:1px solid rgba(250,138,180,0.3); color:#FA8AB4;">Little edible jewels.</div>
+          </div>
+          <p class="case-desc">
+            A Cologne-based boutique pastry shop that blends French pâtisserie with traditional German ingredients
+            like marzipan and forest berries. Targeting couples, wedding planners, and lovers of affordable luxury.
+            The brand embodies delicacy, sweetness, sophistication, and romance.
+          </p>
+        </div>
+        <div class="case-images">
+          <div class="case-img-wrap tall">
+            <img src="img/projects/Sussmund_01.jpg" alt="SüßMund Logo">
+          </div>
+          <div class="case-img-wrap">
+            <img src="img/projects/Sussmund_02.jpg" alt="SüßMund Brand Guidelines">
+          </div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Brand Identity</span>
+          <span class="case-tag">Logo Design</span>
+          <span class="case-tag">Style Guide</span>
+          <span class="case-tag">Gastronomy</span>
+          <span class="case-tag">Cologne</span>
+          <span class="case-tag">Mascot Design</span>
+          <span class="case-tag">Packaging</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="note">
+      <div class="note-title">Vollständiges Portfolio</div>
+      <p>
+        Weitere Logo-Projekte und Branding-Arbeiten sind auf
+        <a href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener noreferrer">Behance</a> zu finden.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ── Bottom back bar ───────────────────────────────────── -->
+  <div class="bottom-bar">
+    <a href="index.html" class="bottom-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+      Zurück zum Portfolio
+    </a>
+  </div>
+
+</body>
+</html>

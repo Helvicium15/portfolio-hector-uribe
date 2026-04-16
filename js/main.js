@@ -79,7 +79,7 @@ const projects = [
   {
     id: 5, name: 'Branding', cat: 'Grafikdesign · Logo',
     img: 'img/projects/logo-collection.jpg',
-    url: 'logo-collection.html',
+    url: 'branding.html',
     desc: 'Identidades de marca para AeroLeaf, NordWand y SüßMund.',
     x: 90, y: 11
   },
