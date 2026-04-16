@@ -567,7 +567,7 @@ function filterSkills() {
 /* ============================================================
    LANGUAGE TOGGLE
    ============================================================ */
-let currentLang = 'de';
+let currentLang = localStorage.getItem('lang') || 'de';
 
 const translations = {
   de: {
@@ -661,12 +661,16 @@ function applyLanguage(lang) {
   }
 
   document.documentElement.lang = lang;
+  localStorage.setItem('lang', lang);
 }
 
 document.getElementById('langToggle').addEventListener('click', () => {
   currentLang = currentLang === 'de' ? 'en' : 'de';
   applyLanguage(currentLang);
 });
+
+// Apply saved language on load
+if (currentLang !== 'de') applyLanguage(currentLang);
 
 /* ============================================================
    MOBILE INIT — show panels on load (they are always-on widgets)
