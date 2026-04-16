@@ -309,23 +309,11 @@ projects.forEach((p) => {
 function makeIconDraggable(icon) {
   let startX, startY, startLeft, startTop;
   let active = false;
-  let posConverted = false; // track if % position has been converted to px
 
   icon.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
-    e.preventDefault(); // prevent text-selection drag interference
+    e.preventDefault();
 
-    // Convert % position to px only once (first interaction)
-    if (!posConverted) {
-      const field = iconsField.getBoundingClientRect();
-      const cur   = icon.getBoundingClientRect();
-      icon.style.left = (cur.left - field.left) + 'px';
-      icon.style.top  = (cur.top  - field.top)  + 'px';
-      posConverted = true;
-    }
-
-    startLeft = parseFloat(icon.style.left);
-    startTop  = parseFloat(icon.style.top);
     startX = e.clientX;
     startY = e.clientY;
     active = true;
@@ -337,8 +325,14 @@ function makeIconDraggable(icon) {
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    // 10px threshold — prevents accidental drag on normal clicks
+    // Convert % → px only once, at the moment drag actually begins
     if (!icon._wasDragged && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+      const field = iconsField.getBoundingClientRect();
+      const cur   = icon.getBoundingClientRect();
+      startLeft = cur.left - field.left;
+      startTop  = cur.top  - field.top;
+      icon.style.left = startLeft + 'px';
+      icon.style.top  = startTop  + 'px';
       icon._wasDragged = true;
       icon.classList.add('dragging');
     }
