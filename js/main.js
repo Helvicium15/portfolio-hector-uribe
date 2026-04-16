@@ -295,12 +295,64 @@ projects.forEach((p) => {
   `;
 
   icon.addEventListener('click', (e) => {
+    if (icon._wasDragged) { icon._wasDragged = false; return; }
     e.stopPropagation();
     openWindow(p, icon);
   });
 
   iconsField.appendChild(icon);
+
+  // Desktop drag — icons are repositionable like macOS desktop
+  if (!isMobile()) makeIconDraggable(icon);
 });
+
+function makeIconDraggable(icon) {
+  let startX, startY, startLeft, startTop;
+  let active = false;
+
+  icon.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+
+    // Convert current position to px (may be % on first drag)
+    const field = iconsField.getBoundingClientRect();
+    const cur   = icon.getBoundingClientRect();
+    startLeft = cur.left - field.left;
+    startTop  = cur.top  - field.top;
+
+    icon.style.left = startLeft + 'px';
+    icon.style.top  = startTop  + 'px';
+
+    startX = e.clientX;
+    startY = e.clientY;
+    active = true;
+    icon._wasDragged = false;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!active) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    if (!icon._wasDragged && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+      icon._wasDragged = true;
+      icon.classList.add('dragging');
+    }
+
+    if (icon._wasDragged) {
+      const field = iconsField.getBoundingClientRect();
+      const maxL  = field.width  - icon.offsetWidth;
+      const maxT  = field.height - icon.offsetHeight - 60; // 60px dock clearance
+      icon.style.left = Math.max(0, Math.min(startLeft + dx, maxL)) + 'px';
+      icon.style.top  = Math.max(0, Math.min(startTop  + dy, maxT)) + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!active) return;
+    active = false;
+    icon.classList.remove('dragging');
+  });
+}
 
 /* ============================================================
    BUILD & OPEN WINDOWS
