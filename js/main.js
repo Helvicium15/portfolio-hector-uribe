@@ -55,7 +55,7 @@ const projects = [
   },
   {
     id: 17, name: 'Obsidian', cat: 'UX/UI · Landing Page',
-    img: 'img/projects/obsidian.png',
+    img: 'img/projects/obsidian-thumbnail.png',
     url: 'https://obsidian-rise-shine.lovable.app',
     desc: 'Landing page de crypto con UI oscura y premium.',
     x: 72, y: 57
