@@ -10,84 +10,106 @@ const projects = [
 
   /* ── COLUMNA A (x ≈ 62) — UX/UI ──────────────────────────── */
   {
-    id: 1, name: 'Silly Crab', cat: 'Web Dev · React',
+    id: 1, name: 'Silly Crab',
+    cat_de: 'Web Dev · React', cat_en: 'Web Dev · React',
     img: 'img/projects/silly-crab.png',
     url: 'https://silly-crab-sc75.vercel.app/',
-    desc: 'Aplicación React animada con UI playful y personajes interactivos.',
+    desc_de: 'Animierte React-App mit spielerischer UI und interaktiven Charakteren.',
+    desc_en: 'Animated React app with playful UI and interactive characters.',
     x: 62, y: 12
   },
   {
-    id: 2, name: 'Squishy Savings', cat: 'UX/UI · Web App',
+    id: 2, name: 'Squishy Savings',
+    cat_de: 'UX/UI · Web-App', cat_en: 'UX/UI · Web App',
     img: 'img/projects/mosaic-savings.jpg',
     url: 'https://squishy-savings-app.vercel.app/',
-    desc: 'App de ahorro con diseño UX entretenido y visual.',
+    desc_de: 'Spar-App mit unterhaltsamem und visuellem UX-Design.',
+    desc_en: 'Savings app with fun and visual UX design.',
     x: 62, y: 30
   },
   {
-    id: 9, name: 'SchwimmSpass', cat: 'UX/UI · Mobile',
+    id: 9, name: 'SchwimmSpass',
+    cat_de: 'UX/UI · Mobil', cat_en: 'UX/UI · Mobile',
     img: 'img/projects/schwimmspass-thumbnail.png',
     url: 'schwimmspass.html',
-    desc: 'Diseño de app móvil para una escuela de natación.',
+    desc_de: 'Mobile-App-Design für eine Schwimmschule.',
+    desc_en: 'Mobile app design for a swimming school.',
     x: 62, y: 50
   },
   {
-    id: 19, name: 'Only Franz', cat: 'UX/UI · Recipe App',
+    id: 19, name: 'Only Franz',
+    cat_de: 'UX/UI · Rezept-App', cat_en: 'UX/UI · Recipe App',
     img: 'img/projects/onlyfranz.png',
     url: 'https://onlyfranz.lovable.app',
-    desc: 'App de recetas con estilo editorial cálido.',
+    desc_de: 'Rezept-App mit warmem, redaktionellem Stil.',
+    desc_en: 'Recipe app with a warm, editorial style.',
     x: 62, y: 68
   },
 
   /* ── COLUMNA B (x ≈ 73) — UX/UI ──────────────────────────── */
   {
-    id: 3, name: 'SentinelOne', cat: 'UX/UI · Dashboard',
+    id: 3, name: 'SentinelOne',
+    cat_de: 'UX/UI · Dashboard', cat_en: 'UX/UI · Dashboard',
     img: 'img/projects/mosaic-sentinel.png',
     url: 'https://sentinel-2025.vercel.app/',
-    desc: 'Rediseño de dashboard de ciberseguridad con dark UI moderna.',
+    desc_de: 'Redesign eines Cybersecurity-Dashboards mit moderner Dark UI.',
+    desc_en: 'Cybersecurity dashboard redesign with modern dark UI.',
     x: 72, y: 20
   },
   {
-    id: 18, name: 'EcoThread', cat: 'UX/UI · E-Commerce',
+    id: 18, name: 'EcoThread',
+    cat_de: 'UX/UI · E-Commerce', cat_en: 'UX/UI · E-Commerce',
     img: 'img/projects/ecothread.png',
     url: 'https://ecothread.lovable.app',
-    desc: 'Diseño UX de e-commerce para moda sostenible.',
+    desc_de: 'E-Commerce UX-Design für nachhaltige Mode.',
+    desc_en: 'E-commerce UX design for sustainable fashion.',
     x: 72, y: 38
   },
   {
-    id: 17, name: 'Obsidian', cat: 'UX/UI · Landing Page',
+    id: 17, name: 'Obsidian',
+    cat_de: 'UX/UI · Landingpage', cat_en: 'UX/UI · Landing Page',
     img: 'img/projects/obsidian-thumbnail.png',
     url: 'https://obsidian-rise-shine.lovable.app',
-    desc: 'Landing page de crypto con UI oscura y premium.',
+    desc_de: 'Crypto-Landingpage mit dunkler, Premium-UI.',
+    desc_en: 'Crypto landing page with dark, premium UI.',
     x: 72, y: 57
   },
   {
-    id: 6, name: 'Vegetables Calendar', cat: 'Grafikdesign · Print',
+    id: 6, name: 'Vegetables Calendar',
+    cat_de: 'Grafikdesign · Druck', cat_en: 'Graphic Design · Print',
     img: 'img/projects/vegetables-calendar.png',
     url: 'https://www.behance.net/gallery/162725755/VEGETABLES-SEASONAL-CALENDAR-2024',
-    desc: 'Calendario estacional de verduras 2024, diseño para impresión.',
+    desc_de: 'Saisonaler Gemüsekalender 2024, Printdesign.',
+    desc_en: 'Seasonal vegetables calendar 2024, print design.',
     x: 72, y: 74
   },
 
   /* ── CLÚSTER DISEÑO/FOTO — 2×2 extremo derecho ────────────── */
   {
-    id: 4, name: 'Photography', cat: 'Fotografie · Unsplash',
+    id: 4, name: 'Photography',
+    cat_de: 'Fotografie · Unsplash', cat_en: 'Photography · Unsplash',
     img: 'img/projects/photography.png',
     url: 'https://unsplash.com/de/@helvicium',
-    desc: 'Fotografía creativa de retrato y street en Unsplash.',
+    desc_de: 'Kreative Porträt- und Street-Fotografie auf Unsplash.',
+    desc_en: 'Creative portrait and street photography on Unsplash.',
     x: 81, y: 11
   },
   {
-    id: 5, name: 'Branding', cat: 'Grafikdesign · Logo',
+    id: 5, name: 'Branding',
+    cat_de: 'Grafikdesign · Logo', cat_en: 'Graphic Design · Logo',
     img: 'img/projects/branding-thumbnail.png',
     url: 'branding.html',
-    desc: 'Identidades de marca para AeroLeaf, NordWand y SüßMund.',
+    desc_de: 'Markenidentitäten für AeroLeaf, NordWand und SüßMund.',
+    desc_en: 'Brand identities for AeroLeaf, NordWand and SüßMund.',
     x: 90, y: 11
   },
   {
-    id: 7, name: 'Posters', cat: 'Grafikdesign · Poster',
+    id: 7, name: 'Posters',
+    cat_de: 'Grafikdesign · Poster', cat_en: 'Graphic Design · Poster',
     img: 'img/projects/posters.jpg',
     url: 'https://www.behance.net/hectoruribe2',
-    desc: 'Serie de pósters de diseño gráfico con estética bold.',
+    desc_de: 'Grafikdesign-Posterserie mit kühner Ästhetik.',
+    desc_en: 'Graphic design poster series with bold aesthetics.',
     x: 81, y: 34,
     mosaic: [
       'img/projects/mosaic-smile.png',
@@ -96,10 +118,12 @@ const projects = [
     ]
   },
   {
-    id: 8, name: '3D Models', cat: '3D · Sketchfab',
+    id: 8, name: '3D Models',
+    cat_de: '3D · Sketchfab', cat_en: '3D · Sketchfab',
     img: 'img/projects/3D_model.png',
     url: 'https://sketchfab.com/hectorz151',
-    desc: 'Modelos y esculturas 3D publicados en Sketchfab.',
+    desc_de: '3D-Modelle und Skulpturen auf Sketchfab veröffentlicht.',
+    desc_en: '3D models and sculptures published on Sketchfab.',
     x: 81, y: 58,
     mosaic: [
       'img/projects/mosaic-robot.png',
@@ -289,6 +313,7 @@ function openWindow(p, iconEl) {
   const win = document.createElement('div');
   win.className = 'project-win';
   win.id = 'win-' + p.id;
+  win.dataset.projectId = p.id;  // used by applyLanguage to refresh text
   win.innerHTML = `
     <div class="win-bar" id="winBar-${p.id}">
       <div class="win-controls">
@@ -302,11 +327,11 @@ function openWindow(p, iconEl) {
       <img src="${p.img}" alt="${p.name}" loading="lazy">
     </div>
     <div class="win-info">
-      <span class="win-cat">${p.cat}</span>
+      <span class="win-cat">${p['cat_' + currentLang]}</span>
       <h3 class="win-name">${p.name}</h3>
-      <p class="win-desc">${p.desc}</p>
+      <p class="win-desc">${p['desc_' + currentLang]}</p>
       <a href="${p.url}" class="win-btn" target="_blank" rel="noopener">
-        Öffnen
+        ${translations[currentLang]['win-open']}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
       </a>
     </div>
@@ -605,11 +630,20 @@ function applyLanguage(lang) {
     }
   });
 
-  // Project window open button (if open)
-  document.querySelectorAll('.win-btn').forEach(btn => {
-    const svg = btn.querySelector('svg');
-    btn.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
-    btn.insertBefore(document.createTextNode(translations[lang]['win-open'] + ' '), svg);
+  // Update any open project window's text to match language
+  document.querySelectorAll('.project-win').forEach(win => {
+    const p = projects.find(pr => pr.id === +win.dataset.projectId);
+    if (!p) return;
+    const catEl  = win.querySelector('.win-cat');
+    const descEl = win.querySelector('.win-desc');
+    const btn    = win.querySelector('.win-btn');
+    if (catEl)  catEl.textContent  = p['cat_'  + lang];
+    if (descEl) descEl.textContent = p['desc_' + lang];
+    if (btn) {
+      const svg = btn.querySelector('svg');
+      btn.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+      btn.insertBefore(document.createTextNode(translations[lang]['win-open'] + ' '), svg);
+    }
   });
 
   // Skills count
