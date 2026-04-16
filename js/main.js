@@ -25,7 +25,7 @@ const projects = [
   },
   {
     id: 9, name: 'SchwimmSpass', cat: 'UX/UI · Mobile',
-    img: 'img/projects/mobile.png',
+    img: 'img/projects/schwimmspass-thumbnail.png',
     url: 'schwimmspass.html',
     desc: 'Diseño de app móvil para una escuela de natación.',
     x: 62, y: 50

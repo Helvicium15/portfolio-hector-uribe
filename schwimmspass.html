@@ -75,15 +75,6 @@
       padding: 0 0 4rem;
       overflow: hidden;
     }
-    .hero-video {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.18;
-      z-index: 1;
-      pointer-events: none;
-    }
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -209,18 +200,19 @@
       justify-content: center;
     }
     .mockup-phone {
-      max-width: 380px;
+      max-width: 360px;
       width: 100%;
-      border-radius: 28px;
+      border-radius: 20px;
       border: 1px solid var(--border);
       overflow: hidden;
       background: var(--bg-card);
-      box-shadow: 0 0 0 1px var(--border), 0 32px 80px rgba(14,165,233,0.12), 0 24px 60px rgba(0,0,0,0.7);
+      box-shadow: 0 0 0 1px var(--border), 0 32px 80px rgba(14,165,233,0.15), 0 24px 60px rgba(0,0,0,0.6);
     }
     .mockup-phone img {
       width: 100%;
       height: auto;
       display: block;
+      object-fit: cover;
     }
 
     /* ── Two-column grid ─────────────────────────────────────── */
@@ -393,9 +385,7 @@
 
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="img/Firefly_liquid.mp4" type="video/mp4">
-    </video>
+    <div class="hero-bg" style="position:absolute;inset:0;background-image:url('img/projects/schwimmspass-thumbnail.png');background-size:cover;background-position:center top;z-index:0;"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="eyebrow">
@@ -441,7 +431,7 @@
       <div class="section-label">Vorschau</div>
       <div class="mockup-wrap reveal">
         <div class="mockup-phone">
-          <img src="img/projects/mobile.png" alt="SchwimmSpass Mobile App Mockup">
+          <img src="img/projects/schwimmspass-thumbnail.png" alt="SchwimmSpass Mobile App Mockup">
         </div>
       </div>
     </div>
