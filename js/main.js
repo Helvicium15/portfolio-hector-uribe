@@ -309,19 +309,23 @@ projects.forEach((p) => {
 function makeIconDraggable(icon) {
   let startX, startY, startLeft, startTop;
   let active = false;
+  let posConverted = false; // track if % position has been converted to px
 
   icon.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
+    e.preventDefault(); // prevent text-selection drag interference
 
-    // Convert current position to px (may be % on first drag)
-    const field = iconsField.getBoundingClientRect();
-    const cur   = icon.getBoundingClientRect();
-    startLeft = cur.left - field.left;
-    startTop  = cur.top  - field.top;
+    // Convert % position to px only once (first interaction)
+    if (!posConverted) {
+      const field = iconsField.getBoundingClientRect();
+      const cur   = icon.getBoundingClientRect();
+      icon.style.left = (cur.left - field.left) + 'px';
+      icon.style.top  = (cur.top  - field.top)  + 'px';
+      posConverted = true;
+    }
 
-    icon.style.left = startLeft + 'px';
-    icon.style.top  = startTop  + 'px';
-
+    startLeft = parseFloat(icon.style.left);
+    startTop  = parseFloat(icon.style.top);
     startX = e.clientX;
     startY = e.clientY;
     active = true;
@@ -333,7 +337,8 @@ function makeIconDraggable(icon) {
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    if (!icon._wasDragged && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+    // 10px threshold — prevents accidental drag on normal clicks
+    if (!icon._wasDragged && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
       icon._wasDragged = true;
       icon.classList.add('dragging');
     }
@@ -341,7 +346,7 @@ function makeIconDraggable(icon) {
     if (icon._wasDragged) {
       const field = iconsField.getBoundingClientRect();
       const maxL  = field.width  - icon.offsetWidth;
-      const maxT  = field.height - icon.offsetHeight - 60; // 60px dock clearance
+      const maxT  = field.height - icon.offsetHeight - 60;
       icon.style.left = Math.max(0, Math.min(startLeft + dx, maxL)) + 'px';
       icon.style.top  = Math.max(0, Math.min(startTop  + dy, maxT)) + 'px';
     }
