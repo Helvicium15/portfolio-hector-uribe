@@ -16,7 +16,7 @@ const projects = [
     url: 'https://silly-crab-sc75.vercel.app/',
     desc_de: 'Animierte React-App mit spielerischer UI und interaktiven Charakteren.',
     desc_en: 'Animated React app with playful UI and interactive characters.',
-    x: 62, y: 22
+    x: 62, y: 13
   },
   {
     id: 2, name: 'Squishy Savings',
@@ -25,7 +25,7 @@ const projects = [
     url: 'https://squishy-savings-app.vercel.app/',
     desc_de: 'Spar-App mit unterhaltsamem und visuellem UX-Design.',
     desc_en: 'Savings app with fun and visual UX design.',
-    x: 62, y: 40
+    x: 62, y: 31
   },
   {
     id: 9, name: 'SchwimmSpass',
@@ -34,7 +34,7 @@ const projects = [
     url: 'schwimmspass.html',
     desc_de: 'Mobile-App-Design für eine Schwimmschule.',
     desc_en: 'Mobile app design for a swimming school.',
-    x: 62, y: 58
+    x: 62, y: 49
   },
   {
     id: 19, name: 'Only Franz',
@@ -43,7 +43,7 @@ const projects = [
     url: 'https://onlyfranz.lovable.app',
     desc_de: 'Rezept-App mit warmem, redaktionellem Stil.',
     desc_en: 'Recipe app with a warm, editorial style.',
-    x: 62, y: 76
+    x: 62, y: 67
   },
 
   /* ── COL 2 (x=74) ─────────────────────────────────────────── */
@@ -54,7 +54,7 @@ const projects = [
     url: 'https://sentinel-2025.vercel.app/',
     desc_de: 'Redesign eines Cybersecurity-Dashboards mit moderner Dark UI.',
     desc_en: 'Cybersecurity dashboard redesign with modern dark UI.',
-    x: 74, y: 22
+    x: 74, y: 13
   },
   {
     id: 18, name: 'EcoThread',
@@ -63,7 +63,7 @@ const projects = [
     url: 'https://ecothread.lovable.app',
     desc_de: 'E-Commerce UX-Design für nachhaltige Mode.',
     desc_en: 'E-commerce UX design for sustainable fashion.',
-    x: 74, y: 40
+    x: 74, y: 31
   },
   {
     id: 17, name: 'Obsidian',
@@ -72,7 +72,7 @@ const projects = [
     url: 'https://obsidian-rise-shine.lovable.app',
     desc_de: 'Crypto-Landingpage mit dunkler, Premium-UI.',
     desc_en: 'Crypto landing page with dark, premium UI.',
-    x: 74, y: 58
+    x: 74, y: 49
   },
   {
     id: 6, name: 'Vegetables Calendar',
@@ -81,7 +81,7 @@ const projects = [
     url: 'https://www.behance.net/gallery/162725755/VEGETABLES-SEASONAL-CALENDAR-2024',
     desc_de: 'Saisonaler Gemüsekalender 2024, Printdesign.',
     desc_en: 'Seasonal vegetables calendar 2024, print design.',
-    x: 74, y: 76
+    x: 74, y: 67
   },
 
   /* ── COL 3 (x=86) ─────────────────────────────────────────── */
@@ -92,7 +92,7 @@ const projects = [
     url: 'https://unsplash.com/de/@helvicium',
     desc_de: 'Kreative Porträt- und Street-Fotografie auf Unsplash.',
     desc_en: 'Creative portrait and street photography on Unsplash.',
-    x: 86, y: 22
+    x: 86, y: 13
   },
   {
     id: 5, name: 'Branding',
@@ -101,7 +101,7 @@ const projects = [
     url: 'branding.html',
     desc_de: 'Markenidentitäten für AeroLeaf, NordWand und SüßMund.',
     desc_en: 'Brand identities for AeroLeaf, NordWand and SüßMund.',
-    x: 86, y: 40
+    x: 86, y: 31
   },
   {
     id: 7, name: 'Posters',
@@ -110,7 +110,7 @@ const projects = [
     url: 'https://www.behance.net/hectoruribe2',
     desc_de: 'Grafikdesign-Posterserie mit kühner Ästhetik.',
     desc_en: 'Graphic design poster series with bold aesthetics.',
-    x: 86, y: 58,
+    x: 86, y: 49,
     mosaic: [
       'img/projects/mosaic-smile.webp',
       'img/projects/mosaic-sweet.webp',
@@ -124,7 +124,7 @@ const projects = [
     url: 'https://sketchfab.com/hectorz151',
     desc_de: '3D-Modelle und Skulpturen auf Sketchfab veröffentlicht.',
     desc_en: '3D models and sculptures published on Sketchfab.',
-    x: 86, y: 76,
+    x: 86, y: 67,
     mosaic: [
       'img/projects/mosaic-robot.webp',
       'img/projects/mosaic-candy-gun.webp',
