@@ -159,11 +159,11 @@ document.querySelectorAll('.info-sec-title').forEach(btn => {
     const isOpen = !body.classList.contains('hidden');
     if (isOpen) {
       body.classList.add('hidden');
-      tri.textContent = '▶';
+      tri.style.transform = 'rotate(-90deg)';
       btn.classList.remove('open');
     } else {
       body.classList.remove('hidden');
-      tri.textContent = '▼';
+      tri.style.transform = 'rotate(0deg)';
       btn.classList.add('open');
     }
   });
@@ -344,13 +344,13 @@ function openWindow(p, iconEl) {
   let left, top;
   if (isMobile()) {
     left = 12;
-    top  = window.innerHeight - 420;
+    top  = window.innerHeight - 470;
     if (top < 60) top = 60;
   } else {
     const iconRect = iconEl.getBoundingClientRect();
     left = iconRect.right + 12;
     top  = iconRect.top - 20;
-    const winW = 330, winH = 320;
+    const winW = 390, winH = 370;
     if (left + winW > window.innerWidth  - 16) left = iconRect.left - winW - 12;
     if (left < 16)                              left = 16;
     if (top + winH > window.innerHeight - 80)   top  = window.innerHeight - winH - 80;
