@@ -1,11 +1,10 @@
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
+# Claude Code local memory
+.claude/
 
-# Editor
+# IDE settings
 .vscode/
-.idea/
 
-# Logs
-*.log
+# Root-level source video (not referenced by the site)
+*.mp4
+!Portafolio_v2/img/*.mp4
+!img/*.mp4
