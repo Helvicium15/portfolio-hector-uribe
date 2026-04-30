@@ -3,690 +3,351 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hector Uribe Chacon — Media Designer</title>
+  <title>Hector Uribe — Portfolio</title>
+  <!-- Preload LCP asset (profile photo, above the fold) -->
+  <link rel="preload" as="image" href="img/hector-profile.jpg">
+
+  <!-- Google Fonts — non-blocking (prevents render-blocking request) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Main script: defer so it downloads in parallel but runs after HTML is parsed -->
+  <script src="js/main.js" defer></script>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="desktop" id="desktop">
 
-  <!-- ===== NAVBAR ===== -->
-  <header class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <a href="#" class="navbar-logo">HU</a>
-      <nav class="navbar-links" id="desktopNav">
-        <a href="#about"    class="nav-link" data-i18n="navAbout">Über mich</a>
-        <a href="#skills"   class="nav-link" data-i18n="navSkills">Skills</a>
-        <a href="#projects" class="nav-link" data-i18n="navProjects">Projekte</a>
-        <a href="#gallery"  class="nav-link" data-i18n="navGallery">Galerie</a>
-        <a href="#contact"  class="nav-link" data-i18n="navContact">Kontakt</a>
-      </nav>
-      <div class="navbar-actions">
-        <button class="lang-toggle" id="langToggle" aria-label="Toggle language">EN</button>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
+    <!-- Video background -->
+    <div class="desktop-video-wrapper">
+      <video class="desktop-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="img/Firefly_liquid.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="desktop-overlay" aria-hidden="true"></div>
+
+    <!-- macOS Get Info panel -->
+    <div class="info-panel" id="infoPanel">
+      <div class="sheet-handle"></div>
+      <div class="info-titlebar" id="infoPanelBar">
+        <div class="win-controls">
+          <span class="wc red" id="infoPanelClose"></span>
+          <span class="wc yellow"></span>
+          <span class="wc green"></span>
+        </div>
+        <span class="info-wintitle">hector-profile.jpg — Info</span>
+      </div>
+
+      <!-- Large photo at the top -->
+      <div class="info-photo">
+        <img src="img/hector-profile.jpg" alt="Hector Uribe" fetchpriority="high" decoding="async">
+      </div>
+
+      <!-- Filename row -->
+      <div class="info-header">
+        <div class="info-filenames">
+          <span class="info-fname">hector-profile.jpg</span>
+          <span class="info-fsize">4,2 MB · JPEG</span>
+        </div>
+      </div>
+
+      <div class="info-tags-bar" data-i18n="tags">Schlagwörter hinzufügen…</div>
+
+      <div class="info-section">
+        <button class="info-sec-title open" data-target="sec-general">
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-general"> Allgemein:</span>
         </button>
-      </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-      <nav class="mobile-nav">
-        <a href="#about"    class="mobile-link" data-i18n="navAbout">Über mich</a>
-        <a href="#skills"   class="mobile-link" data-i18n="navSkills">Skills</a>
-        <a href="#projects" class="mobile-link" data-i18n="navProjects">Projekte</a>
-        <a href="#gallery"  class="mobile-link" data-i18n="navGallery">Galerie</a>
-        <a href="#contact"  class="mobile-link" data-i18n="navContact">Kontakt</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
-    <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
-      <source src="img/hero-background.mp4" type="video/mp4">
-    </video>
-    <div class="hero-grid-overlay" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="hero-eyebrow fade-up delay-200">
-        <span class="eyebrow-line" aria-hidden="true"></span>
-        <span data-i18n="heroRole">Mediengestalter · Digital &amp; Print</span>
-      </div>
-      <h1 class="hero-title" aria-label="HECTOR">
-        <div class="key-row key-row-1">
-          <div class="key-wrap" data-key="H"><img src="img/Name/H.png" alt="H" draggable="false"></div>
-          <div class="key-wrap" data-key="E"><img src="img/Name/E.png" alt="E" draggable="false"></div>
-          <div class="key-wrap" data-key="C"><img src="img/Name/C.png" alt="C" draggable="false"></div>
-          <div class="key-wrap" data-key="T"><img src="img/Name/T.png" alt="T" draggable="false"></div>
-          <div class="key-wrap" data-key="O"><img src="img/Name/O.png" alt="O" draggable="false"></div>
-          <div class="key-wrap" data-key="R"><img src="img/Name/R.png" alt="R" draggable="false"></div>
+        <div class="info-sec-body" id="sec-general">
+          <div class="info-row"><span class="info-key">Name:</span><span class="info-val">Hector Uribe Chacon</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-rolle">Rolle:</span><span class="info-val" data-i18n="val-rolle">Mediengestalter</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-standort">Standort:</span><span class="info-val">Deutschland</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-herkunft">Herkunft:</span><span class="info-val" data-i18n="val-herkunft">Mexikanische Wurzeln</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-sprachen">Sprachen:</span><span class="info-val">DE · EN · ES</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-erstellt">Erstellt:</span><span class="info-val">1990, Pachuca Mexiko</span></div>
+          <div class="info-row"><span class="info-key" data-i18n="key-geaendert">Geändert:</span><span class="info-val" data-i18n="val-geaendert">Täglich ✦</span></div>
         </div>
-      </h1>
-      <div class="hero-sub fade-up delay-800">
-        <span data-i18n="hero3D">3D Künstler</span>
-        <span class="hsep" aria-hidden="true">·</span>
-        <span>Visual Designer</span>
-        <span class="hsep" aria-hidden="true">·</span>
-        <span>Web Dev</span>
       </div>
-      <div class="hero-cta fade-up delay-1000">
-        <a href="#projects" class="btn-primary magnetic" data-i18n="heroBtn">
-          Arbeiten ansehen
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-        <a href="#contact" class="btn-outline magnetic" data-i18n="navCta">Kontakt</a>
-      </div>
-    </div>
 
-    <div class="hero-meta fade-up delay-1200">
-      <div class="meta-item">
-        <span class="meta-num" data-count="7">0</span>
-        <span class="meta-label" data-i18n="metaProjects">Projekte</span>
-      </div>
-      <div class="meta-divider" aria-hidden="true"></div>
-      <div class="meta-item">
-        <span class="meta-num" data-count="5">0</span>
-        <span class="meta-label" data-i18n="metaYears">Jahre Erfahrung</span>
-      </div>
-      <div class="meta-divider" aria-hidden="true"></div>
-      <div class="meta-item">
-        <span class="meta-num" data-count="17">0</span>
-        <span class="meta-label" data-i18n="metaTools">Tools</span>
-      </div>
-    </div>
-
-    <div class="hero-scroll">
-      <div class="scroll-ring">
-        <svg class="spin-slow" viewBox="0 0 100 100" width="72" height="72">
-          <path id="scrollTextPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
-          <text font-size="9.5" fill="currentColor" opacity="0.4" letter-spacing="1.5">
-            <textPath href="#scrollTextPath">SCROLL · EXPLORE · SCROLL · EXPLORE ·</textPath>
-          </text>
-        </svg>
-        <svg class="arrow-bounce" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MARQUEE ===== -->
-  <div class="marquee-strip" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Grafikdesign</span><span class="msep">·</span>
-      <span>3D Modellierung</span><span class="msep">·</span>
-      <span>UX/UI Design</span><span class="msep">·</span>
-      <span>Fotografie</span><span class="msep">·</span>
-      <span>Illustration</span><span class="msep">·</span>
-      <span>Webentwicklung</span><span class="msep">·</span>
-      <span>Motion Graphics</span><span class="msep">·</span>
-      <span>Print Design</span><span class="msep">·</span>
-      <span>Grafikdesign</span><span class="msep">·</span>
-      <span>3D Modellierung</span><span class="msep">·</span>
-      <span>UX/UI Design</span><span class="msep">·</span>
-      <span>Fotografie</span><span class="msep">·</span>
-      <span>Illustration</span><span class="msep">·</span>
-      <span>Webentwicklung</span><span class="msep">·</span>
-      <span>Motion Graphics</span><span class="msep">·</span>
-      <span>Print Design</span><span class="msep">·</span>
-    </div>
-  </div>
-
-  <!-- ===== ABOUT ===== -->
-  <section class="section about" id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-image-col reveal">
-          <div class="about-image-wrap">
-            <img src="img/hector-profile.jpg" alt="Hector Uribe Chacon" class="about-img" loading="lazy">
-            <div class="about-deco-ring"></div>
-            <div class="about-deco-dot"></div>
-          </div>
+      <div class="info-section">
+        <button class="info-sec-title open" data-target="sec-about">
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-about"> Über mich:</span>
+        </button>
+        <div class="info-sec-body" id="sec-about">
+          <p class="info-about" data-i18n="about-1">Ein leidenschaftlicher Mediengestalter mit mexikanischen Wurzeln, der in Deutschland lebt und arbeitet. Ich verbinde kreatives Denken mit technischer Präzision.</p>
+          <p class="info-about" data-i18n="about-2">Mit Erfahrung in UX/UI Design, 3D Modellierung, Fotografie und Webentwicklung bringe ich Ideen zum Leben — und schaffe Werke, die Eindruck hinterlassen.</p>
         </div>
-        <div class="about-content-col reveal delay-200">
-          <span class="label" data-i18n="aboutLabel">Über mich</span>
-          <h2 class="section-title" data-i18n="aboutTitle">Wer ich bin</h2>
-          <div class="about-text">
-            <p data-i18n="aboutP1">Ein leidenschaftlicher Mediengestalter mit mexikanischen Wurzeln, der in Deutschland lebt und arbeitet. Ich verbinde kreatives Denken mit technischer Präzision.</p>
-            <p data-i18n="aboutP2">Mit Erfahrung in UX/UI Design, 3D Modellierung, Fotografie und Webentwicklung bringe ich Ideen zum Leben — und schaffe Werke, die Eindruck hinterlassen.</p>
-          </div>
-          <ul class="facts-list">
-            <li class="fact-item"><span class="fact-icon">📍</span><span data-i18n="factLocation">Deutschland</span></li>
-            <li class="fact-item"><span class="fact-icon">🌍</span><span data-i18n="factHeritage">Mexikanische Herkunft</span></li>
-            <li class="fact-item"><span class="fact-icon">💼</span><span data-i18n="factRole">Mediengestalter</span></li>
-            <li class="fact-item"><span class="fact-icon">🗣️</span><span data-i18n="factLangs">DE · EN · ES</span></li>
-          </ul>
-          <div class="tags">
-            <span class="tag">UX/UI Design</span>
-            <span class="tag">Photography</span>
-            <span class="tag">3D Modeling</span>
-            <span class="tag">Print Design</span>
-            <span class="tag">Web Development</span>
-            <span class="tag">Motion Graphics</span>
-          </div>
-          <a href="#contact" class="btn-primary magnetic" data-i18n="aboutCta">Kontakt aufnehmen</a>
+      </div>
+
+      <div class="info-section">
+        <button class="info-sec-title" data-target="sec-share">
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-share"> Teilen &amp; Berechtigungen:</span>
+        </button>
+        <div class="info-sec-body hidden" id="sec-share">
+          <div class="info-row"><span class="info-key">Instagram:</span><span class="info-val"><a href="https://www.instagram.com/hectoruribechacon/" target="_blank">@hectorz151</a></span></div>
+          <div class="info-row"><span class="info-key">Behance:</span><span class="info-val"><a href="https://behance.net/hectoruribe2" target="_blank">hectoruribe2</a></span></div>
+          <div class="info-row"><span class="info-key">E-Mail:</span><span class="info-val"><a href="mailto:hectoruch18@gmail.com">hectoruch18@gmail.com</a></span></div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ===== STATEMENT ===== -->
-  <div class="statement-block">
-    <div class="container">
-      <p class="statement-text reveal">
-        <span data-i18n="st1">EINE VERBINDUNG</span>
-        <span class="st-accent" data-i18n="st2"> AUS KUNST &amp; TECHNOLOGIE,</span>
-        <span data-i18n="st3"> FOTOGRAFIE &amp; DESIGN.</span>
-      </p>
-    </div>
-  </div>
+    <!-- ══ PROJEKTE WINDOW ══════════════════════════════════════ -->
+    <div class="projekte-win" id="projekteWin">
+      <div class="sheet-handle"></div>
 
-  <!-- ===== PROCESS ===== -->
-  <section class="section how-i-work" id="how-i-work">
-    <div class="container">
-      <span class="label" data-i18n="processLabel">Prozess</span>
-      <h2 class="section-title" data-i18n="processTitle">So arbeite ich</h2>
-      <div class="steps-grid">
-        <div class="step-card reveal delay-100">
-          <div class="step-number">01</div>
-          <div class="step-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18h6M10 22h4M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2.26A7 7 0 015 9a7 7 0 017-7z"/></svg>
-          </div>
-          <h3 class="step-title" data-i18n="step1">Entdecken</h3>
-          <p class="step-desc" data-i18n="step1Desc">Ich analysiere Bedürfnisse, setze klare Ziele und entwickle eine fundierte Vision für das Projekt.</p>
+      <!-- Title bar -->
+      <div class="projekte-titlebar" id="projekteBar">
+        <div class="win-controls">
+          <span class="wc red"    id="projekteClose"></span>
+          <span class="wc yellow"></span>
+          <span class="wc green"></span>
         </div>
-        <div class="step-card reveal delay-200">
-          <div class="step-number">02</div>
-          <div class="step-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
-          </div>
-          <h3 class="step-title" data-i18n="step2">Gestalten</h3>
-          <p class="step-desc" data-i18n="step2Desc">Konzepte werden in visuell überzeugende Designs umgewandelt, die Ästhetik und Funktion verbinden.</p>
-        </div>
-        <div class="step-card reveal delay-300">
-          <div class="step-number">03</div>
-          <div class="step-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <h3 class="step-title" data-i18n="step3">Entwickeln</h3>
-          <p class="step-desc" data-i18n="step3Desc">Das Design wird in sauberen, performanten und skalierbaren Code umgesetzt.</p>
-        </div>
-        <div class="step-card reveal delay-400">
-          <div class="step-number">04</div>
-          <div class="step-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/></svg>
-          </div>
-          <h3 class="step-title" data-i18n="step4">Liefern</h3>
-          <p class="step-desc" data-i18n="step4Desc">Das fertige Projekt wird übergeben — getestet, optimiert und bereit für die Welt.</p>
+        <div class="projekte-path">
+          <span>Hector</span>
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="projekte-path-active" data-i18n="projekte-nav">Projekte</span>
         </div>
       </div>
+
+      <!-- Cards injected by JS -->
+      <div class="projekte-body" id="projekteBody"></div>
+
+      <!-- Status bar -->
+      <div class="projekte-statusbar" id="projekteCount">12 Projekte</div>
     </div>
-  </section>
 
-  <!-- ===== SKILLS ===== -->
-  <section class="section skills" id="skills">
-    <div class="container">
-      <!-- Tech tools icon grid -->
-      <div class="tech-tools reveal">
-        <div class="tech-tools-header">
-          <div>
-            <span class="label">Werkzeuge</span>
-            <h3 class="tech-tools-title">Technologien</h3>
-          </div>
-          <p class="tech-tools-sub">Professionelle Software, mit der ich täglich arbeite</p>
+    <!-- Floating project icons -->
+    <div class="icons-field" id="iconsField"></div>
+
+    <!-- Windows -->
+    <div id="windowsContainer"></div>
+
+    <!-- Dark overlay (closes windows) -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ══ SKILLS FINDER WINDOW ══════════════════════════════ -->
+    <div class="skills-win" id="skillsWin">
+      <div class="sheet-handle"></div>
+
+      <!-- Title bar -->
+      <div class="skills-titlebar" id="skillsBar">
+        <div class="win-controls">
+          <span class="wc red"    id="skillsClose"></span>
+          <span class="wc yellow"></span>
+          <span class="wc green"></span>
         </div>
-        <div class="tech-grid">
+        <div class="skills-path">
+          <span>Hector</span>
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="skills-path-active">Skills</span>
+        </div>
+        <label class="skills-search-wrap">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="skillsSearch" placeholder="Suchen…" data-i18n-ph="search-ph" autocomplete="off">
+        </label>
+      </div>
 
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobephotoshop" alt="Photoshop" class="tech-icon">
-            <span class="tech-name">Photoshop</span>
+      <!-- Body -->
+      <div class="skills-body">
+
+        <!-- Sidebar -->
+        <aside class="skills-sidebar">
+          <p class="skills-sidebar-heading" data-i18n="favs">Favoriten</p>
+          <button class="skills-cat active" data-cat="all">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span data-i18n="all">Alle</span>
+          </button>
+          <button class="skills-cat" data-cat="adobe">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L2 22h7l1.5-4h7l1.5 4h7L13.5 2zm-2 12l2-5.5 2 5.5h-4z"/></svg>
+            Adobe Suite
+          </button>
+          <button class="skills-cat" data-cat="3d">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            3D
+          </button>
+          <button class="skills-cat" data-cat="design">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            Design
+          </button>
+          <button class="skills-cat" data-cat="code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Code &amp; AI
+          </button>
+        </aside>
+
+        <!-- Icon grid -->
+        <div class="skills-grid" id="skillsGrid">
+
+          <!-- Adobe Suite -->
+          <div class="skill-item" data-cat="adobe" data-name="photoshop">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#001529,#1473E6)"><img src="img/logos/Photoshop.png" alt="Photoshop" loading="lazy" decoding="async"></div>
+            <span>Photoshop</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobeillustrator" alt="Illustrator" class="tech-icon">
-            <span class="tech-name">Illustrator</span>
+          <div class="skill-item" data-cat="adobe" data-name="illustrator">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#2d0800,#FF7C00)"><img src="img/logos/Illustrator.png" alt="Illustrator" loading="lazy" decoding="async"></div>
+            <span>Illustrator</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobeaftereffects" alt="After Effects" class="tech-icon">
-            <span class="tech-name">After Effects</span>
+          <div class="skill-item" data-cat="adobe" data-name="after effects">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#0a0050,#9999FF)"><img src="img/logos/After_Effects.png" alt="After Effects" loading="lazy" decoding="async"></div>
+            <span>After Effects</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobeindesign" alt="InDesign" class="tech-icon">
-            <span class="tech-name">InDesign</span>
+          <div class="skill-item" data-cat="adobe" data-name="indesign">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#3b001a,#FF3FA4)"><img src="img/logos/InDesign.png" alt="InDesign" loading="lazy" decoding="async"></div>
+            <span>InDesign</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobexd" alt="Adobe XD" class="tech-icon">
-            <span class="tech-name">Adobe XD</span>
+          <div class="skill-item" data-cat="adobe" data-name="adobe xd">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#1f0030,#FF61F6)"><img src="img/logos/Adobe_XD.png" alt="Adobe XD" loading="lazy" decoding="async"></div>
+            <span>Adobe XD</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/adobepremierepro" alt="Premiere Pro" class="tech-icon">
-            <span class="tech-name">Premiere Pro</span>
+
+          <!-- 3D -->
+          <div class="skill-item" data-cat="3d" data-name="maya">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#061828,#00AEEF)"><img src="img/logos/Maya.png" alt="Maya" loading="lazy" decoding="async"></div>
+            <span>Maya</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/autodesk/1B6EAF" alt="Maya" class="tech-icon">
-            <span class="tech-name">Maya</span>
+          <div class="skill-item" data-cat="3d" data-name="3ds max">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#0a1e30,#1B6EAF)"><img src="img/logos/3d_max.png" alt="3DS Max" loading="lazy" decoding="async"></div>
+            <span>3DS Max</span>
           </div>
-          <div class="tech-card">
-            <svg class="tech-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="22,3 41,13.5 41,30.5 22,41 3,30.5 3,13.5" fill="rgba(0,174,239,0.12)" stroke="#00AEEF" stroke-width="2"/>
-              <polyline points="22,3 22,22 41,13.5" stroke="#00AEEF" stroke-width="1.5" opacity="0.6"/>
-              <line x1="22" y1="22" x2="3" y2="13.5" stroke="#00AEEF" stroke-width="1.5" opacity="0.6"/>
-              <line x1="22" y1="22" x2="22" y2="41" stroke="#00AEEF" stroke-width="1.5" opacity="0.6"/>
+          <div class="skill-item" data-cat="3d" data-name="blender">
+            <div class="skill-app" style="background:linear-gradient(145deg,#1a0d00,#E87D0D)"><img src="https://cdn.simpleicons.org/blender/FFFFFF" alt="Blender"></div>
+            <span>Blender</span>
+          </div>
+
+          <!-- Design -->
+          <div class="skill-item" data-cat="design" data-name="figma">
+            <div class="skill-app" style="background:linear-gradient(145deg,#1a1a1a,#A259FF)"><img src="https://cdn.simpleicons.org/figma/FFFFFF" alt="Figma"></div>
+            <span>Figma</span>
+          </div>
+          <div class="skill-item" data-cat="design" data-name="canva">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#00394a,#00C4CC)"><img src="img/logos/Canva.png" alt="Canva" loading="lazy" decoding="async"></div>
+            <span>Canva</span>
+          </div>
+          <div class="skill-item" data-cat="design" data-name="webflow">
+            <div class="skill-app" style="background:linear-gradient(145deg,#001a5e,#146EF5)"><img src="https://cdn.simpleicons.org/webflow/FFFFFF" alt="Webflow"></div>
+            <span>Webflow</span>
+          </div>
+
+          <!-- Code & AI -->
+          <div class="skill-item" data-cat="code" data-name="html5">
+            <div class="skill-app" style="background:linear-gradient(145deg,#6e1a00,#E34F26)"><img src="https://cdn.simpleicons.org/html5/FFFFFF" alt="HTML5"></div>
+            <span>HTML5</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="css3">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#001a3d,#1572B6)"><img src="img/logos/CSS.png" alt="CSS3" loading="lazy" decoding="async"></div>
+            <span>CSS3</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="react">
+            <div class="skill-app" style="background:linear-gradient(145deg,#001a2e,#61DAFB)"><img src="https://cdn.simpleicons.org/react/FFFFFF" alt="React"></div>
+            <span>React</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="typescript">
+            <div class="skill-app" style="background:linear-gradient(145deg,#001a3d,#3178C6)"><img src="https://cdn.simpleicons.org/typescript/FFFFFF" alt="TypeScript"></div>
+            <span>TypeScript</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="midjourney">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#5a5a5a,#8a8a8a)"><img src="img/logos/Midjourney_Emblem.svg" alt="Midjourney" loading="lazy" decoding="async"></div>
+            <span>Midjourney</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="claude code">
+            <div class="skill-app full" style="background:linear-gradient(145deg,#1a0e2e,#cc785c)"><img src="img/logos/Claude.png" alt="Claude Code" loading="lazy" decoding="async"></div>
+            <span>Claude Code</span>
+          </div>
+          <div class="skill-item" data-cat="code" data-name="nano banana">
+            <div class="skill-app" style="background:linear-gradient(145deg,#1a1400,#e6b800)">
+              <span style="font-size:26px;line-height:1;">🍌</span>
+            </div>
+            <span>Nano Banana</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Status bar -->
+      <div class="skills-statusbar">
+        <span id="skillsCount">19 Programme</span>
+      </div>
+    </div>
+
+    <!-- Mobile sheet backdrop -->
+    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+    <!-- Language toggle -->
+    <button class="lang-toggle" id="langToggle" aria-label="Sprache wechseln">
+      <span class="lang-flag">🇩🇪</span>
+      <span class="lang-label">DE</span>
+    </button>
+
+    <!-- Dock -->
+    <div class="dock">
+      <div class="dock-inner">
+
+        <!-- Profile toggle (mobile only) -->
+        <button class="dock-icon dock-mobile-only" id="dockProfileBtn" aria-label="Profil öffnen">
+          <div class="dock-app" style="background:linear-gradient(145deg,#1a1a2e,#4a4a8a)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <span class="dock-label">Profil</span>
+        </button>
+
+        <div class="dock-sep dock-mobile-only"></div>
+
+        <!-- Projekte toggle -->
+        <button class="dock-icon" id="dockProjekteBtn" aria-label="Projekte öffnen">
+          <div class="dock-app" style="background:linear-gradient(145deg,#0d1a3a,#1a3a6b)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="9" height="7" rx="1.5"/>
+              <rect x="13" y="3" width="9" height="7" rx="1.5"/>
+              <rect x="2" y="14" width="9" height="7" rx="1.5"/>
+              <rect x="13" y="14" width="9" height="7" rx="1.5"/>
             </svg>
-            <span class="tech-name">3DS Max</span>
           </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/blender" alt="Blender" class="tech-icon">
-            <span class="tech-name">Blender</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/figma" alt="Figma" class="tech-icon">
-            <span class="tech-name">Figma</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/canva" alt="Canva" class="tech-icon">
-            <span class="tech-name">Canva</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/webflow" alt="Webflow" class="tech-icon">
-            <span class="tech-name">Webflow</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/html5" alt="HTML5" class="tech-icon">
-            <span class="tech-name">HTML5</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/css3" alt="CSS3" class="tech-icon">
-            <span class="tech-name">CSS3</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/react" alt="React" class="tech-icon">
-            <span class="tech-name">React</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/typescript" alt="TypeScript" class="tech-icon">
-            <span class="tech-name">TypeScript</span>
-          </div>
-          <div class="tech-card">
-            <img src="https://cdn.simpleicons.org/midjourney/FFFFFF" alt="Midjourney" class="tech-icon">
-            <span class="tech-name">Midjourney</span>
-          </div>
+          <span class="dock-label" data-i18n="projekte-dock">Projekte</span>
+        </button>
 
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- Skills toggle -->
+        <button class="dock-icon" id="dockSkillsBtn" aria-label="Skills öffnen">
+          <div class="dock-app" style="background:linear-gradient(145deg,#1c2a3a,#2f54eb)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <span class="dock-label">Skills</span>
+        </button>
 
-  <!-- ===== PROJECTS ===== -->
-  <section class="section projects" id="projects">
-    <div class="container">
-      <span class="label" data-i18n="projectsLabel">Portfolio</span>
-      <h2 class="section-title" data-i18n="projectsTitle">Ausgewählte Arbeiten</h2>
-      <div class="projects-bento">
+        <div class="dock-sep"></div>
 
-        <!-- 1 · Silly Crab — Web App -->
-        <div class="project-card proj-1 reveal" style="--delay:0ms">
-          <div class="project-img" style="background-image:url('img/projects/silly-crab.png'); background-color:#03060f;">
-            <div class="project-tags">
-              <span class="project-tag">Web App</span>
-              <span class="project-tag">React</span>
-              <span class="project-tag">TypeScript</span>
-            </div>
+        <!-- Social -->
+        <a href="https://www.instagram.com/hectoruribechacon/" class="dock-icon" target="_blank" rel="noopener">
+          <div class="dock-app" style="background:linear-gradient(145deg,#6a0094,#fd1d1d,#fcb045)">
+            <img src="img/logos/instagram.svg" alt="Instagram" loading="lazy" decoding="async">
           </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj1Cat">Web App · Development</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">Silly Crab</h3>
-                <p class="project-desc" data-i18n="proj1Desc">Vollständig entwickelte Web-App mit React und TypeScript — von der Idee bis zum Launch.</p>
-              </div>
-              <a href="https://silly-crab-sc75.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-arrow" aria-label="View Silly Crab">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
+          <span class="dock-label">Instagram</span>
+        </a>
+        <a href="https://www.behance.net/hectoruribe2" class="dock-icon" target="_blank" rel="noopener">
+          <div class="dock-app" style="background:linear-gradient(145deg,#001a6e,#1769ff)">
+            <img src="https://cdn.simpleicons.org/behance/FFFFFF" alt="Behance">
           </div>
-        </div>
-
-        <!-- 2 · EcoThread — E-Commerce -->
-        <div class="project-card proj-2 reveal" style="--delay:80ms">
-          <div class="project-img" style="background-image:url('img/projects/ecothread.png'); background-color:#001a0c;">
-            <div class="project-tags">
-              <span class="project-tag">E-Commerce</span>
-              <span class="project-tag">UX/UI</span>
-              <span class="project-tag">React</span>
-            </div>
+          <span class="dock-label">Behance</span>
+        </a>
+        <a href="https://www.linkedin.com/in/hectoruch18/" class="dock-icon" target="_blank" rel="noopener">
+          <div class="dock-app full" style="background:linear-gradient(145deg,#003a5c,#0A66C2)">
+            <img src="img/logos/linkedin-app-icon.webp" alt="LinkedIn" loading="lazy" decoding="async">
           </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj2Cat">E-Commerce · UX Design</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">EcoThread</h3>
-                <p class="project-desc" data-i18n="proj2Desc">Nachhaltiger Mode-Shop mit minimalem UI und grüner Ästhetik — vollständig in React entwickelt.</p>
-              </div>
-              <a href="https://ecothread.lovable.app" target="_blank" rel="noopener noreferrer" class="project-arrow" aria-label="View EcoThread">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
+          <span class="dock-label">LinkedIn</span>
+        </a>
+        <a href="mailto:hectoruch18@gmail.com" class="dock-icon">
+          <div class="dock-app" style="background:linear-gradient(145deg,#0040a0,#60a5f5)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
-        </div>
-
-        <!-- 3 · SentinelOne — Dashboard -->
-        <div class="project-card proj-3 reveal" style="--delay:160ms">
-          <div class="project-img" style="background-image:url('img/projects/sentinelone.png'); background-color:#00081a;">
-            <div class="project-tags">
-              <span class="project-tag">Dashboard</span>
-              <span class="project-tag">Data Viz</span>
-              <span class="project-tag">UX</span>
-            </div>
-          </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj3Cat">Dashboard Design · Cybersecurity</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">SentinelOne</h3>
-                <p class="project-desc" data-i18n="proj3Desc">UX/UI-Redesign eines Security-Dashboards für bessere Datendarstellung und intuitive Navigation.</p>
-              </div>
-              <a href="sentinelone.html" class="project-arrow" aria-label="View SentinelOne">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4 · Unsplash Photography -->
-        <div class="project-card proj-4 reveal" style="--delay:240ms">
-          <div class="project-img" style="background-image:url('img/projects/photography.png'); background-color:#0a0800;">
-            <div class="project-tags">
-              <span class="project-tag">Portrait</span>
-              <span class="project-tag">Street</span>
-              <span class="project-tag">Product</span>
-            </div>
-          </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj4Cat">Photography · Unsplash</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">Fotografie</h3>
-                <p class="project-desc" data-i18n="proj4Desc">Kuratierte Fotoserie auf Unsplash — Porträt, Street und Produktfotografie mit eigenem künstlerischen Blick.</p>
-              </div>
-              <a href="https://unsplash.com/de/@helvicium" target="_blank" rel="noopener noreferrer" class="project-arrow" aria-label="View Photography on Unsplash">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5 · Logo Collection — Graphic Design -->
-        <div class="project-card proj-5 reveal" style="--delay:320ms">
-          <div class="project-img" style="background-image:url('img/projects/logo-collection.jpg'); background-color:#0a000d;">
-            <div class="project-tags">
-              <span class="project-tag">Logo</span>
-              <span class="project-tag">Branding</span>
-              <span class="project-tag">Identity</span>
-            </div>
-          </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj5Cat">Graphic Design · Logo Design</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">Logo Collection</h3>
-                <p class="project-desc" data-i18n="proj5Desc">Sammlung von Logo-Designs und visuellen Identitäten für verschiedene Branchen und Kunden.</p>
-              </div>
-              <a href="logo-collection.html" class="project-arrow" aria-label="View Logo Collection">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6 · Only Franz — Recipe App -->
-        <div class="project-card proj-6 reveal" style="--delay:400ms">
-          <div class="project-img" style="background-image:url('img/projects/onlyfranz.png'); background-color:#020810;">
-            <div class="project-tags">
-              <span class="project-tag">Recipe App</span>
-              <span class="project-tag">UX/UI</span>
-              <span class="project-tag">React</span>
-            </div>
-          </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj6Cat">Web App · Recipe</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">Only Franz</h3>
-                <p class="project-desc" data-i18n="proj6Desc">Rezept-Web-App mit cleanem Interface und durchdachter UX — entwickelt mit React.</p>
-              </div>
-              <a href="https://onlyfranz.lovable.app" target="_blank" rel="noopener noreferrer" class="project-arrow" aria-label="View Only Franz">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7 · Vegetables Calendar 2024 — Print Design -->
-        <div class="project-card proj-7 reveal" style="--delay:480ms">
-          <div class="project-img" style="background-image:url('img/projects/vegetables-calendar.png'); background-color:#0a1205;">
-            <div class="project-tags">
-              <span class="project-tag">Print</span>
-              <span class="project-tag">Editorial</span>
-              <span class="project-tag">Illustration</span>
-            </div>
-          </div>
-          <div class="project-info">
-            <span class="project-cat" data-i18n="proj7Cat">Grafikdesign · Print</span>
-            <div class="project-bottom">
-              <div>
-                <h3 class="project-name">Vegetables Calendar</h3>
-                <p class="project-desc" data-i18n="proj7Desc">Saisonaler Gemüsekalender 2024 — Editorial-Illustration mit botanischer Ästhetik und Typografie.</p>
-              </div>
-              <a href="https://www.behance.net/gallery/162725755/VEGETABLES-SEASONAL-CALENDAR-2024" target="_blank" rel="noopener noreferrer" class="project-arrow" aria-label="View Vegetables Calendar on Behance">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
+          <span class="dock-label">E-Mail</span>
+        </a>
 
       </div>
     </div>
-  </section>
 
-  <!-- ===== GALLERY ===== -->
-  <section class="section gallery" id="gallery">
-    <div class="container">
-      <div class="gallery-top">
-        <div>
-          <span class="label" data-i18n="galleryLabel">Galerie</span>
-          <h2 class="section-title" data-i18n="galleryTitle">Alle Arbeiten</h2>
-        </div>
-        <div class="gallery-nav-area">
-          <span class="gallery-count-label"><span id="galleryCount">22</span> Projekte</span>
-          <div class="gallery-nav-btns">
-            <button class="gallery-prev" id="galleryPrev" aria-label="Zurück">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button class="gallery-next" id="galleryNext" aria-label="Weiter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+  </div>
 
-      <!-- Filter tabs -->
-      <div class="gallery-filters" role="group" aria-label="Kategorie filtern">
-        <button class="gf-btn active" data-filter="all">Alle <span class="gf-count">22</span></button>
-        <button class="gf-btn" data-filter="uxui">UX/UI <span class="gf-count">7</span></button>
-        <button class="gf-btn" data-filter="illustration">Illustration <span class="gf-count">7</span></button>
-        <button class="gf-btn" data-filter="graphic">Grafikdesign <span class="gf-count">4</span></button>
-        <button class="gf-btn" data-filter="photo">Fotografie <span class="gf-count">1</span></button>
-        <button class="gf-btn" data-filter="3d">3D <span class="gf-count">1</span></button>
-        <button class="gf-btn" data-filter="web">Web Dev <span class="gf-count">2</span></button>
-      </div>
-
-      <!-- Slider -->
-      <div class="gallery-slider-wrapper">
-      <div class="gallery-grid" id="galleryGrid">
-
-        <a class="gallery-item" data-cat="uxui" href="https://obsidian-rise-shine.lovable.app" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/obsidian.png" alt="Obsidian Crypto" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">UX/UI · Landing Page</span><h3 class="gi-title">Obsidian Crypto</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="uxui" href="https://ecothread.lovable.app" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/ecothread.png" alt="EcoThread" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">UX/UI · E-Commerce</span><h3 class="gi-title">EcoThread</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="uxui" href="schwimmspass-mobile.html">
-          <div class="gi-img"><img src="img/projects/mobile.png" alt="SchwimmSpass Mobile" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">UX/UI · Mobile</span><h3 class="gi-title">SchwimmSpass Mobile</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="uxui" href="https://xd.adobe.com/view/fd07470b-99a3-4e6f-b4ef-9558d656f931-a854/" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/landingpage.png" alt="Landingpage Webservice" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">UX/UI · Landing Page</span><h3 class="gi-title">Landingpage Webservice</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="uxui" href="https://onlyfranz.lovable.app" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/onlyfranz.png" alt="Only Franz" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">UX/UI · Recipe App</span><h3 class="gi-title">Only Franz</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-candy-gun.png" alt="Candy Gun" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Digital Art</span><h3 class="gi-title">Candy Gun</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-frog.png" alt="Boxing Frog" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Digital Art</span><h3 class="gi-title">Boxing Frog</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-sweet.png" alt="Sweet Poster" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Poster</span><h3 class="gi-title">Sweet Poster</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-smile.png" alt="Smile Grenade" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Digital Art</span><h3 class="gi-title">Smile Grenade</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://silly-crab-sc75.vercel.app/" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/blue-silly-crab.png" alt="Blue Silly Crab" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Character</span><h3 class="gi-title">Blue Silly Crab</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-metaball.png" alt="Metaball" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · 3D Art</span><h3 class="gi-title">Metaball</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="illustration" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/mosaic-robot.png" alt="Robot" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Illustration · Character</span><h3 class="gi-title">Robot</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="graphic" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/graphic-design.png" alt="Graphic Design" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Grafikdesign · Branding</span><h3 class="gi-title">Graphic Design</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-        <a class="gallery-item" data-cat="web" href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener">
-          <div class="gi-img"><img src="img/projects/webdev.png" alt="Web Development" loading="lazy"></div>
-          <div class="gi-info"><span class="gi-cat">Web Dev · Frontend</span><h3 class="gi-title">Web Development</h3><span class="gi-link">Projekt ansehen →</span></div>
-        </a>
-
-      </div>
-      </div><!-- /gallery-slider-wrapper -->
-    </div>
-  </section>
-
-  <!-- ===== CONTACT ===== -->
-  <section class="section contact" id="contact">
-    <div class="container">
-      <div class="contact-grid">
-        <div class="contact-left reveal">
-          <span class="label" data-i18n="contactLabel">Kontakt</span>
-          <h2 class="section-title" data-i18n="contactTitle">Lass uns reden</h2>
-          <p class="contact-desc" data-i18n="contactDesc">Bereit für ein neues Projekt? Schreib mir und lass uns gemeinsam etwas Großartiges erschaffen.</p>
-          <div class="contact-location">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span data-i18n="contactLocation">Deutschland</span>
-          </div>
-        </div>
-        <div class="contact-right reveal delay-200">
-          <a href="mailto:hectoruch18@gmail.com" class="contact-card magnetic">
-            <div class="cc-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div class="cc-info">
-              <span class="cc-label">Email</span>
-              <span class="cc-value">hectoruch18@gmail.com</span>
-            </div>
-            <svg class="cc-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-          </a>
-          <a href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener noreferrer" class="contact-card magnetic">
-            <div class="cc-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h8a4 4 0 010 8H2V7z"/><path d="M2 11h7"/><path d="M14 9h8"/><path d="M14 12h8"/><path d="M14 15h8"/></svg>
-            </div>
-            <div class="cc-info">
-              <span class="cc-label">Behance</span>
-              <span class="cc-value">behance.net/hectoruribe2</span>
-            </div>
-            <svg class="cc-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-          </a>
-          <a href="https://unsplash.com/de/@helvicium" target="_blank" rel="noopener noreferrer" class="contact-card magnetic">
-            <div class="cc-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            </div>
-            <div class="cc-info">
-              <span class="cc-label">Unsplash</span>
-              <span class="cc-value">@helvicium</span>
-            </div>
-            <svg class="cc-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <p class="footer-tagline" data-i18n="footerTagline">Design ist nicht wie es aussieht — es ist wie es funktioniert.</p>
-        <div class="footer-socials">
-          <a href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Behance">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.867 2.031 1.867.873 0 1.438-.405 1.725-1.038l2zm-13.537-3c-.133-.867-.515-1.508-1.413-1.508-.978 0-1.522.661-1.645 1.508H10.19zm3.061-1.658c-.073-.494-.244-.913-.516-1.257-.524-.664-1.311-1.085-2.513-1.085C8.19 10 7 11.37 7 14c0 2.573 1.13 4 3.174 4 1.19 0 1.984-.418 2.515-1.079.27-.34.449-.75.523-1.241H10.19v-1.338h3.06z"/></svg>
-            Behance
-          </a>
-          <a href="https://unsplash.com/de/@helvicium" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Unsplash">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 6.75V0h9v6.75h-9zm9 3.75H24V24H0V10.5h7.5v6.75h9V10.5z"/></svg>
-            Unsplash
-          </a>
-          <a href="https://sketchfab.com/hectorz151" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Sketchfab">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5l6.364 3.682v7.636L12 19.5l-6.364-3.682V8.182L12 4.5z"/></svg>
-            Sketchfab
-          </a>
-          <a href="mailto:hectoruch18@gmail.com" class="footer-social" aria-label="Email">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Email
-          </a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-copy">© <span id="year"></span> Hector Uribe Chacon. <span data-i18n="footerRights">Alle Rechte vorbehalten.</span></p>
-        <nav class="footer-links">
-          <a href="#about" class="footer-link">Über mich</a>
-          <a href="#skills" class="footer-link">Skills</a>
-          <a href="#projects" class="footer-link">Projekte</a>
-          <a href="#contact" class="footer-link">Kontakt</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
 </body>
 </html>
