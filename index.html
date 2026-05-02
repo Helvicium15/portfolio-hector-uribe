@@ -3,7 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: apply saved theme before CSS renders -->
+  <script>
+    (function(){
+      var s=localStorage.getItem('theme');
+      var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var t=s||(p?'dark':'light');
+      if(t==='light') document.documentElement.setAttribute('data-theme','light');
+    }());
+  </script>
   <title>Hector Uribe — Portfolio</title>
+  <meta name="description" content="Hector Uribe — Mediengestalter &amp; UX/UI Designer aus Deutschland. Portfolio mit Projekten in Web-Entwicklung, 3D, Fotografie und Branding.">
+  <meta property="og:title" content="Hector Uribe — Portfolio">
+  <meta property="og:description" content="Mediengestalter &amp; UX/UI Designer aus Deutschland. Projekte in Web-Entwicklung, 3D, Fotografie und Branding.">
+  <meta property="og:image" content="img/hector-profile.jpg">
+  <meta property="og:type" content="website">
   <!-- Preload LCP asset (profile photo, above the fold) -->
   <link rel="preload" as="image" href="img/hector-profile.jpg">
 
@@ -59,7 +73,7 @@
 
       <div class="info-section">
         <button class="info-sec-title open" data-target="sec-general">
-          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-general"> Allgemein:</span>
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-general"> Allgemein:</span>
         </button>
         <div class="info-sec-body" id="sec-general">
           <div class="info-row"><span class="info-key">Name:</span><span class="info-val">Hector Uribe Chacon</span></div>
@@ -74,7 +88,7 @@
 
       <div class="info-section">
         <button class="info-sec-title open" data-target="sec-about">
-          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-about"> Über mich:</span>
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-about"> Über mich:</span>
         </button>
         <div class="info-sec-body" id="sec-about">
           <p class="info-about" data-i18n="about-1">Ein leidenschaftlicher Mediengestalter mit mexikanischen Wurzeln, der in Deutschland lebt und arbeitet. Ich verbinde kreatives Denken mit technischer Präzision.</p>
@@ -84,7 +98,7 @@
 
       <div class="info-section">
         <button class="info-sec-title" data-target="sec-share">
-          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-share"> Teilen &amp; Berechtigungen:</span>
+          <svg class="sec-tri" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg)" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg><span data-i18n="sec-share"> Teilen &amp; Berechtigungen:</span>
         </button>
         <div class="info-sec-body hidden" id="sec-share">
           <div class="info-row"><span class="info-key">Instagram:</span><span class="info-val"><a href="https://www.instagram.com/hectoruribechacon/" target="_blank">@hectorz151</a></span></div>
@@ -107,7 +121,7 @@
         </div>
         <div class="projekte-path">
           <span>Hector</span>
-          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="projekte-path-active" data-i18n="projekte-nav">Projekte</span>
         </div>
       </div>
@@ -141,11 +155,11 @@
         </div>
         <div class="skills-path">
           <span>Hector</span>
-          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="skills-path-active">Skills</span>
         </div>
         <label class="skills-search-wrap">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" id="skillsSearch" placeholder="Suchen…" data-i18n-ph="search-ph" autocomplete="off">
         </label>
       </div>
@@ -316,28 +330,47 @@
           <span class="dock-label">Skills</span>
         </button>
 
+        <!-- Theme toggle (macOS Appearance style) -->
+        <button class="dock-icon" id="dockThemeBtn" aria-label="Erscheinungsbild wechseln">
+          <div class="dock-app theme-app">
+            <!-- Moon: visible in dark mode -->
+            <svg class="t-icon t-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <!-- Sun: visible in light mode -->
+            <svg class="t-icon t-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </div>
+          <span class="dock-label" id="themeDockLabel">Hell</span>
+        </button>
+
         <div class="dock-sep"></div>
 
         <!-- Social -->
-        <a href="https://www.instagram.com/hectoruribechacon/" class="dock-icon" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/hectoruribechacon/" class="dock-icon" target="_blank" rel="noopener" aria-label="Instagram Profil öffnen">
           <div class="dock-app" style="background:linear-gradient(145deg,#6a0094,#fd1d1d,#fcb045)">
             <img src="img/logos/instagram.svg" alt="Instagram" loading="lazy" decoding="async">
           </div>
           <span class="dock-label">Instagram</span>
         </a>
-        <a href="https://www.behance.net/hectoruribe2" class="dock-icon" target="_blank" rel="noopener">
+        <a href="https://www.behance.net/hectoruribe2" class="dock-icon" target="_blank" rel="noopener" aria-label="Behance Profil öffnen">
           <div class="dock-app" style="background:linear-gradient(145deg,#001a6e,#1769ff)">
             <img src="https://cdn.simpleicons.org/behance/FFFFFF" alt="Behance">
           </div>
           <span class="dock-label">Behance</span>
         </a>
-        <a href="https://www.linkedin.com/in/hectoruch18/" class="dock-icon" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/in/hectoruch18/" class="dock-icon" target="_blank" rel="noopener" aria-label="LinkedIn Profil öffnen">
           <div class="dock-app full" style="background:linear-gradient(145deg,#003a5c,#0A66C2)">
             <img src="img/logos/linkedin-app-icon.webp" alt="LinkedIn" loading="lazy" decoding="async">
           </div>
           <span class="dock-label">LinkedIn</span>
         </a>
-        <a href="mailto:hectoruch18@gmail.com" class="dock-icon">
+        <a href="mailto:hectoruch18@gmail.com" class="dock-icon" aria-label="E-Mail senden">
           <div class="dock-app" style="background:linear-gradient(145deg,#0040a0,#60a5f5)">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>

@@ -686,6 +686,13 @@ function applyLanguage(lang) {
 
   document.documentElement.lang = lang;
   localStorage.setItem('lang', lang);
+
+  /* Sync theme label with new language */
+  const _tl = document.getElementById('themeDockLabel');
+  if (_tl) {
+    const _th = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    _tl.textContent = lang === 'de' ? (_th === 'light' ? 'Hell' : 'Dunkel') : (_th === 'light' ? 'Light' : 'Dark');
+  }
 }
 
 document.getElementById('langToggle').addEventListener('click', () => {
@@ -798,4 +805,147 @@ if (isMobile()) {
       e.stopPropagation();
     }
   });
+}());
+
+/* ============================================================
+   THEME TOGGLE — Light / Dark (macOS Appearance style)
+   Reads localStorage → falls back to prefers-color-scheme
+   ============================================================ */
+(function () {
+  const html       = document.documentElement;
+  const themeBtn   = document.getElementById('dockThemeBtn');
+  const themeLabel = document.getElementById('themeDockLabel');
+
+  function label(theme, lang) {
+    return lang === 'de'
+      ? (theme === 'light' ? 'Hell' : 'Dunkel')
+      : (theme === 'light' ? 'Light' : 'Dark');
+  }
+
+  function current() {
+    return html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
+
+  function apply(theme, save) {
+    if (theme === 'light') {
+      html.setAttribute('data-theme', 'light');
+    } else {
+      html.removeAttribute('data-theme');
+    }
+    if (themeLabel) themeLabel.textContent = label(theme, currentLang);
+    if (save) localStorage.setItem('theme', theme);
+  }
+
+  /* Sync initial label (theme already set by anti-flash inline script) */
+  const initTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  apply(initTheme, false);
+
+  /* Toggle on click */
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => apply(current() === 'dark' ? 'light' : 'dark', true));
+  }
+
+  /* Follow OS preference changes when user hasn't set a manual preference */
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) apply(e.matches ? 'dark' : 'light', false);
+  });
+}());
+
+/* ============================================================
+   ENTRANCE ANIMATIONS
+   Equivalent to Framer Motion: whileInView, viewport once:true
+   opacity 0→1, translateY 24px→0, 500ms easeOut, stagger 80ms
+   ============================================================ */
+(function () {
+  const DUR           = 500;
+  const EASE          = 'cubic-bezier(0.0, 0.0, 0.2, 1)';
+  const PANEL_STAGGER = 80;
+  const GRID_STAGGER  = 50;
+
+  /* Play entrance on a single element and clean up after */
+  function revealEl(el, delay) {
+    el.style.opacity    = '0';
+    el.style.transform  = 'translateY(24px)';
+    el.style.willChange = 'opacity, transform';
+
+    const anim = el.animate(
+      [{ opacity: 0, transform: 'translateY(24px)' },
+       { opacity: 1, transform: 'translateY(0)'    }],
+      { duration: DUR, delay, easing: EASE, fill: 'both' }
+    );
+
+    /* After animation: hand CSS control back so open/close toggles still work */
+    anim.finished.then(() => {
+      el.style.opacity    = '';
+      el.style.transform  = '';
+      el.style.willChange = '';
+      anim.cancel();
+    }).catch(() => {});
+  }
+
+  /* Observe a list of elements, animate each once it enters the viewport */
+  function watchOnce(els, baseDelay, stagger) {
+    if (!els.length) return;
+
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const i = parseInt(entry.target.dataset.ainIdx || '0');
+        revealEl(entry.target, baseDelay + i * stagger);
+        o.unobserve(entry.target);
+      });
+    }, { threshold: 0.05 });
+
+    els.forEach((el, i) => {
+      el.dataset.ainIdx = i;
+      /* Pre-hide before observer fires (prevents flash) */
+      el.style.opacity   = '0';
+      el.style.transform = 'translateY(24px)';
+      obs.observe(el);
+    });
+  }
+
+  /* ── 1. Hero / Perfil panel ───────────────────────────────── */
+  /* ── 2. Skills window ────────────────────────────────────── */
+  /* ── 3. Projekte window ──────────────────────────────────── */
+  watchOnce(
+    [document.getElementById('infoPanel'),
+     document.getElementById('skillsWin'),
+     document.getElementById('projekteWin')].filter(Boolean),
+    0, PANEL_STAGGER
+  );
+
+  /* ── 4. Dock ─────────────────────────────────────────────── */
+  const dockEl = document.querySelector('.dock');
+  if (dockEl) watchOnce([dockEl], 3 * PANEL_STAGGER, 0);
+
+  /* ── 5. Skills grid — stagger each item ──────────────────── */
+  /* Base delay = skills-win entrance (1×80ms) + its animation (500ms) − overlap */
+  watchOnce(
+    Array.from(document.querySelectorAll('.skill-item')),
+    PANEL_STAGGER + 220, GRID_STAGGER
+  );
+
+  /* ── 6. Projekte cards — stagger each card ───────────────── */
+  /* Base delay = projekte-win entrance (2×80ms) + its animation − overlap */
+  watchOnce(
+    Array.from(document.querySelectorAll('#projekteBody .proj-card-item')),
+    2 * PANEL_STAGGER + 220, GRID_STAGGER
+  );
+
+  /* ── 7. Project icons — dynamic, observe with MutationObserver */
+  const iconsFieldEl = document.getElementById('iconsField');
+  if (iconsFieldEl) {
+    const tryIcons = () => {
+      const icons = Array.from(iconsFieldEl.querySelectorAll('.project-icon'));
+      if (!icons.length) return false;
+      watchOnce(icons, 100, GRID_STAGGER);
+      return true;
+    };
+    if (!tryIcons()) {
+      const mo = new MutationObserver(() => { if (tryIcons()) mo.disconnect(); });
+      mo.observe(iconsFieldEl, { childList: true, subtree: true });
+    }
+  }
 }());

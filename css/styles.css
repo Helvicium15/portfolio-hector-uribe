@@ -4,13 +4,35 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #000000;
-  --win-bg:    #1e1e1e;
-  --win-bar:   #2a2a2a;
-  --win-border:rgba(255,255,255,0.09);
-  --accent:    #2F54EB;
-  --font:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --radius-win:14px;
+  --bg:          #000000;
+  --win-bg:      #1e1e1e;
+  --win-bar:     #2a2a2a;
+  --win-border:  rgba(255,255,255,0.09);
+  --accent:      #2F54EB;
+  --font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-win:  14px;
+
+  /* Window text */
+  --win-title:   rgba(255,255,255,0.4);
+  --win-text:    #ffffff;
+  --win-subtext: rgba(255,255,255,0.72);
+
+  /* Desktop icons */
+  --icon-label:  #ffffff;
+
+  /* Dock */
+  --dock-bg:     rgba(255,255,255,0.38);
+  --dock-border: rgba(255,255,255,0.78);
+  --dock-inset:  rgba(255,255,255,0.55);
+  --dock-label:  rgba(255,255,255,0.85);
+  --dock-sep:    rgba(0,0,0,0.15);
+
+  /* Language toggle */
+  --lang-bg:           rgba(10,30,80,0.82);
+  --lang-border:       rgba(60,110,220,0.35);
+  --lang-color:        rgba(255,255,255,0.92);
+  --lang-hover:        rgba(20,50,130,0.9);
+  --lang-hover-border: rgba(80,140,255,0.5);
 }
 
 html, body {
@@ -224,7 +246,7 @@ a { text-decoration: none; color: inherit; }
 .icon-label {
   font-size: 11.5px;
   font-weight: 500;
-  color: #fff;
+  color: var(--icon-label);
   text-align: center;
   max-width: 96px;
   overflow: hidden;
@@ -368,7 +390,7 @@ a { text-decoration: none; color: inherit; }
   gap: 10px;
   padding: 11px 14px;
   background: var(--win-bar);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--win-border);
   cursor: grab;
 }
 
@@ -398,7 +420,7 @@ a { text-decoration: none; color: inherit; }
   text-align: center;
   font-size: 12px;
   font-weight: 500;
-  color: rgba(255,255,255,0.4);
+  color: var(--win-title);
   letter-spacing: 0.02em;
   pointer-events: none;
 }
@@ -442,14 +464,14 @@ a { text-decoration: none; color: inherit; }
 .win-name {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: var(--win-text);
   line-height: 1.2;
   margin-top: 1px;
 }
 
 .win-desc {
   font-size: 13px;
-  color: rgba(255,255,255,0.72);
+  color: var(--win-subtext);
   line-height: 1.65;
   margin-top: 3px;
 }
@@ -703,7 +725,8 @@ a { text-decoration: none; color: inherit; }
   z-index: 185;
   font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif;
   user-select: none;
-  transition: opacity 0.18s, transform 0.18s;
+  transition: opacity 0.18s, transform 0.18s,
+              background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .skills-win.hidden {
@@ -904,12 +927,12 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   gap: 7px;
   padding: 9px 18px;
-  background: rgba(10,30,80,0.82);
+  background: var(--lang-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(60,110,220,0.35);
+  border: 1px solid var(--lang-border);
   border-radius: 22px;
-  color: rgba(255,255,255,0.92);
+  color: var(--lang-color);
   font-family: var(--font);
   font-size: 13px;
   font-weight: 500;
@@ -917,12 +940,12 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
-  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, color 0.3s ease;
   box-shadow: 0 2px 16px rgba(10,30,100,0.5);
 }
 .lang-toggle:hover {
-  background: rgba(20,50,130,0.9);
-  border-color: rgba(80,140,255,0.5);
+  background: var(--lang-hover);
+  border-color: var(--lang-hover-border);
 }
 .lang-toggle:active {
   transform: scale(0.95);
@@ -958,13 +981,13 @@ a { text-decoration: none; color: inherit; }
   align-items: flex-end;
   gap: 10px;
   padding: 10px 20px 8px;
-  background: rgba(255,255,255,0.38);
+  background: var(--dock-bg);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255,255,255,0.78);
+  border: 1px solid var(--dock-border);
   border-radius: 22px;
   box-shadow:
-    0 2px 0 rgba(255,255,255,0.55) inset,
+    0 2px 0 var(--dock-inset) inset,
     0 8px 32px rgba(0,0,0,0.14),
     0 1px 4px rgba(0,0,0,0.08);
   width: max-content;
@@ -984,7 +1007,7 @@ button.dock-icon {
 .dock-sep {
   width: 1px;
   height: 36px;
-  background: rgba(0,0,0,0.15);
+  background: var(--dock-sep);
   border-radius: 1px;
   margin: 0 2px;
   align-self: center;
@@ -1038,7 +1061,7 @@ button.dock-icon {
 .dock-label {
   font-size: 9px;
   font-weight: 500;
-  color: rgba(255,255,255,0.85);
+  color: var(--dock-label);
   text-align: center;
   white-space: nowrap;
   letter-spacing: 0.01em;
@@ -1111,7 +1134,8 @@ button.dock-icon {
   z-index: 188;
   font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif;
   user-select: none;
-  transition: opacity 0.18s, transform 0.18s;
+  transition: opacity 0.18s, transform 0.18s,
+              background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .projekte-win.hidden {
@@ -1420,58 +1444,115 @@ button.dock-icon {
   .name-tag span:first-child { font-size: 0.65rem; letter-spacing: 0.18em; }
   .name-role { display: none; }
 
-  /* ── Projekte window → compact horizontal-scroll widget ────── */
+  /* ── Projekte window → iPhone App Store card carousel ──────── */
   .projekte-win {
     position: fixed !important;
     top: 248px !important;
-    left: 8px !important;
-    right: 8px !important;
-    width: auto !important;
-    height: 186px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 220px !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-top: 1px solid rgba(255,255,255,0.08) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
     z-index: 316 !important;
     opacity: 1 !important;
     transform: translateY(0) !important;
     pointer-events: all !important;
     transition: none !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+    box-shadow: none !important;
     overflow: hidden !important;
+    background: rgba(0,0,0,0.38) !important;
+    backdrop-filter: blur(22px) !important;
+    -webkit-backdrop-filter: blur(22px) !important;
   }
   .projekte-win.hidden { opacity: 1 !important; transform: translateY(0) !important; pointer-events: all !important; }
   .projekte-win .win-controls { display: none !important; }
   .projekte-win .sheet-handle { display: none !important; }
-  .projekte-titlebar { cursor: default !important; padding: 5px 8px !important; min-height: 26px !important; }
+  .projekte-titlebar {
+    cursor: default !important;
+    padding: 8px 16px !important;
+    min-height: 32px !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+  }
+  .projekte-titlebar .projekte-path { color: rgba(255,255,255,0.45) !important; }
+  .projekte-titlebar .projekte-path-active { color: rgba(255,255,255,0.9) !important; }
   .projekte-statusbar { display: none !important; }
 
   .projekte-body {
     display: flex !important;
     flex-direction: row !important;
     grid-template-columns: none !important;
-    overflow-x: auto !important;
+    overflow-x: scroll !important;
     overflow-y: hidden !important;
-    padding: 8px !important;
-    gap: 6px !important;
-    height: calc(186px - 26px) !important;
-    align-items: flex-start !important;
+    padding: 10px 20px 10px 16px !important;
+    gap: 12px !important;
+    height: calc(220px - 32px) !important;
+    align-items: center !important;
     align-content: unset !important;
     scrollbar-width: none !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    background: transparent !important;
   }
   .projekte-body::-webkit-scrollbar { display: none !important; }
 
+  /* iPhone App Store-style cards: wide image cards with title overlay */
   .proj-card-item {
     flex-shrink: 0 !important;
-    width: 68px !important;
-    padding: 6px 2px 4px !important;
-    gap: 3px !important;
+    width: calc(100vw - 96px) !important;
+    height: 160px !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: #111 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.4) !important;
+    scroll-snap-align: start !important;
+    cursor: pointer !important;
   }
+  .proj-card-item:hover { background: #111 !important; }
+
+  /* Full-bleed image fills the card */
   .proj-card-thumb {
-    width: 46px !important;
-    height: 46px !important;
-    border-radius: 12px !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
-  .proj-card-name { font-size: 9px !important; max-width: 66px !important; }
-  .proj-card-cat  { display: none !important; }
+  .proj-card-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 0 !important;
+  }
+
+  /* Title at the bottom with gradient overlay */
+  .proj-card-name {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 36px 13px 11px !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 55%, transparent 100%) !important;
+    color: #fff !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.2 !important;
+  }
+  .proj-card-cat { display: none !important; }
 
   /* ── Dock ────────────────────────────────────────────────── */
   .dock-inner { gap: 6px; padding: 8px 12px 7px; }
@@ -1481,6 +1562,21 @@ button.dock-icon {
   .dock-label { font-size: 8px; }
   .dock-sep   { height: 28px; }
   .dock-icon:hover { transform: translateY(-6px) scale(1.15); }
+}
+
+/* ============================================================
+   RESPONSIVE — mid mobile (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .info-panel { width: 144px !important; max-height: 222px !important; }
+  .skills-win { width: calc(100% - 164px) !important; height: 222px !important; }
+  .skills-body { height: calc(222px - 30px); }
+  .dock-inner { gap: 5px; padding: 8px 10px 7px; }
+  .dock-app   { width: 38px; height: 38px; border-radius: 10px; }
+  .dock-app img, .dock-app svg { width: 58%; height: 58%; }
+  .dock-label { font-size: 7.5px; }
+  .dock-sep   { height: 30px; }
+  .lang-toggle { padding: 6px 12px; font-size: 11px; }
 }
 
 /* ============================================================
@@ -1570,4 +1666,176 @@ button.dock-icon {
 }
 .wc.red.pop {
   animation: btnPop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ============================================================
+   SMOOTH THEME TRANSITIONS — 0.3s ease on color-related props
+   ============================================================ */
+html,
+body,
+.project-win,
+.win-bar,
+.win-title,
+.win-name,
+.win-desc,
+.win-cat,
+.win-info,
+.info-panel,
+.info-titlebar,
+.info-header,
+.info-sec-body,
+.info-sec-title,
+.info-tags-bar,
+.info-about,
+.info-row,
+.skills-sidebar,
+.skills-grid,
+.skill-item,
+.skill-app,
+.projekte-titlebar,
+.projekte-body,
+.proj-card-item,
+.dock-inner,
+.dock-app,
+.dock-sep,
+.icon-label,
+.icon-thumb {
+  transition: background-color 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ============================================================
+   LIGHT MODE — macOS Ventura appearance (#ECECEC base)
+   ============================================================ */
+[data-theme="light"] {
+  --bg:          #ECECEC;
+  --win-bg:      #ffffff;
+  --win-bar:     #f2f2f2;
+  --win-border:  rgba(0,0,0,0.08);
+  --win-title:   rgba(0,0,0,0.35);
+  --win-text:    #1a1a1a;
+  --win-subtext: rgba(0,0,0,0.62);
+
+  --icon-label:  #1a1a1a;
+
+  --dock-bg:     rgba(255,255,255,0.72);
+  --dock-border: rgba(0,0,0,0.18);
+  --dock-inset:  rgba(0,0,0,0.03);
+  --dock-label:  rgba(0,0,0,0.72);
+  --dock-sep:    rgba(0,0,0,0.12);
+
+  --lang-bg:           rgba(232,232,232,0.92);
+  --lang-border:       rgba(0,0,0,0.12);
+  --lang-color:        rgba(0,0,0,0.82);
+  --lang-hover:        rgba(212,212,212,0.96);
+  --lang-hover-border: rgba(0,0,0,0.2);
+}
+
+/* Desktop overlay: lighter tint in light mode */
+[data-theme="light"] .desktop-overlay {
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.04) 35%,
+    rgba(255,255,255,0.04) 65%,
+    rgba(255,255,255,0.18) 100%);
+}
+
+/* macOS panels: white + elevated shadow against #ECECEC bg */
+[data-theme="light"] .info-panel {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1), 0 8px 28px rgba(0,0,0,0.07) !important;
+}
+
+[data-theme="light"] .skills-win {
+  background: #f8f8f8 !important;
+  border-color: rgba(0,0,0,0.14) !important;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.06) inset,
+    0 4px 16px rgba(0,0,0,0.1),
+    0 20px 60px rgba(0,0,0,0.09) !important;
+}
+
+[data-theme="light"] .projekte-win {
+  background: #f8f8f8 !important;
+  border-color: rgba(0,0,0,0.14) !important;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.06) inset,
+    0 4px 16px rgba(0,0,0,0.1),
+    0 20px 60px rgba(0,0,0,0.09) !important;
+}
+
+[data-theme="light"] .skills-grid    { background: #ffffff; }
+[data-theme="light"] .projekte-body  { background: #ffffff; }
+
+/* Project windows: dark → white in light mode */
+[data-theme="light"] .project-win {
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.07),
+    0 8px 32px rgba(0,0,0,0.14),
+    0 32px 80px rgba(0,0,0,0.1);
+}
+
+/* Icon border adapts */
+[data-theme="light"] .icon-thumb {
+  border-color: rgba(0,0,0,0.14);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 8px 28px rgba(0,0,0,0.1);
+}
+
+/* Dock: slightly more opaque in light mode */
+[data-theme="light"] .dock-inner {
+  box-shadow:
+    0 2px 0 var(--dock-inset) inset,
+    0 8px 32px rgba(0,0,0,0.1),
+    0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* Dock label: no text-shadow in light mode */
+[data-theme="light"] .dock-label { text-shadow: none; }
+
+/* lang-toggle shadow in light mode */
+[data-theme="light"] .lang-toggle { box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+
+/* Mobile projekte panel in light mode */
+@media (max-width: 768px) {
+  [data-theme="light"] .projekte-win {
+    background: rgba(255,255,255,0.75) !important;
+  }
+  [data-theme="light"] .projekte-titlebar .projekte-path {
+    color: rgba(0,0,0,0.45) !important;
+  }
+  [data-theme="light"] .projekte-titlebar .projekte-path-active {
+    color: rgba(0,0,0,0.88) !important;
+  }
+}
+
+/* ============================================================
+   THEME TOGGLE DOCK BUTTON — macOS Appearance icon style
+   ============================================================ */
+
+/* Dock app: diagonal split, dark left / light right */
+.theme-app {
+  background: linear-gradient(135deg, #1e2738 50%, #dedad3 50%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Icons cross-fade */
+.theme-app .t-icon {
+  position: absolute;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+/* Dark mode: moon visible */
+.theme-app .t-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+.theme-app .t-sun  { opacity: 0; transform: scale(0.7) rotate(-30deg); }
+
+/* Light mode: sun visible */
+[data-theme="light"] .theme-app .t-moon { opacity: 0; transform: scale(0.7) rotate(30deg); }
+[data-theme="light"] .theme-app .t-sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+
+/* Background also shifts in light mode */
+[data-theme="light"] .theme-app {
+  background: linear-gradient(135deg, #2a3852 50%, #f0ece4 50%) !important;
 }
