@@ -75,6 +75,15 @@
       padding: 0 0 4rem;
       overflow: hidden;
     }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+    }
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -405,7 +414,9 @@
 
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
-    <div style="position:absolute;inset:0;background-image:url('img/projects/mosaic-savings.jpg');background-size:cover;background-position:center;z-index:0;"></div>
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="img/Firefly_liquid.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="eyebrow">
