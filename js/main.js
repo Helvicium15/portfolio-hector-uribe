@@ -22,7 +22,7 @@ const projects = [
     id: 2, name: 'Squishy Savings',
     cat_de: 'UX/UI · Web-App', cat_en: 'UX/UI · Web App',
     img: 'img/projects/mosaic-savings.jpg',
-    url: 'https://squishy-savings-app.vercel.app/',
+    url: 'squishy-savings.html',
     desc_de: 'Spar-App mit unterhaltsamem und visuellem UX-Design.',
     desc_en: 'Savings app with fun and visual UX design.',
     x: 62, y: 31
