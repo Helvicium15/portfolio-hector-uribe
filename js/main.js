@@ -584,7 +584,7 @@ function updateProjekteLanguage(lang) {
 /* ============================================================
    LANGUAGE TOGGLE
    ============================================================ */
-let currentLang = localStorage.getItem('lang') || 'de';
+let currentLang = localStorage.getItem('lang') || 'en';
 
 const translations = {
   de: {

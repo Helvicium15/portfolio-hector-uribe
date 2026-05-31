@@ -401,8 +401,8 @@
 
   <!-- ── Language toggle ───────────────────────────────────── -->
   <button class="lang-toggle" id="langToggle" aria-label="Switch language">
-    <span class="lang-flag">🇩🇪</span>
-    <span class="lang-label">DE</span>
+    <span class="lang-flag">🇬🇧</span>
+    <span class="lang-label">EN</span>
   </button>
 
   <!-- ── Fixed back button ────────────────────────────────── -->
@@ -650,7 +650,7 @@
       localStorage.setItem('lang', lang);
     }
 
-    let lang = localStorage.getItem('lang') || 'de';
+    let lang = localStorage.getItem('lang') || 'en';
     applyLang(lang);
 
     document.getElementById('langToggle').addEventListener('click', () => {
