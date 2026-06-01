@@ -1241,6 +1241,26 @@ button.dock-icon {
   margin-top: -2px;
 }
 
+/* NEW badge on project cards */
+.proj-card-item { position: relative; }
+.proj-card-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #F59E0B;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.28);
+  pointer-events: none;
+  z-index: 3;
+}
+
 /* Status bar */
 .projekte-statusbar {
   padding: 5px 14px;

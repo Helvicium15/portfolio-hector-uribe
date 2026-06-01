@@ -8,6 +8,18 @@ document.querySelector('.desktop-video').playbackRate = 0.75;
    ============================================================ */
 const projects = [
 
+  /* ── LATEST ────────────────────────────────────────────────── */
+  {
+    id: 20, name: 'StudyBuddy',
+    cat_de: 'UX/UI · Mobil · CPUX', cat_en: 'UX/UI · Mobile · CPUX',
+    img: 'img/projects/mobile.png',
+    url: 'studybuddy.html',
+    desc_de: 'Capstone-Projekt: Lern-App mit strukturierten Blöcken, Fokus-Timer und Reflexion.',
+    desc_en: 'Capstone project: study app with structured blocks, focus timer and reflection.',
+    isNew: true,
+    x: 50, y: 13
+  },
+
   /* ── COL 1 (x=62) ─────────────────────────────────────────── */
   {
     id: 1, name: 'Silly Crab',
@@ -553,6 +565,7 @@ function buildProjekteCards(lang) {
 
   body.innerHTML = projects.map(p => `
     <div class="proj-card-item" data-proj-id="${p.id}">
+      ${p.isNew ? '<span class="proj-card-badge">NEW</span>' : ''}
       <div class="proj-card-thumb">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
       </div>
