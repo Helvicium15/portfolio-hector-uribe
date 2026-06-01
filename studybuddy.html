@@ -441,21 +441,92 @@
     }
     .contact-link:hover { border-color: var(--accent-light); color: var(--accent-light); }
 
-    /* -- Next project bar --------------------------------- */
-    .next-project-bar { border-top: 1px solid var(--border); }
-    .next-project-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 2rem; text-decoration: none; transition: background 0.2s;
-      max-width: 1200px; margin: 0 auto;
+    /* -- Next project card -------------------------------- */
+    .next-project-section {
+      padding: 0 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .next-project-link:hover { background: var(--bg-alt); }
+    .next-project-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s, transform 0.25s, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+    .next-project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, var(--accent-dim) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .next-project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .next-project-card:hover::before { opacity: 1; }
+    .next-project-info { position: relative; z-index: 1; }
     .next-label {
-      font-family: var(--font-display); font-size: 0.63rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--fg-muted); display: block; margin-bottom: 5px;
+      font-family: var(--font-display);
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      display: block;
+      margin-bottom: 6px;
     }
-    .next-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--fg); }
-    .next-project-link svg { color: var(--fg-muted); flex-shrink: 0; transition: transform 0.2s; }
-    .next-project-link:hover svg { transform: translateX(4px); }
+    .next-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .next-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+      transition: color 0.2s, gap 0.2s;
+    }
+    .next-project-card:hover .next-cta { color: var(--accent-light); gap: 10px; }
+    .next-cta svg { flex-shrink: 0; transition: transform 0.2s; }
+    .next-project-card:hover .next-cta svg { transform: translateX(3px); }
+    .next-project-thumb {
+      width: 160px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      opacity: 0.75;
+      transition: opacity 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .next-project-card:hover .next-project-thumb { opacity: 1; transform: scale(1.04); }
+    .next-project-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 480px) {
+      .next-project-thumb { display: none; }
+      .next-project-section { padding: 0 1.25rem 2.5rem; }
+      .next-project-card { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -670,12 +741,21 @@
   </div>
 
   <!-- Next project -->
-  <div class="next-project-bar">
-    <a href="schwimmspass.html" class="next-project-link">
-      <div>
+  <div class="next-project-section">
+    <a href="schwimmspass.html" class="next-project-card">
+      <div class="next-project-info">
         <span class="next-label" data-i18n="next-label">Next Project</span>
         <span class="next-name">SchwimmSpass Mobile</span>
+        <span class="next-cta">
+          <span data-i18n="next-cta">View Case Study</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
       </div>
+      <div class="next-project-thumb">
+        <img src="img/projects/schwimmspass-thumbnail.webp" alt="SchwimmSpass Mobile" loading="lazy">
+      </div>
+    </a>
+  </div>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
@@ -694,6 +774,7 @@
         'back-bottom':      'Back to Portfolio',
         'contact-text':    'Interested in working together?',
         'next-label':      'Next Project',
+        'next-cta':        'View Case Study',
         'hero-desc':        'A mobile app helping students plan study blocks, focus with a distraction-free timer, and reflect after each session — all wrapped in a warm, diary-entry aesthetic.',
         'meta-cat':         'Category',
         'meta-platform':    'Platform',
@@ -744,6 +825,7 @@
         'back-bottom':      'Zurück zum Portfolio',
         'contact-text':    'Interesse an einer Zusammenarbeit?',
         'next-label':      'Nächstes Projekt',
+        'next-cta':        'Case Study ansehen',
         'hero-desc':        'Eine mobile App für Studierende — strukturierte Lernblöcke planen, mit einem ablenkungsfreien Timer arbeiten und nach jeder Session reflektieren.',
         'meta-cat':         'Kategorie',
         'meta-platform':    'Plattform',

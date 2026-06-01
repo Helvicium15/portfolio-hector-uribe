@@ -421,21 +421,92 @@
     }
     .contact-link:hover { border-color: var(--accent-light); color: var(--accent-light); }
 
-    /* -- Next project bar --------------------------------- */
-    .next-project-bar { border-top: 1px solid var(--border); }
-    .next-project-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 2rem; text-decoration: none; transition: background 0.2s;
-      max-width: 1200px; margin: 0 auto;
+    /* -- Next project card -------------------------------- */
+    .next-project-section {
+      padding: 0 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .next-project-link:hover { background: var(--bg-alt); }
+    .next-project-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s, transform 0.25s, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+    .next-project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, var(--accent-dim) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .next-project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .next-project-card:hover::before { opacity: 1; }
+    .next-project-info { position: relative; z-index: 1; }
     .next-label {
-      font-family: var(--font-display); font-size: 0.63rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--fg-muted); display: block; margin-bottom: 5px;
+      font-family: var(--font-display);
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      display: block;
+      margin-bottom: 6px;
     }
-    .next-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--fg); }
-    .next-project-link svg { color: var(--fg-muted); flex-shrink: 0; transition: transform 0.2s; }
-    .next-project-link:hover svg { transform: translateX(4px); }
+    .next-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .next-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+      transition: color 0.2s, gap 0.2s;
+    }
+    .next-project-card:hover .next-cta { color: var(--accent-light); gap: 10px; }
+    .next-cta svg { flex-shrink: 0; transition: transform 0.2s; }
+    .next-project-card:hover .next-cta svg { transform: translateX(3px); }
+    .next-project-thumb {
+      width: 160px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      opacity: 0.75;
+      transition: opacity 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .next-project-card:hover .next-project-thumb { opacity: 1; transform: scale(1.04); }
+    .next-project-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 480px) {
+      .next-project-thumb { display: none; }
+      .next-project-section { padding: 0 1.25rem 2.5rem; }
+      .next-project-card { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -602,137 +673,34 @@
   </div>
 
   <!-- Next project -->
-  <div class="next-project-bar">
-    <a href="branding.html" class="next-project-link">
-      <div>
+  <div class="next-project-section">
+    <a href="branding.html" class="next-project-card">
+      <div class="next-project-info">
         <span class="next-label" data-i18n="next-label">Next Project</span>
         <span class="next-name">Branding</span>
+        <span class="next-cta">
+          <span data-i18n="next-cta">View Case Study</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
       </div>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="next-project-thumb">
+        <img src="img/projects/branding-thumbnail.webp" alt="Branding" loading="lazy">
+      </div>
+    </a>
+  </div>
+      <div class="next-project-thumb">
+        <img src="img/projects/branding-thumbnail.webp" alt="Branding" loading="lazy">
+      </div>
     </a>
   </div>
 
-  <!-- ── Bottom back bar ───────────────────────────────────── -->
-  <div class="bottom-bar">
-    <a href="index.html" class="bottom-back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-      <span data-i18n="back-bottom">Zurück zum Portfolio</span>
+  <!-- none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+      <div class="next-project-thumb">
+        <img src="img/projects/branding-thumbnail.webp" alt="Branding" loading="lazy">
+      </div>
     </a>
   </div>
 
-  <script>
-    const t = {
-      de: {
-        'back':             'Portfolio',
-        'back-bottom':      'Zurück zum Portfolio',
-        'contact-text':    'Interesse an einer Zusammenarbeit?',
-        'next-label':      'Nächstes Projekt',
-        'hero-desc':        'Eine mobile App für persönliche Finanzen — Ersparnisse lokal speichern, Ausgaben kontrollieren und smarte Sparziele verfolgen, ohne Cloud oder Registrierung.',
-        'meta-cat':         'Kategorie',
-        'meta-platform':    'Plattform',
-        'meta-type':        'Typ',
-        'meta-type-val':    'Prototyp',
-        'proto-btn':        'Prototyp ansehen',
-        'section-preview':  'Vorschau',
-        'section-overview': 'Projektübersicht',
-        'challenge-title':  'Herausforderung',
-        'challenge-text':   'Die meisten Spar-Apps erfordern eine Kontoverbindung, Cloud-Sync oder Registrierung. Das Ziel war eine App, die alle Finanzdaten vollständig lokal auf dem Gerät speichert — maximale Privatsphäre, null Abhängigkeiten — und gleichzeitig einen klaren Überblick über Ersparnisse, Ausgaben und Sparziele bietet.',
-        'solution-title':   'Lösung',
-        'solution-text':    'Ein Mobile-First-Design mit verspielter, weicher Ästhetik — hence "Squishy". Klare Struktur für das Anlegen von Sparkonten, Tracken von Einnahmen und Ausgaben sowie persönliche Sparziele mit visueller Fortschrittsanzeige. Alles ohne Server, ohne Login.',
-        'section-process':  'Prozess',
-        'step1-title':      'Nutzeranalyse',
-        'step1-text':       'Personas für Nutzer, die Privatsphäre priorisieren. Pain Points bei bestehenden Finanz-Apps — Komplexität, Datenweitergabe, Registrierungspflicht.',
-        'step2-title':      'Information Architecture',
-        'step2-text':       'Low-Fidelity-Wireframes für die Hauptscreens: Dashboard, Sparkonten, Transaktionen, Sparziele.',
-        'step3-title':      'Visuelles Design',
-        'step3-text':       'Entwicklung eines verspielten Design-Systems in Figma — weiche Formen, warme Grüntöne, klare Datenhierarchie und zugängliche Typografie.',
-        'step4-title':      'Klickbarer Prototyp',
-        'step4-text':       'Vollständiger interaktiver Prototyp mit allen Hauptflows — von der Kontoerstellung über das Ausgaben-Tracking bis zur Zielübersicht.',
-        'section-details':  'Details',
-        'features-title':   'Wichtigste Features',
-        'feat1':            'Lokale Datenspeicherung — keine Registrierung erforderlich',
-        'feat2':            'Mehrere Sparkonten gleichzeitig verwalten',
-        'feat3':            'Einnahmen und Ausgaben erfassen und kategorisieren',
-        'feat4':            'Persönliche Sparziele mit visuellem Fortschrittsbalken',
-        'feat5':            'Ausgabenlimit pro Konto festlegen',
-        'tools-l1':         'Figma — Wireframes, UI Design, Prototyping',
-        'tools-l2':         'Mobile UI Patterns — iOS & Material Design Guidelines',
-        'tools-l3':         'UX Flows — Onboarding, Kontoverwaltung, Zielverfolgung',
-        'tools-l4':         'Komponentenbasiertes Design-System',
-        'tools-l5':         'Micro-Interactions & Animationen',
-      },
-      en: {
-        'back':             'Portfolio',
-        'back-bottom':      'Back to Portfolio',
-        'contact-text':    'Interested in working together?',
-        'next-label':      'Next Project',
-        'hero-desc':        'A mobile app for personal finance — save locally, track expenses and set smart savings goals, no cloud or sign-up required.',
-        'meta-cat':         'Category',
-        'meta-platform':    'Platform',
-        'meta-type':        'Type',
-        'meta-type-val':    'Prototype',
-        'proto-btn':        'View Prototype',
-        'section-preview':  'Preview',
-        'section-overview': 'Project Overview',
-        'challenge-title':  'Challenge',
-        'challenge-text':   'Most savings apps require a bank connection, cloud sync or account registration. The goal was an app that stores all financial data entirely on-device — maximum privacy, zero dependencies — while still offering a clear overview of savings, expenses and goals.',
-        'solution-title':   'Solution',
-        'solution-text':    'A mobile-first design with a playful, soft aesthetic — hence "Squishy". Clear structure for creating savings accounts, tracking income and expenses, and setting personal savings goals with visual progress indicators. No server. No login.',
-        'section-process':  'Process',
-        'step1-title':      'User Research',
-        'step1-text':       'Personas for privacy-conscious users. Pain points in existing finance apps identified: complexity, data sharing, mandatory sign-ups.',
-        'step2-title':      'Information Architecture',
-        'step2-text':       'Low-fidelity wireframes for the main screens: Dashboard, Savings Accounts, Transactions, Goals.',
-        'step3-title':      'Visual Design',
-        'step3-text':       'Development of a playful design system in Figma — soft shapes, warm greens, clear data hierarchy and accessible typography.',
-        'step4-title':      'Clickable Prototype',
-        'step4-text':       'Complete interactive prototype covering all main flows — from account creation and expense tracking to goal overview.',
-        'section-details':  'Details',
-        'features-title':   'Key Features',
-        'feat1':            'Local data storage — no sign-up required',
-        'feat2':            'Manage multiple savings accounts simultaneously',
-        'feat3':            'Log and categorize income and expenses',
-        'feat4':            'Personal savings goals with visual progress bar',
-        'feat5':            'Set spending limits per account',
-        'tools-l1':         'Figma — Wireframes, UI Design, Prototyping',
-        'tools-l2':         'Mobile UI Patterns — iOS & Material Design Guidelines',
-        'tools-l3':         'UX Flows — Onboarding, Account Management, Goal Tracking',
-        'tools-l4':         'Component-based design system',
-        'tools-l5':         'Micro-Interactions & Animations',
-      },
-    };
-
-    function applyLang(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.dataset.i18n;
-        if (t[lang][key] !== undefined) el.textContent = t[lang][key];
-      });
-      const btn = document.getElementById('langToggle');
-      btn.querySelector('.lang-flag').textContent = lang === 'de' ? '🇩🇪' : '🇬🇧';
-      btn.querySelector('.lang-label').textContent = lang === 'de' ? 'DE' : 'EN';
-      document.documentElement.lang = lang;
-      localStorage.setItem('lang', lang);
-    }
-
-    let lang = localStorage.getItem('lang') || 'en';
-    applyLang(lang);
-
-    document.getElementById('langToggle').addEventListener('click', () => {
-      lang = lang === 'de' ? 'en' : 'de';
-      applyLang(lang);
-    });
-  </script>
-
-  <script>
-    const reveals = document.querySelectorAll('.reveal');
-    if (reveals.length) {
-      const ro = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
-        });
-      }, { threshold: 0.1 });
-      reveals.forEach(el => ro.observe(el));
-    }
-  </script>
-</body>
-</html>
+  <!-- 

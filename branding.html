@@ -411,21 +411,92 @@
     }
     .contact-link:hover { border-color: var(--accent-light); color: var(--accent-light); }
 
-    /* -- Next project bar --------------------------------- */
-    .next-project-bar { border-top: 1px solid var(--border); }
-    .next-project-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 2rem; text-decoration: none; transition: background 0.2s;
-      max-width: 1200px; margin: 0 auto;
+    /* -- Next project card -------------------------------- */
+    .next-project-section {
+      padding: 0 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .next-project-link:hover { background: var(--bg-alt); }
+    .next-project-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s, transform 0.25s, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+    .next-project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, var(--accent-dim) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .next-project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .next-project-card:hover::before { opacity: 1; }
+    .next-project-info { position: relative; z-index: 1; }
     .next-label {
-      font-family: var(--font-display); font-size: 0.63rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--fg-muted); display: block; margin-bottom: 5px;
+      font-family: var(--font-display);
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      display: block;
+      margin-bottom: 6px;
     }
-    .next-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--fg); }
-    .next-project-link svg { color: var(--fg-muted); flex-shrink: 0; transition: transform 0.2s; }
-    .next-project-link:hover svg { transform: translateX(4px); }
+    .next-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .next-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+      transition: color 0.2s, gap 0.2s;
+    }
+    .next-project-card:hover .next-cta { color: var(--accent-light); gap: 10px; }
+    .next-cta svg { flex-shrink: 0; transition: transform 0.2s; }
+    .next-project-card:hover .next-cta svg { transform: translateX(3px); }
+    .next-project-thumb {
+      width: 160px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      opacity: 0.75;
+      transition: opacity 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .next-project-card:hover .next-project-thumb { opacity: 1; transform: scale(1.04); }
+    .next-project-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 480px) {
+      .next-project-thumb { display: none; }
+      .next-project-section { padding: 0 1.25rem 2.5rem; }
+      .next-project-card { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -606,82 +677,34 @@
   </div>
 
   <!-- Next project -->
-  <div class="next-project-bar">
-    <a href="studybuddy.html" class="next-project-link">
-      <div>
+  <div class="next-project-section">
+    <a href="studybuddy.html" class="next-project-card">
+      <div class="next-project-info">
         <span class="next-label" data-i18n="next-label">Next Project</span>
         <span class="next-name">StudyBuddy</span>
+        <span class="next-cta">
+          <span data-i18n="next-cta">View Case Study</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
       </div>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="next-project-thumb">
+        <img src="img/projects/studybuddy-thumbnail.jpg" alt="StudyBuddy" loading="lazy">
+      </div>
+    </a>
+  </div>
+      <div class="next-project-thumb">
+        <img src="img/projects/studybuddy-thumbnail.jpg" alt="StudyBuddy" loading="lazy">
+      </div>
     </a>
   </div>
 
-  <!-- ── Bottom back bar ───────────────────────────────────── -->
-  <div class="bottom-bar">
-    <a href="index.html" class="bottom-back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
-      <span data-i18n="back-bottom">Zurück zum Portfolio</span>
+  <!-- none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+      <div class="next-project-thumb">
+        <img src="img/projects/studybuddy-thumbnail.jpg" alt="StudyBuddy" loading="lazy">
+      </div>
     </a>
   </div>
 
-  <script>
-    const t = {
-      de: {
-        'back':            'Portfolio',
-        'back-bottom':     'Zurück zum Portfolio',
-        'eyebrow':         'Grafikdesign · Branding',
-        'hero-desc':       'Eine Auswahl an Logo-Designs und visuellen Identitäten für Marken aus verschiedenen Branchen — von Konzept über Typografie bis zur finalen Anwendung.',
-        'stat-industries': 'Branchen',
-        'stat-years':      'Jahre',
-        'section-cases':   'Ausgewählte Case Studies',
-        'aero-desc':       'Ein Berliner Tech-Startup, das smarte Hydroponik-Systeme für den Anbau von Gemüse in kleinen Wohnungen und Büros ohne direktes Tageslicht entwickelt. Für umweltbewusste Stadtbewohner (25–40), die Innovation, Effizienz und einen futuristischen Charakter suchen.',
-        'nord-desc':       'Eine Hamburger Premium-Outdoormarke für technische Kleidung bei extremen Klimabedingungen — 100 % recycelte Materialien, urbane monochromatische Ästhetik. Für Abenteurer, Kletterer und Stadtbewohner, die den „Gorpcore"-Stil schätzen.',
-        'suss-desc':       'Eine Kölner Boutique-Konditorei, die französische Pâtisserie mit deutschen Zutaten wie Marzipan und Waldbeeren verbindet. Für Paare, Hochzeitsplaner und Liebhaber erschwinglichen Luxus.',
-        'note-title':      'Vollständiges Portfolio',
-      },
-      en: {
-        'back':            'Portfolio',
-        'back-bottom':     'Back to Portfolio',
-        'eyebrow':         'Graphic Design · Branding',
-        'hero-desc':       'A selection of logo designs and visual identities for brands across different industries — from concept and typography to final implementation.',
-        'stat-industries': 'Industries',
-        'stat-years':      'Years',
-        'section-cases':   'Featured Case Studies',
-        'aero-desc':       'A Berlin-based tech startup designing smart hydroponic systems for growing vegetables in small apartments and offices without direct natural light. Targeting eco-conscious urban professionals (25–40), the brand embodies innovation, cleanliness, efficiency, and a futuristic yet organic personality.',
-        'nord-desc':       'A Hamburg-based premium technical clothing brand for extreme climates, focused on 100% recycled materials and urban monochromatic aesthetics. Targeting adventurers, climbers, and rainy city dwellers who value the \'Gorpcore\' aesthetic. The brand embodies resilience, stoicism, and minimalism.',
-        'suss-desc':       'A Cologne-based boutique pastry shop that blends French pâtisserie with traditional German ingredients like marzipan and forest berries. Targeting couples, wedding planners, and lovers of affordable luxury. The brand embodies delicacy, sweetness, sophistication, and romance.',
-        'note-title':      'Full Portfolio',
-      },
-    };
-
-    const tHtml = {
-      de: { 'note-text': 'Weitere Logo-Projekte und Branding-Arbeiten sind auf <a href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener noreferrer">Behance</a> zu finden.' },
-      en: { 'note-text': 'More logo projects and branding work can be found on <a href="https://www.behance.net/hectoruribe2" target="_blank" rel="noopener noreferrer">Behance</a>.' },
-    };
-
-    function applyLang(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.dataset.i18n;
-        if (t[lang][key] !== undefined) el.textContent = t[lang][key];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const key = el.dataset.i18nHtml;
-        if (tHtml[lang][key] !== undefined) el.innerHTML = tHtml[lang][key];
-      });
-      const btn = document.getElementById('langToggle');
-      btn.querySelector('.lang-flag').textContent = lang === 'de' ? '🇩🇪' : '🇬🇧';
-      btn.querySelector('.lang-label').textContent = lang === 'de' ? 'DE' : 'EN';
-      document.documentElement.lang = lang;
-      localStorage.setItem('lang', lang);
-    }
-
-    let lang = localStorage.getItem('lang') || 'en';
-    applyLang(lang);
-
-    document.getElementById('langToggle').addEventListener('click', () => {
-      lang = lang === 'de' ? 'en' : 'de';
-      applyLang(lang);
-    });
-  </script>
-</body>
-</html>
+  <!-- 
