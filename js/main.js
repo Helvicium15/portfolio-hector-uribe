@@ -32,7 +32,7 @@ const projects = [
   },
   {
     id: 2, name: 'Squishy Savings',
-    cat_de: 'UX/UI · Web-App', cat_en: 'UX/UI · Web App',
+    cat_de: 'UX/UI · Mobile App', cat_en: 'UX/UI · Mobile App',
     img: 'img/projects/mosaic-savings.jpg',
     url: 'squishy-savings.html',
     desc_de: 'Spar-App mit unterhaltsamem und visuellem UX-Design.',

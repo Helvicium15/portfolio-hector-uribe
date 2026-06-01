@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Branding — Hector Uribe</title>
+  <meta name="description" content="Branding — Logo design and visual identities for AeroLeaf, NordWand and SüßMund. Graphic design case studies by Hector Uribe.">
+  <meta property="og:title" content="Branding — Hector Uribe">
+  <meta property="og:description" content="Logo design and brand identities across AgriTech, outdoor fashion and gastronomy.">
+  <meta property="og:image" content="https://portfolio-hector-uribe.vercel.app/img/projects/branding-thumbnail.webp">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -386,6 +391,41 @@
     .lang-toggle:active { transform: scale(0.95); }
     .lang-flag { font-size: 15px; line-height: 1; }
     .lang-label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; }
+
+    /* -- View transition ---------------------------------- */
+    @view-transition { navigation: auto; }
+
+    /* -- Contact strip ------------------------------------ */
+    .contact-strip {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .contact-strip p { color: var(--fg-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--fg); font-family: var(--font-display); font-size: 1rem;
+      font-weight: 600; text-decoration: none;
+      border-bottom: 1px solid var(--border); padding-bottom: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent-light); color: var(--accent-light); }
+
+    /* -- Next project bar --------------------------------- */
+    .next-project-bar { border-top: 1px solid var(--border); }
+    .next-project-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem; text-decoration: none; transition: background 0.2s;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .next-project-link:hover { background: var(--bg-alt); }
+    .next-label {
+      font-family: var(--font-display); font-size: 0.63rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--fg-muted); display: block; margin-bottom: 5px;
+    }
+    .next-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--fg); }
+    .next-project-link svg { color: var(--fg-muted); flex-shrink: 0; transition: transform 0.2s; }
+    .next-project-link:hover svg { transform: translateX(4px); }
   </style>
 </head>
 <body>
@@ -557,6 +597,24 @@
     </div>
 
   </main>
+
+
+  <!-- Contact strip -->
+  <div class="contact-strip">
+    <p data-i18n="contact-text">Interested in working together?</p>
+    <a href="mailto:hectoruch18@gmail.com" class="contact-link">hectoruch18@gmail.com</a>
+  </div>
+
+  <!-- Next project -->
+  <div class="next-project-bar">
+    <a href="studybuddy.html" class="next-project-link">
+      <div>
+        <span class="next-label" data-i18n="next-label">Next Project</span>
+        <span class="next-name">StudyBuddy</span>
+      </div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
 
   <!-- ── Bottom back bar ───────────────────────────────────── -->
   <div class="bottom-bar">

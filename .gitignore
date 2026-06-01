@@ -8,3 +8,4 @@
 *.mp4
 !Portafolio_v2/img/*.mp4
 !img/*.mp4
+.vercel
