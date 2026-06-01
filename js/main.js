@@ -12,7 +12,7 @@ const projects = [
   {
     id: 20, name: 'StudyBuddy',
     cat_de: 'UX/UI · Mobil · CPUX', cat_en: 'UX/UI · Mobile · CPUX',
-    img: 'img/projects/mobile.png',
+    img: 'img/projects/studybuddy-thumbnail.jpg',
     url: 'studybuddy.html',
     desc_de: 'Capstone-Projekt: Lern-App mit strukturierten Blöcken, Fokus-Timer und Reflexion.',
     desc_en: 'Capstone project: study app with structured blocks, focus timer and reflection.',
