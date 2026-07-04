@@ -92,12 +92,13 @@ function PerspectiveProjectCarousel() {
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
       const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-      if (Math.abs(delta) < 6) return;
+      if (Math.abs(delta) < 12) return;
       e.preventDefault();
       if (wheelLock.current) return;
       wheelLock.current = true;
       setActive(a => (delta > 0 ? (a + 1) % n : (a - 1 + n) % n));
-      window.setTimeout(() => { wheelLock.current = false; }, 360);
+      // Lock ≈ card transition (0.55s) so one wheel notch settles one card.
+      window.setTimeout(() => { wheelLock.current = false; }, 480);
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
