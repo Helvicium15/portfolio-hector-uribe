@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -78,10 +78,29 @@ function PerspectiveProjectCarousel() {
   const { lang } = useLang();
   const en = lang === 'en';
   const n = projects.length;
+  const stageRef = useRef<HTMLDivElement>(null);
+  const wheelLock = useRef(false);
 
   useEffect(() => {
     const t = setInterval(() => setActive(a => (a + 1) % n), 4200);
     return () => clearInterval(t);
+  }, [n]);
+
+  // Mouse-wheel navigation over the perspective stage (one notch = one card).
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 6) return;
+      e.preventDefault();
+      if (wheelLock.current) return;
+      wheelLock.current = true;
+      setActive(a => (delta > 0 ? (a + 1) % n : (a - 1 + n) % n));
+      window.setTimeout(() => { wheelLock.current = false; }, 360);
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
   }, [n]);
 
   const prev = () => setActive(a => (a - 1 + n) % n);
@@ -109,7 +128,7 @@ function PerspectiveProjectCarousel() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
 
       {/* ── Perspective stage ──────────────────────────────────── */}
-      <div style={{
+      <div ref={stageRef} style={{
         position: 'relative',
         width: '100%',
         height: CARD_H + 56,
