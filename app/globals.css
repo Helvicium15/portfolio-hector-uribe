@@ -756,6 +756,62 @@ html {
   .proj-arrow { display: none; }
 }
 
+/* ── Projects slider: scroll affordances ─────────────────────────── */
+.proj-fade {
+  position: absolute;
+  top: 0;
+  bottom: 16px;
+  width: 76px;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.3s ease;
+}
+.proj-fade-left  { left: 0;  background: linear-gradient(90deg,  #d6ebf2 14%, rgba(214,235,242,0)); }
+.proj-fade-right { right: 0; background: linear-gradient(270deg, #d6ebf2 14%, rgba(214,235,242,0)); }
+
+.proj-scrollbar {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(15,41,64,0.10);
+  margin: 18px auto 0;
+  max-width: 220px;
+  overflow: hidden;
+}
+.proj-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #fe8684, #83cae2);
+  transition: left 0.12s ease, width 0.2s ease;
+}
+
+.proj-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(15,41,64,0.66);
+}
+.proj-hint-arrow {
+  color: #fe8684;
+  flex-shrink: 0;
+  animation: projNudge 1.6s ease-in-out infinite;
+}
+@keyframes projNudge {
+  0%, 100% { transform: translateX(0);   opacity: 0.6; }
+  50%      { transform: translateX(5px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-hint-arrow { animation: none; }
+}
+
 /* ── Focus visible ────────────────────────────────────────────── */
 *:focus-visible {
   outline: 2px solid #0F2940;
@@ -914,6 +970,9 @@ html {
    RESPONSIVE SYSTEM
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* Mobile section menu under the diorama — hidden on desktop, shown ≤640px */
+.diorama-mobile-menu { display: none; }
+
 @media (max-width: 640px) {
 
   #hero {
@@ -924,24 +983,62 @@ html {
 
   .scroll-cue { display: none !important; }
 
-  #diorama { padding: 16px 0 8px !important; }
+  #diorama { padding: 8px 0 4px !important; }
 
-  .diorama-canvas { height: min(450px, 66vh) !important; }
+  .diorama-canvas { height: min(400px, 46vh) !important; }
 
-  .lg-anno {
-    width: 56px !important;
-    height: 56px !important;
-    padding: 0 !important;
-    border-radius: 50% !important;
-    transform: translate(-50%, -50%) !important;
+  .section-head { margin-bottom: 24px !important; }
+  .section-head h2 { font-size: clamp(30px, 8vw, 40px) !important; }
+  .section-head p { margin-top: 12px !important; }
+
+  /* Phones: drop the floating iso chips, connector lines and drag hint —
+     replaced by the labeled section menu rendered under the canvas. */
+  .lg-anno,
+  .diorama-annos-svg,
+  .diorama-hint { display: none !important; }
+
+  .diorama-mobile-menu {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 10px 14px 6px;
   }
-  .lg-anno:hover {
-    transform: translate(-50%, -50%) translateY(-3px) !important;
+  .dm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 15px 8px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(131,202,226,0.35);
+    background: rgba(255,255,255,0.84);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 4px 14px rgba(15,41,64,0.08), inset 0 1px 0 rgba(255,255,255,0.92);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.14s ease, box-shadow 0.18s ease;
   }
-  .lg-anno-label { display: none !important; }
-  .lg-anno-sphere {
-    width: 56px !important;
-    height: 56px !important;
+  .dm-btn:active { transform: scale(0.95); }
+  .dm-ic {
+    width: 36px; height: 36px; flex-shrink: 0;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: rgba(var(--ac), 0.16);
+    border: 1px solid rgba(var(--ac), 0.44);
+  }
+  .dm-ic svg { width: 18px; height: 18px; }
+  .dm-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    color: #0F2940;
+    letter-spacing: -0.01em;
+    padding-right: 5px;
+    white-space: nowrap;
   }
 
   .glass-btn {

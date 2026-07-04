@@ -10,12 +10,17 @@ export default function ProjectsCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [thumb, setThumb] = useState(0.4);
 
   const updateArrows = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
     setCanPrev(el.scrollLeft > 4);
-    setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+    setCanNext(el.scrollLeft < max - 4);
+    setProgress(max > 0 ? el.scrollLeft / max : 0);
+    setThumb(el.scrollWidth > 0 ? Math.min(1, el.clientWidth / el.scrollWidth) : 1);
   }, []);
 
   useEffect(() => {
@@ -45,6 +50,20 @@ export default function ProjectsCarousel() {
       window.removeEventListener('resize', updateArrows);
     };
   }, [updateArrows]);
+
+  // One-time gentle nudge on first view to reveal the slider is scrollable.
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const el = trackRef.current;
+    if (!el) return;
+    let t2: ReturnType<typeof setTimeout>;
+    const t1 = setTimeout(() => {
+      if (!el || el.scrollLeft > 4) return;
+      el.scrollTo({ left: 46, behavior: 'smooth' });
+      t2 = setTimeout(() => el?.scrollTo({ left: 0, behavior: 'smooth' }), 680);
+    }, 1200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   const scrollByCards = (dir: number) => {
     const el = trackRef.current;
@@ -138,6 +157,10 @@ export default function ProjectsCarousel() {
           })}
         </div>
 
+        {/* Edge fades — cue that more cards continue off-screen */}
+        <div aria-hidden className="proj-fade proj-fade-left" style={{ opacity: canPrev ? 1 : 0 }} />
+        <div aria-hidden className="proj-fade proj-fade-right" style={{ opacity: canNext ? 1 : 0 }} />
+
         {/* Prev / Next */}
         <button
           type="button"
@@ -161,13 +184,16 @@ export default function ProjectsCarousel() {
         </button>
       </div>
 
-      <p style={{
-        textAlign: 'center', margin: '10px 0 0',
-        fontFamily: 'var(--font-mono)', fontSize: 11,
-        letterSpacing: '0.16em', textTransform: 'uppercase',
-        color: 'rgba(15,41,64,0.72)',
-      }}>
-        {en ? 'Scroll · Swipe · Click' : 'Scrollen · Wischen · Klicken'}
+      {/* Scroll affordance: progress track + animated instruction */}
+      <div className="proj-scrollbar" aria-hidden>
+        <span
+          className="proj-scrollbar-thumb"
+          style={{ width: `${Math.max(thumb * 100, 12)}%`, left: `${progress * (1 - thumb) * 100}%` }}
+        />
+      </div>
+      <p className="proj-hint">
+        <span>{en ? 'Scroll or swipe to see more' : 'Scrollen oder wischen für mehr'}</span>
+        <svg className="proj-hint-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
       </p>
     </div>
   );

@@ -380,9 +380,21 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
     const H = mount.clientHeight || 560;
 
     const scene = new THREE.Scene();
-    const aspect = W / H;
-    const d = 5.6;
-    const cam = new THREE.OrthographicCamera(-d * aspect, d * aspect, d * 1.55, -d * 0.80, -50, 100);
+
+    // Responsive orthographic framing: always keep at least HALF_W of horizontal
+    // world half-extent visible so the WHOLE room fits on portrait/mobile, and
+    // ease the vertical frustum toward square as we zoom out so the room keeps
+    // natural proportions instead of ballooning with empty margin.
+    const HALF_W = 8.6;
+    const frustum = (aspect: number) => {
+      const dd = Math.max(5.6, HALF_W / aspect);
+      const k = Math.min(Math.max((dd - 5.6) / 4.0, 0), 1); // 0 = desktop, 1 = very narrow
+      const tM = 1.55 + (1.00 - 1.55) * k; // tighten top headroom on mobile
+      const bM = 0.80 + (0.62 - 0.80) * k;
+      return { left: -dd * aspect, right: dd * aspect, top: dd * tM, bottom: -dd * bM };
+    };
+    const f0 = frustum(W / H);
+    const cam = new THREE.OrthographicCamera(f0.left, f0.right, f0.top, f0.bottom, -50, 100);
     const off = new THREE.Vector3(1, 0.92, 1).normalize().multiplyScalar(40);
     cam.position.copy(off);
     cam.lookAt(new THREE.Vector3(0, 1.5, 0));
@@ -608,9 +620,9 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
     const ro = new ResizeObserver(() => {
       const w2 = mount.clientWidth, h2 = mount.clientHeight;
       if (!w2 || !h2) return;
-      const a2 = w2 / h2;
-      cam.left = -d * a2; cam.right = d * a2;
-      cam.top = d * 1.55; cam.bottom = -d * 0.80;
+      const f = frustum(w2 / h2);
+      cam.left = f.left; cam.right = f.right;
+      cam.top = f.top; cam.bottom = f.bottom;
       cam.updateProjectionMatrix();
       renderer.setSize(w2, h2);
     });
@@ -632,6 +644,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
   }, [onSectionOpen, isDark]);
 
   return (
+    <>
     <div ref={containerRef} className="diorama-canvas" style={{ position: 'relative', width: '100%', height: 'min(740px, 78vh)' }}>
       {/* Three.js canvas */}
       <div ref={mountRef} style={{ position: 'absolute', inset: 0 }} />
@@ -648,6 +661,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
 
       {/* SVG connecting lines */}
       <svg
+        className="diorama-annos-svg"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'visible' }}
         aria-hidden="true"
       >
@@ -778,11 +792,32 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
       })}
 
       {/* Drag hint */}
-      <div className="lq-pill" style={{ position: 'absolute', left: '50%', bottom: '-36px', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '8px', padding: '7px 18px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: isDark ? 'rgba(240,244,255,0.88)' : 'rgba(20,25,60,0.72)', pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: isDark ? '0 0 16px rgba(120,80,255,0.18) inset, 0 4px 16px rgba(0,0,0,0.35)' : '0 4px 16px rgba(0,0,0,0.10)', animation: 'scrollBob 3s ease-in-out infinite' }}>
+      <div className="lq-pill diorama-hint" style={{ position: 'absolute', left: '50%', bottom: '-36px', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '8px', padding: '7px 18px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: isDark ? 'rgba(240,244,255,0.88)' : 'rgba(20,25,60,0.72)', pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: isDark ? '0 0 16px rgba(120,80,255,0.18) inset, 0 4px 16px rgba(0,0,0,0.35)' : '0 4px 16px rgba(0,0,0,0.10)', animation: 'scrollBob 3s ease-in-out infinite' }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M9 11V6a2 2 0 0 1 4 0v5"/><path d="M13 8a2 2 0 0 1 4 0v4"/><path d="M17 9.5a2 2 0 0 1 4 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.3-3.2L4.5 13a2 2 0 0 1 3.5-2"/></svg>
         {ui[lang].dioramaHint}
       </div>
     </div>
+
+    {/* Mobile-only labeled section menu — replaces the floating iso chips on
+        phones, where they'd overlap unlabeled and taps are unreliable. */}
+    <nav className="diorama-mobile-menu" aria-label={lang === 'en' ? 'Sections' : lang === 'es' ? 'Secciones' : 'Bereiche'}>
+      {ANNOS.map((a) => {
+        const ac = (CHIP_ACCENTS[a.key] ?? [131, 202, 226]).join(',');
+        return (
+          <button
+            key={a.key}
+            type="button"
+            onClick={() => onSectionOpen(a.key)}
+            className="dm-btn"
+            style={{ '--ac': ac } as React.CSSProperties}
+          >
+            <span className="dm-ic">{getAnnoIcon(a.key, false)}</span>
+            <span className="dm-label">{annoLabels[a.key]?.[lang] ?? a.label}</span>
+          </button>
+        );
+      })}
+    </nav>
+    </>
   );
 }
 
