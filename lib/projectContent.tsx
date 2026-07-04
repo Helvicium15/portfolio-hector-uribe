@@ -247,28 +247,30 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     role: t('Solo — UX Designer', 'Solo — UX Designer'),
     year: '2024',
     heroImg: '/img/projects/studybuddy-thumbnail.webp',
+    liveUrl: 'https://study-buddy-lilac-chi.vercel.app/',
+    liveLabel: t('Live ansehen', 'View live'),
     intro: t('StudyBuddy ist mein CPUX-Capstone-Projekt: eine mobile App, die Studierende dabei unterstützt, strukturierte Lernblöcke zu planen, mit einem ablenkungsfreien Timer zu arbeiten und danach kurz zu reflektieren — alles in einer warmen, tagebuchähnlichen Ästhetik.', 'StudyBuddy is my CPUX capstone project: a mobile app that helps students plan structured study blocks, work with a distraction-free timer and briefly reflect afterwards — all in a warm, journal-like aesthetic.'),
     sections: [
       {
-        label: 'Problem & Lösung',
+        label: t('Problem & Lösung', 'Problem & Solution'),
         content: grid2(
-          <>{cardTitle('Herausforderung', '#a855f766')}{cardBody('Studierende verlieren sich in langen, unstrukturierten Sessions ohne Pausen und wissen danach nicht, wie produktiv sie wirklich waren. Bestehende Tools wie Kalender-Apps oder reine Timer bieten keine Verbindung zur eigentlichen Lernerfahrung.')}</>,
-          <>{cardTitle('Lösung', '#a855f766')}{cardBody('StudyBuddy ermöglicht strukturierte Lernblöcke — Fach, Dauer, Lerntyp — kombiniert mit einem fokussierten Timer und einer kurzen Post-Session-Reflexion. Der gesamte Kernflow dauert unter 15 Sekunden.')}</>,
+          <>{cardTitle(t('Herausforderung', 'Challenge'), '#a855f766')}{cardBody(t('Studierende verlieren sich in langen, unstrukturierten Sessions ohne Pausen und wissen danach nicht, wie produktiv sie wirklich waren. Bestehende Tools wie Kalender-Apps oder reine Timer bieten keine Verbindung zur eigentlichen Lernerfahrung.', 'Students get lost in long, unstructured sessions without breaks and afterwards don\'t know how productive they really were. Existing tools like calendar apps or plain timers offer no connection to the actual learning experience.'))}</>,
+          <>{cardTitle(t('Lösung', 'Solution'), '#a855f766')}{cardBody(t('StudyBuddy ermöglicht strukturierte Lernblöcke — Fach, Dauer, Lerntyp — kombiniert mit einem fokussierten Timer und einer kurzen Post-Session-Reflexion. Der gesamte Kernflow dauert unter 15 Sekunden.', 'StudyBuddy enables structured study blocks — subject, duration, study type — combined with a focused timer and a short post-session reflection. The entire core flow takes under 15 seconds.'))}</>,
         ),
       },
       {
-        label: 'User Persona',
+        label: t('User Persona', 'User Persona'),
         content: card(
           <div style={{ position: 'relative', zIndex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18, marginBottom: 20, flexWrap: 'wrap' }}>
               <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(131,202,226,0.20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>👩‍🎓</div>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: '#0F2940', marginBottom: 3 }}>Lena Hofmann, 23</div>
-                <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)' }}>BWL, 4. Semester · iPhone — unterwegs und am Schreibtisch</div>
+                <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)' }}>{t('BWL, 4. Semester · iPhone — unterwegs und am Schreibtisch', 'Business, 4th semester · iPhone — on the go and at the desk')}</div>
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 14 }}>
-              {[['Ziel','Effizient lernen ohne den Überblick zu verlieren'],['Frustration','Weiß nach stundenlangem Lernen nicht, was erreicht wurde'],['Bedarf','Struktur — aber ohne zusätzlichen Stress'],['Gerät','iPhone, unterwegs & am Schreibtisch']].map(([k,v]) => (
+              {[[t('Ziel','Goal'),t('Effizient lernen ohne den Überblick zu verlieren','Study efficiently without losing track')],[t('Frustration','Frustration'),t('Weiß nach stundenlangem Lernen nicht, was erreicht wurde','After hours of studying, doesn\'t know what was achieved')],[t('Bedarf','Need'),t('Struktur — aber ohne zusätzlichen Stress','Structure — but without extra stress')],[t('Gerät','Device'),t('iPhone, unterwegs & am Schreibtisch','iPhone, on the go & at the desk')]].map(([k,v]) => (
                 <div key={k}>
                   <div className="mono-label" style={{ marginBottom: 4, fontSize: 9 }}>{k}</div>
                   <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)' }}>{v}</div>
@@ -279,14 +281,14 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         ),
       },
       {
-        label: 'UX-Prozess',
+        label: t('UX-Prozess', 'UX Process'),
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 14 }}>
             {[
-              { n: 'P1', t: 'Research', b: 'Desk Research: Forest, Pomodoro Timer, StudySmarter, Notion. Key Insight: kein Tool kombiniert Planung, Timer und Reflexion. Persona Lena aus Findings entwickelt.', h: '10h' },
-              { n: 'P2', t: 'Konzeption', b: '3 Kernfunktionen definiert: Blockanlage, Fokustimer, Reflexion. 6-Screen-User-Flow von App-Öffnung bis Sessionende. Low-Fi-Bleistift-Wireframes.', h: '15h' },
-              { n: 'P3', t: 'Design', b: 'Style-Tile um "Tagebucheintrag"-Konzept: warme Pastelltöne auf Creme. Bewusstes Dark Mode für den Timer als psychologisches Fokussignal. Hi-Fi-Mockups & Figma-Prototyp.', h: '20h' },
-              { n: 'P4', t: 'Dokumentation', b: 'Alle Designentscheidungen dokumentiert. Wichtigstes Learning: Das Schwierigste war das Weglassen von Features — jeder extra Screen ist ein potenzieller Drop-off-Punkt.', h: '5h' },
+              { n: 'P1', t: t('Research', 'Research'), b: t('Desk Research: Forest, Pomodoro Timer, StudySmarter, Notion. Key Insight: kein Tool kombiniert Planung, Timer und Reflexion. Persona Lena aus Findings entwickelt.', 'Desk research: Forest, Pomodoro Timer, StudySmarter, Notion. Key insight: no tool combines planning, timer and reflection. Persona Lena developed from the findings.'), h: '10h' },
+              { n: 'P2', t: t('Konzeption', 'Concept'), b: t('3 Kernfunktionen definiert: Blockanlage, Fokustimer, Reflexion. 6-Screen-User-Flow von App-Öffnung bis Sessionende. Low-Fi-Bleistift-Wireframes.', 'Defined 3 core functions: block creation, focus timer, reflection. 6-screen user flow from app open to session end. Low-fi pencil wireframes.'), h: '15h' },
+              { n: 'P3', t: t('Design', 'Design'), b: t('Style-Tile um "Tagebucheintrag"-Konzept: warme Pastelltöne auf Creme. Bewusstes Dark Mode für den Timer als psychologisches Fokussignal. Hi-Fi-Mockups & Figma-Prototyp.', 'Style tile around a "journal entry" concept: warm pastels on cream. Deliberate dark mode for the timer as a psychological focus signal. Hi-fi mockups & Figma prototype.'), h: '20h' },
+              { n: 'P4', t: t('Dokumentation', 'Documentation'), b: t('Alle Designentscheidungen dokumentiert. Wichtigstes Learning: Das Schwierigste war das Weglassen von Features — jeder extra Screen ist ein potenzieller Drop-off-Punkt.', 'Documented all design decisions. Key learning: the hardest part was leaving features out — every extra screen is a potential drop-off point.'), h: '5h' },
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -302,11 +304,11 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         ),
       },
       {
-        label: 'User Flow',
+        label: t('User Flow', 'User Flow'),
         content: card(
           <div style={{ position: 'relative', zIndex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', justifyContent: 'center' }}>
-              {['Home','Block anlegen','Bereit?','Timer','Fertig!','Home'].map((step, i, arr) => (
+              {[t('Home','Home'),t('Block anlegen','Create block'),t('Bereit?','Ready?'),t('Timer','Timer'),t('Fertig!','Done!'),t('Home','Home')].map((step, i, arr) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span className="glass-pill" style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>{step}</span>
                   {i < arr.length - 1 && <span style={{ color: 'rgba(15,41,64,0.55)', fontSize: 11 }}>→</span>}
@@ -317,14 +319,14 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         ),
       },
       {
-        label: 'Key Features',
+        label: t('Key Features', 'Key Features'),
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
             {[
-              { t: 'Lernblock-Erstellung', b: 'Fach, Dauer und Lerntyp (Lesen / Üben / Zusammenfassen) in einer Ansicht anlegen.' },
-              { t: 'Fokus-Timer', b: 'Minimaler Dark-Mode-Timer — ein Tap zum Beenden, Wischen zum Pausieren. Keine Ablenkungen.' },
-              { t: 'Post-Session-Reflexion', b: 'Stimmungs-Emoji und optionale Kurznotiz nach jeder Session — leicht, persönlich, motivierend.' },
-              { t: 'Streak & Fortschritt', b: 'Täglicher Streak-Counter mit visuellem Fortschrittsfeedback. Gesamter Kernflow unter 15 Sekunden.' },
+              { t: t('Lernblock-Erstellung', 'Study Block Creation'), b: t('Fach, Dauer und Lerntyp (Lesen / Üben / Zusammenfassen) in einer Ansicht anlegen.', 'Create subject, duration and study type (read / practice / summarize) in one view.') },
+              { t: t('Fokus-Timer', 'Focus Timer'), b: t('Minimaler Dark-Mode-Timer — ein Tap zum Beenden, Wischen zum Pausieren. Keine Ablenkungen.', 'Minimal dark-mode timer — one tap to finish, swipe to pause. No distractions.') },
+              { t: t('Post-Session-Reflexion', 'Post-Session Reflection'), b: t('Stimmungs-Emoji und optionale Kurznotiz nach jeder Session — leicht, persönlich, motivierend.', 'Mood emoji and optional short note after each session — light, personal, motivating.') },
+              { t: t('Streak & Fortschritt', 'Streak & Progress'), b: t('Täglicher Streak-Counter mit visuellem Fortschrittsfeedback. Gesamter Kernflow unter 15 Sekunden.', 'Daily streak counter with visual progress feedback. Entire core flow under 15 seconds.') },
             ].map((f, i) => card(<>{cardTitle(f.t, '#a855f766')}{cardBody(f.b)}</>, undefined, i))}
           </div>
         ),
@@ -354,8 +356,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               <img src="/img/projects/AeroLeaf_01.webp" alt="AeroLeaf Brand Mockup" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
-              {card(<>{cardTitle('Konzept', '#39FF1466')}{cardBody('Berliner AgriTech-Startup für smarte Hydroponiksysteme — Gemüseanbau in kleinen Wohnungen und Büros ohne Tageslicht. Zielgruppe: umweltbewusste Stadtbewohner (25–40). Die Marke vereint Innovation, Sauberkeit und eine futuristische, aber organische Persönlichkeit.')}</>)}
-              {card(<>{cardTitle('Identität', '#39FF1466')}{cardBody('Tagline: "Where nature meets German engineering." Farbpalette: Neongrün auf Tiefschwarz. Typografie: Geometric Sans mit technischem Charakter. Anwendungen: Produktpackaging, App-Icon, Showroom-Beschilderung.')}</>)}
+              {card(<>{cardTitle(t('Konzept', 'Concept'), '#39FF1466')}{cardBody(t('Berliner AgriTech-Startup für smarte Hydroponiksysteme — Gemüseanbau in kleinen Wohnungen und Büros ohne Tageslicht. Zielgruppe: umweltbewusste Stadtbewohner (25–40). Die Marke vereint Innovation, Sauberkeit und eine futuristische, aber organische Persönlichkeit.', 'Berlin AgriTech startup for smart hydroponic systems — growing vegetables in small apartments and offices without daylight. Target audience: eco-conscious city dwellers (25–40). The brand unites innovation, cleanliness and a futuristic yet organic personality.'))}</>)}
+              {card(<>{cardTitle(t('Identität', 'Identity'), '#39FF1466')}{cardBody(t('Tagline: "Where nature meets German engineering." Farbpalette: Neongrün auf Tiefschwarz. Typografie: Geometric Sans mit technischem Charakter. Anwendungen: Produktpackaging, App-Icon, Showroom-Beschilderung.', 'Tagline: "Where nature meets German engineering." Color palette: neon green on deep black. Typography: geometric sans with a technical character. Applications: product packaging, app icon, showroom signage.'))}</>)}
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','AgriTech','Berlin','Sustainable'].map(t => (
@@ -373,8 +375,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               <img src="/img/projects/NordWand_01.webp" alt="NordWand Brand Mockup" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
-              {card(<>{cardTitle('Konzept', '#e8601f66')}{cardBody('Hamburger Premium-Bekleidungsmarke für extreme Klimabedingungen — 100% recycelte Materialien, urbane monochromatische Ästhetik. Zielgruppe: Abenteurer, Kletterer und Stadtbewohner im Regen mit Gorpcore-Affinität. Die Marke verkörpert Belastbarkeit, Stoizismus und Minimalismus.')}</>)}
-              {card(<>{cardTitle('Identität', '#e8601f66')}{cardBody('Tagline: "Protection against the elements." Farbpalette: Tiefes Schiefergrau, Schneeweiss, Eismatt-Akzent. Logo: Kondensierte Typografie mit geometrischem Berggipfelelement. Anwendungen: Jacken, Retail-Signage, Produktcards.')}</>)}
+              {card(<>{cardTitle(t('Konzept', 'Concept'), '#e8601f66')}{cardBody(t('Hamburger Premium-Bekleidungsmarke für extreme Klimabedingungen — 100% recycelte Materialien, urbane monochromatische Ästhetik. Zielgruppe: Abenteurer, Kletterer und Stadtbewohner im Regen mit Gorpcore-Affinität. Die Marke verkörpert Belastbarkeit, Stoizismus und Minimalismus.', 'Hamburg premium clothing brand for extreme weather conditions — 100% recycled materials, urban monochromatic aesthetic. Target audience: adventurers, climbers and city dwellers in the rain with a gorpcore affinity. The brand embodies resilience, stoicism and minimalism.'))}</>)}
+              {card(<>{cardTitle(t('Identität', 'Identity'), '#e8601f66')}{cardBody(t('Tagline: "Protection against the elements." Farbpalette: Tiefes Schiefergrau, Schneeweiss, Eismatt-Akzent. Logo: Kondensierte Typografie mit geometrischem Berggipfelelement. Anwendungen: Jacken, Retail-Signage, Produktcards.', 'Tagline: "Protection against the elements." Color palette: deep slate grey, snow white, ice-matte accent. Logo: condensed typography with a geometric mountain-peak element. Applications: jackets, retail signage, product cards.'))}</>)}
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','Outdoor Fashion','Hamburg','Sustainable','Gorpcore'].map(t => (
@@ -392,8 +394,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               <img src="/img/projects/Sussmund_03.webp" alt="SüßMund Pâtisserie" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
-              {card(<>{cardTitle('Konzept', '#fa8ab466')}{cardBody('Kölner Boutique-Konditorei, die französische Pâtisserie mit deutschen Zutaten wie Marzipan und Waldbeeren verbindet. Zielgruppe: Paare, Hochzeitsplaner und Liebhaber erschwinglichen Luxus. Die Marke verkörpert Zartheit, Verspieltheit, Eleganz und Romantik.')}</>)}
-              {card(<>{cardTitle('Identität', '#fa8ab466')}{cardBody('Tagline: "Little edible jewels." Farbpalette: Creme, tiefes Bordeauxrot, Goldakzent. Logo: Verschlungene Initialen mit Gebäckmotiv. Typografie: Klassische Serifenschrift für Display. Anwendungen: Packaging, Visitenkarten, Schaufensterbeschriftung.')}</>)}
+              {card(<>{cardTitle(t('Konzept', 'Concept'), '#fa8ab466')}{cardBody(t('Kölner Boutique-Konditorei, die französische Pâtisserie mit deutschen Zutaten wie Marzipan und Waldbeeren verbindet. Zielgruppe: Paare, Hochzeitsplaner und Liebhaber erschwinglichen Luxus. Die Marke verkörpert Zartheit, Verspieltheit, Eleganz und Romantik.', 'Cologne boutique patisserie combining French pâtisserie with German ingredients like marzipan and wild berries. Target audience: couples, wedding planners and lovers of affordable luxury. The brand embodies delicacy, playfulness, elegance and romance.'))}</>)}
+              {card(<>{cardTitle(t('Identität', 'Identity'), '#fa8ab466')}{cardBody(t('Tagline: "Little edible jewels." Farbpalette: Creme, tiefes Bordeauxrot, Goldakzent. Logo: Verschlungene Initialen mit Gebäckmotiv. Typografie: Klassische Serifenschrift für Display. Anwendungen: Packaging, Visitenkarten, Schaufensterbeschriftung.', 'Tagline: "Little edible jewels." Color palette: cream, deep bordeaux red, gold accent. Logo: intertwined initials with a pastry motif. Typography: classic serif for display. Applications: packaging, business cards, storefront lettering.'))}</>)}
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','Gastronomy','Cologne','Mascot Design','Packaging'].map(t => (
@@ -421,28 +423,28 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     intro: t('SchwimmSpass ist ein App-Redesign-Konzept für einen Mainzer Anbieter von Kinderschwimmkursen. Das Ziel: Die Kursanmeldung und -verwaltung für vielbeschäftigte Eltern so einfach wie möglich zu gestalten.', 'SchwimmSpass is an app redesign concept for a Mainz-based provider of children\'s swimming courses. The goal: to make course registration and management as simple as possible for busy parents.'),
     sections: [
       {
-        label: 'Problem & Kontext',
+        label: t('Problem & Kontext', 'Problem & Context'),
         content: grid2(
-          <>{cardTitle('Ausgangssituation', '#06b6d466')}{cardBody('Die bestehende Lösung des Anbieters war ein PDF-Formular per E-Mail. Eltern mussten Kurstermine manuell abgleichen, Dokumente ausdrucken und einschicken. Kein App-Angebot, keine digitale Rückmeldung.')}</>,
-          <>{cardTitle('Zielgruppe', '#06b6d466')}{cardBody('Eltern von Kindern im Alter von 3–6 Jahren, berufstätig, mit begrenztem Zeitbudget. Hauptgerät: Smartphone. Hauptbedürfnis: schnelle, übersichtliche Kursanmeldung und -verwaltung.')}</>,
+          <>{cardTitle(t('Ausgangssituation', 'Starting Point'), '#06b6d466')}{cardBody(t('Die bestehende Lösung des Anbieters war ein PDF-Formular per E-Mail. Eltern mussten Kurstermine manuell abgleichen, Dokumente ausdrucken und einschicken. Kein App-Angebot, keine digitale Rückmeldung.', 'The provider\'s existing solution was a PDF form via email. Parents had to check course dates manually, print documents and mail them in. No app, no digital feedback.'))}</>,
+          <>{cardTitle(t('Zielgruppe', 'Target Audience'), '#06b6d466')}{cardBody(t('Eltern von Kindern im Alter von 3–6 Jahren, berufstätig, mit begrenztem Zeitbudget. Hauptgerät: Smartphone. Hauptbedürfnis: schnelle, übersichtliche Kursanmeldung und -verwaltung.', 'Parents of children aged 3–6, working, with a limited time budget. Main device: smartphone. Main need: fast, clear course registration and management.'))}</>,
         ),
       },
       {
-        label: 'Designentscheidungen',
+        label: t('Designentscheidungen', 'Design Decisions'),
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 16 }}>
             {[
-              { t: 'Onboarding', b: 'Kinddaten einmalig anlegen; bei Folgebuchungen entfällt jede Dateneingabe.' },
-              { t: 'Kursfilter', b: 'Filterung nach Altersgruppe, Uhrzeit und Wochentag — direkt auf dem Startscreen.' },
-              { t: 'Buchungsflow', b: 'Unter 3 Taps vom Kurs zur Bestätigung. Kalenderintegration per Deep Link.' },
-              { t: 'Fortschritt', b: 'Visueller Badge-Fortschrittsbalken für jedes Kind — motivierend für Eltern.' },
+              { t: t('Onboarding', 'Onboarding'), b: t('Kinddaten einmalig anlegen; bei Folgebuchungen entfällt jede Dateneingabe.', 'Enter child data once; no data entry needed for follow-up bookings.') },
+              { t: t('Kursfilter', 'Course Filter'), b: t('Filterung nach Altersgruppe, Uhrzeit und Wochentag — direkt auf dem Startscreen.', 'Filter by age group, time and weekday — directly on the start screen.') },
+              { t: t('Buchungsflow', 'Booking Flow'), b: t('Unter 3 Taps vom Kurs zur Bestätigung. Kalenderintegration per Deep Link.', 'Under 3 taps from course to confirmation. Calendar integration via deep link.') },
+              { t: t('Fortschritt', 'Progress'), b: t('Visueller Badge-Fortschrittsbalken für jedes Kind — motivierend für Eltern.', 'Visual badge progress bar for each child — motivating for parents.') },
             ].map((d, i) => card(<>{cardTitle(d.t, '#06b6d466')}{cardBody(d.b)}</>, undefined, i))}
           </div>
         ),
       },
       {
-        label: 'Usability-Test',
-        content: card(cardBody('Fünf moderierte Tests mit Eltern (online, per Maze). Hauptfinding: Der Buchungsabschluss-Button war in der ersten Version schwer findbar (Farbe zu ähnlich wie Hintergrund). Überarbeitung: Höherer Kontrast, größere Touch-Target-Area. Sekundäres Finding: Eltern wollten den Kursleiter sehen — Leiterbild und Kurzprofil wurden in v2 ergänzt.')),
+        label: t('Usability-Test', 'Usability Test'),
+        content: card(cardBody(t('Fünf moderierte Tests mit Eltern (online, per Maze). Hauptfinding: Der Buchungsabschluss-Button war in der ersten Version schwer findbar (Farbe zu ähnlich wie Hintergrund). Überarbeitung: Höherer Kontrast, größere Touch-Target-Area. Sekundäres Finding: Eltern wollten den Kursleiter sehen — Leiterbild und Kurzprofil wurden in v2 ergänzt.', 'Five moderated tests with parents (online, via Maze). Main finding: the booking-completion button was hard to find in the first version (color too similar to the background). Revision: higher contrast, larger touch-target area. Secondary finding: parents wanted to see the instructor — an instructor photo and short profile were added in v2.'))),
       },
     ],
     nextSlug: 'squishy-savings',
@@ -462,10 +464,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     intro: t('Squishy Savings ist eine Mobile-Finance-App mit verspielter, weicher Ästhetik und einem klaren Ansatz: alle Finanzdaten lokal auf dem Gerät — maximale Privatsphäre, null Abhängigkeiten, keine Registrierung erforderlich.', 'Squishy Savings is a mobile finance app with a playful, soft aesthetic and a clear approach: all financial data stored locally on the device — maximum privacy, zero dependencies, no registration required.'),
     sections: [
       {
-        label: 'Problem & Lösung',
+        label: t('Problem & Lösung', 'Problem & Solution'),
         content: grid2(
-          <>{cardTitle('Herausforderung', '#f59e0b66')}{cardBody('Die meisten Spar-Apps erfordern eine Kontoverbindung, Cloud-Sync oder Registrierung. Viele Nutzer möchten ihre Finanzdaten privat halten und nicht teilen — aber dennoch einen klaren Überblick über Ersparnisse, Ausgaben und Sparziele.')}</>,
-          <>{cardTitle('Lösung', '#f59e0b66')}{cardBody('Ein Mobile-First-Design mit weicher, spielerischer Ästhetik (hence "Squishy"). Klare Struktur für Sparkonten, Einnahmen-/Ausgaben-Tracking und persönliche Sparziele mit visuellem Fortschritt. Alles ohne Server, ohne Login.')}</>,
+          <>{cardTitle(t('Herausforderung', 'Challenge'), '#f59e0b66')}{cardBody(t('Die meisten Spar-Apps erfordern eine Kontoverbindung, Cloud-Sync oder Registrierung. Viele Nutzer möchten ihre Finanzdaten privat halten und nicht teilen — aber dennoch einen klaren Überblick über Ersparnisse, Ausgaben und Sparziele.', 'Most savings apps require a bank connection, cloud sync or registration. Many users want to keep their financial data private and not share it — yet still have a clear overview of savings, expenses and goals.'))}</>,
+          <>{cardTitle(t('Lösung', 'Solution'), '#f59e0b66')}{cardBody(t('Ein Mobile-First-Design mit weicher, spielerischer Ästhetik (hence "Squishy"). Klare Struktur für Sparkonten, Einnahmen-/Ausgaben-Tracking und persönliche Sparziele mit visuellem Fortschritt. Alles ohne Server, ohne Login.', 'A mobile-first design with a soft, playful aesthetic (hence "Squishy"). Clear structure for savings accounts, income/expense tracking and personal goals with visual progress. All without a server, without a login.'))}</>,
         ),
       },
       {
@@ -473,10 +475,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 14 }}>
             {[
-              { n: '01', t: 'Nutzeranalyse', b: 'Personas für Nutzer, die Privatsphäre priorisieren. Pain Points bei bestehenden Finanz-Apps: Komplexität, Datenweitergabe, Registrierungspflicht.' },
-              { n: '02', t: 'Information Architecture', b: 'Low-Fidelity-Wireframes für Hauptscreens: Dashboard, Sparkonten, Transaktionen, Sparziele.' },
-              { n: '03', t: 'Visuelles Design', b: 'Verspieltes Design-System in Figma — weiche Formen, warme Grüntöne, klare Datenhierarchie und zugängliche Typografie.' },
-              { n: '04', t: 'Klickbarer Prototyp', b: 'Vollständiger interaktiver Prototyp: von der Kontoerstellung über Ausgaben-Tracking bis zur Zielübersicht.' },
+              { n: '01', t: t('Nutzeranalyse', 'User Analysis'), b: t('Personas für Nutzer, die Privatsphäre priorisieren. Pain Points bei bestehenden Finanz-Apps: Komplexität, Datenweitergabe, Registrierungspflicht.', 'Personas for privacy-first users. Pain points with existing finance apps: complexity, data sharing, mandatory registration.') },
+              { n: '02', t: t('Information Architecture', 'Information Architecture'), b: t('Low-Fidelity-Wireframes für Hauptscreens: Dashboard, Sparkonten, Transaktionen, Sparziele.', 'Low-fidelity wireframes for the main screens: dashboard, savings accounts, transactions, goals.') },
+              { n: '03', t: t('Visuelles Design', 'Visual Design'), b: t('Verspieltes Design-System in Figma — weiche Formen, warme Grüntöne, klare Datenhierarchie und zugängliche Typografie.', 'Playful design system in Figma — soft shapes, warm greens, clear data hierarchy and accessible typography.') },
+              { n: '04', t: t('Klickbarer Prototyp', 'Clickable Prototype'), b: t('Vollständiger interaktiver Prototyp: von der Kontoerstellung über Ausgaben-Tracking bis zur Zielübersicht.', 'Complete interactive prototype: from account creation through expense tracking to goal overview.') },
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)', marginBottom: 8 }}>{step.n}</div>
@@ -493,10 +495,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
             {[
-              { t: 'Lokale Datenspeicherung', b: 'Keine Registrierung, kein Cloud-Sync. Alle Finanzdaten bleiben vollständig auf dem Gerät.' },
-              { t: 'Mehrere Sparkonten', b: 'Mehrere Konten gleichzeitig verwalten — Urlaub, Notgroschen, Anschaffungen.' },
-              { t: 'Einnahmen & Ausgaben', b: 'Transaktionen erfassen und kategorisieren; Ausgabenlimit pro Konto festlegen.' },
-              { t: 'Visuelle Sparziele', b: 'Persönliche Ziele mit visuellem Fortschrittsbalken — motivierend, ohne Gamification-Zwang.' },
+              { t: t('Lokale Datenspeicherung', 'Local Data Storage'), b: t('Keine Registrierung, kein Cloud-Sync. Alle Finanzdaten bleiben vollständig auf dem Gerät.', 'No registration, no cloud sync. All financial data stays entirely on the device.') },
+              { t: t('Mehrere Sparkonten', 'Multiple Savings Accounts'), b: t('Mehrere Konten gleichzeitig verwalten — Urlaub, Notgroschen, Anschaffungen.', 'Manage several accounts at once — holiday, emergency fund, purchases.') },
+              { t: t('Einnahmen & Ausgaben', 'Income & Expenses'), b: t('Transaktionen erfassen und kategorisieren; Ausgabenlimit pro Konto festlegen.', 'Record and categorize transactions; set a spending limit per account.') },
+              { t: t('Visuelle Sparziele', 'Visual Savings Goals'), b: t('Persönliche Ziele mit visuellem Fortschrittsbalken — motivierend, ohne Gamification-Zwang.', 'Personal goals with a visual progress bar — motivating, without forced gamification.') },
             ].map((f, i) => card(<>{cardTitle(f.t, '#f59e0b66')}{cardBody(f.b)}</>, undefined, i))}
           </div>
         ),
@@ -519,10 +521,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     intro: t('Sentinel ist eine Web-App für das Echtzeit-Monitoring von Online-Shops — Verkaufszahlen, Lagerbestand und Traffic auf einen Blick, in einem klaren Dark-UI-Dashboard. Designed in Figma, entwickelt mit React und live auf Vercel deployed.', 'Sentinel is a web app for real-time monitoring of online shops — sales figures, inventory and traffic at a glance, in a clean dark-UI dashboard. Designed in Figma, built with React and deployed live on Vercel.'),
     sections: [
       {
-        label: 'Problem & Lösung',
+        label: t('Problem & Lösung', 'Problem & Solution'),
         content: grid2(
-          <>{cardTitle('Herausforderung', '#0ea5e966')}{cardBody('Betreiber von Online-Shops brauchen Echtzeit-Einblick in ihr Geschäft — Verkäufe, Lagerbestände, Traffic — aber die meisten Tools sind zu komplex, zu teuer oder nicht auf kleine und mittlere Shops zugeschnitten.')}</>,
-          <>{cardTitle('Lösung', '#0ea5e966')}{cardBody('Eine fokussierte Web-App mit minimalem Dark-UI-Dashboard. Verkaufszahlen, Lagerstand und Traffic sind auf einen Blick erfassbar — mit visuellen Alerts für kritische Ereignisse und einer Oberfläche, die keine Einarbeitung erfordert.')}</>,
+          <>{cardTitle(t('Herausforderung', 'Challenge'), '#0ea5e966')}{cardBody(t('Betreiber von Online-Shops brauchen Echtzeit-Einblick in ihr Geschäft — Verkäufe, Lagerbestände, Traffic — aber die meisten Tools sind zu komplex, zu teuer oder nicht auf kleine und mittlere Shops zugeschnitten.', 'Online-shop operators need real-time insight into their business — sales, inventory, traffic — but most tools are too complex, too expensive or not tailored to small and mid-sized shops.'))}</>,
+          <>{cardTitle(t('Lösung', 'Solution'), '#0ea5e966')}{cardBody(t('Eine fokussierte Web-App mit minimalem Dark-UI-Dashboard. Verkaufszahlen, Lagerstand und Traffic sind auf einen Blick erfassbar — mit visuellen Alerts für kritische Ereignisse und einer Oberfläche, die keine Einarbeitung erfordert.', 'A focused web app with a minimal dark-UI dashboard. Sales figures, inventory and traffic are graspable at a glance — with visual alerts for critical events and an interface that requires no training.'))}</>,
         ),
       },
       {
@@ -530,10 +532,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 14 }}>
             {[
-              { n: '01', t: 'Nutzeranalyse', b: 'Interviews mit Shop-Betreibern: welche Metriken sind täglich kritisch? Welche Tools nutzen sie, was frustriert sie?' },
-              { n: '02', t: 'Information Architecture', b: 'Strukturierung der Datenhierarchie — was gehört ins Dashboard, was in die Detailansicht? Low-Fi-Wireframes für alle Hauptansichten.' },
-              { n: '03', t: 'Dark UI System', b: 'Design-System in Figma — Farbpalette, Komponenten, Datencharts und Typografie-Hierarchie. Optimiert für lange Monitoring-Sessions.' },
-              { n: '04', t: 'Live App', b: 'Vollständige Web-App mit React entwickelt und auf Vercel deployed — Echtzeit-Daten, Alertsystem und responsives Dashboard-Layout.' },
+              { n: '01', t: t('Nutzeranalyse', 'User Analysis'), b: t('Interviews mit Shop-Betreibern: welche Metriken sind täglich kritisch? Welche Tools nutzen sie, was frustriert sie?', 'Interviews with shop operators: which metrics are critical daily? Which tools do they use, what frustrates them?') },
+              { n: '02', t: t('Information Architecture', 'Information Architecture'), b: t('Strukturierung der Datenhierarchie — was gehört ins Dashboard, was in die Detailansicht? Low-Fi-Wireframes für alle Hauptansichten.', 'Structuring the data hierarchy — what belongs in the dashboard, what in the detail view? Low-fi wireframes for all main views.') },
+              { n: '03', t: t('Dark UI System', 'Dark UI System'), b: t('Design-System in Figma — Farbpalette, Komponenten, Datencharts und Typografie-Hierarchie. Optimiert für lange Monitoring-Sessions.', 'Design system in Figma — color palette, components, data charts and typography hierarchy. Optimized for long monitoring sessions.') },
+              { n: '04', t: t('Live App', 'Live App'), b: t('Vollständige Web-App mit React entwickelt und auf Vercel deployed — Echtzeit-Daten, Alertsystem und responsives Dashboard-Layout.', 'Complete web app built with React and deployed on Vercel — real-time data, alert system and responsive dashboard layout.') },
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)', marginBottom: 8 }}>{step.n}</div>
@@ -550,10 +552,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
             {[
-              { t: 'Echtzeit-Verkaufsmetriken', b: 'Umsatzübersicht und Verkaufszahlen in Echtzeit — täglich, wöchentlich, monatlich vergleichbar.' },
-              { t: 'Lagerbestand-Monitoring', b: 'Bestandsübersicht mit automatischen Alerts bei niedrigem Stock — kein manuelles Prüfen mehr.' },
-              { t: 'Traffic-Visualisierung', b: 'Besucher, Conversion Rate und Absprungraten im Blick — mit Trend-Indikatoren.' },
-              { t: 'Bestellübersicht', b: 'Aktuelle Bestellungen mit Status-Tracking auf einem zentralen Dashboard-Screen.' },
+              { t: t('Echtzeit-Verkaufsmetriken', 'Real-Time Sales Metrics'), b: t('Umsatzübersicht und Verkaufszahlen in Echtzeit — täglich, wöchentlich, monatlich vergleichbar.', 'Revenue overview and sales figures in real time — comparable daily, weekly, monthly.') },
+              { t: t('Lagerbestand-Monitoring', 'Inventory Monitoring'), b: t('Bestandsübersicht mit automatischen Alerts bei niedrigem Stock — kein manuelles Prüfen mehr.', 'Stock overview with automatic alerts on low inventory — no more manual checking.') },
+              { t: t('Traffic-Visualisierung', 'Traffic Visualization'), b: t('Besucher, Conversion Rate und Absprungraten im Blick — mit Trend-Indikatoren.', 'Visitors, conversion rate and bounce rates at a glance — with trend indicators.') },
+              { t: t('Bestellübersicht', 'Order Overview'), b: t('Aktuelle Bestellungen mit Status-Tracking auf einem zentralen Dashboard-Screen.', 'Current orders with status tracking on a central dashboard screen.') },
             ].map((f, i) => card(<>{cardTitle(f.t, '#0ea5e966')}{cardBody(f.b)}</>, undefined, i))}
           </div>
         ),

@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { projects } from '@/lib/data';
+import { useLang } from './LanguageProvider';
 
 export default function ProjectsCarousel() {
+  const { lang } = useLang();
+  const en = lang === 'en';
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
@@ -75,7 +78,7 @@ export default function ProjectsCarousel() {
                 key={p.id}
                 href={href}
                 {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                aria-label={`Projekt ansehen: ${p.name}`}
+                aria-label={`${en ? 'View project' : 'Projekt ansehen'}: ${p.name}`}
                 className="proj-card"
                 style={{
                   position: 'relative',
@@ -112,7 +115,7 @@ export default function ProjectsCarousel() {
                     borderRadius: 999, padding: '5px 12px',
                     color: '#fd7c7a',
                     backdropFilter: 'blur(8px)',
-                  }}>Neu</span>
+                  }}>{en ? 'New' : 'Neu'}</span>
                 )}
 
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 20px 20px' }}>
@@ -120,7 +123,7 @@ export default function ProjectsCarousel() {
                     fontFamily: 'var(--font-mono)', fontSize: 11,
                     letterSpacing: '0.14em', textTransform: 'uppercase',
                     color: `${p.accent}dd`, marginBottom: 6,
-                  }}>{p.cat}</div>
+                  }}>{en && p.catEn ? p.catEn : p.cat}</div>
                   <div style={{
                     fontFamily: 'var(--font-display)', fontWeight: 700,
                     fontSize: 20, lineHeight: 1.2, color: '#fff',
@@ -139,7 +142,7 @@ export default function ProjectsCarousel() {
         <button
           type="button"
           onClick={() => scrollByCards(-1)}
-          aria-label="Vorherige Projekte"
+          aria-label={en ? 'Previous projects' : 'Vorherige Projekte'}
           className="proj-arrow"
           data-side="prev"
           style={{ opacity: canPrev ? 1 : 0, pointerEvents: canPrev ? 'auto' : 'none' }}
@@ -149,7 +152,7 @@ export default function ProjectsCarousel() {
         <button
           type="button"
           onClick={() => scrollByCards(1)}
-          aria-label="Nächste Projekte"
+          aria-label={en ? 'Next projects' : 'Nächste Projekte'}
           className="proj-arrow"
           data-side="next"
           style={{ opacity: canNext ? 1 : 0, pointerEvents: canNext ? 'auto' : 'none' }}
@@ -164,7 +167,7 @@ export default function ProjectsCarousel() {
         letterSpacing: '0.16em', textTransform: 'uppercase',
         color: 'rgba(15,41,64,0.72)',
       }}>
-        Scrollen · Wischen · Klicken
+        {en ? 'Scroll · Swipe · Click' : 'Scrollen · Wischen · Klicken'}
       </p>
     </div>
   );

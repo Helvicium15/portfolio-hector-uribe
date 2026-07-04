@@ -43,9 +43,9 @@ export const ui = {
 } as const;
 
 export const annoLabels: Record<string, Record<Lang, string>> = {
-  info:    { de: 'About',        en: 'About',    es: 'Sobre mí'    },
-  galerie: { de: 'Projects',     en: 'Projects', es: 'Proyectos'   },
+  info:    { de: 'Über mich',    en: 'About',    es: 'Sobre mí'    },
+  galerie: { de: 'Projekte',     en: 'Projects', es: 'Proyectos'   },
   kontakt: { de: 'Arbeitsweise', en: 'Approach', es: 'Método'      },
   skills:  { de: 'Skills',       en: 'Skills',   es: 'Habilidades' },
-  hobbys:  { de: 'Hobbies',      en: 'Hobbies',  es: 'Pasatiempos' },
+  hobbys:  { de: 'Interessen',   en: 'Hobbies',  es: 'Pasatiempos' },
 };

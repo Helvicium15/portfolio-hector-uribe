@@ -3,20 +3,21 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { skillGroups, experience, certifications, education, languages, hobbies, projects } from '@/lib/data';
+import { skillGroups, experience, certifications, education, languages, hobbies, hobbiesEn, projects } from '@/lib/data';
 import { SkillTile } from '@/lib/skillIcons';
+import { useLang } from './LanguageProvider';
 
 interface Props {
   sectionKey: string;
   onClose: () => void;
 }
 
-const LABELS: Record<string, string> = {
-  info:    'Über mich',
-  galerie: 'Projekte',
-  kontakt: 'Arbeitsweise',
-  skills:  'Skills & Tools',
-  hobbys:  'Interessen',
+const LABELS: Record<string, { de: string; en: string }> = {
+  info:    { de: 'Über mich',      en: 'About' },
+  galerie: { de: 'Projekte',       en: 'Projects' },
+  kontakt: { de: 'Arbeitsweise',   en: 'How I Work' },
+  skills:  { de: 'Skills & Tools', en: 'Skills & Tools' },
+  hobbys:  { de: 'Interessen',     en: 'Interests' },
 };
 
 const CARD_WIDTHS: Record<string, number> = {
@@ -74,6 +75,8 @@ const viewLinkBase: React.CSSProperties = {
 function PerspectiveProjectCarousel() {
   const [active, setActive] = useState(0);
   const router = useRouter();
+  const { lang } = useLang();
+  const en = lang === 'en';
   const n = projects.length;
 
   useEffect(() => {
@@ -196,7 +199,7 @@ function PerspectiveProjectCarousel() {
                       textShadow: '0 1px 6px rgba(0,0,0,0.65)',
                       marginBottom: 6,
                     }}>
-                      {p.cat}
+                      {en && p.catEn ? p.catEn : p.cat}
                     </div>
                   )}
                   <div style={{
@@ -221,7 +224,7 @@ function PerspectiveProjectCarousel() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '4px 0 10px',
       }}>
-        <button onClick={prev} style={navBtn} aria-label="Vorheriges Projekt">
+        <button onClick={prev} style={navBtn} aria-label={en ? 'Previous project' : 'Vorheriges Projekt'}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <path d="M19 12H5M11 6l-6 6 6 6"/>
           </svg>
@@ -235,21 +238,21 @@ function PerspectiveProjectCarousel() {
             rel="noopener noreferrer"
             style={viewLinkBase}
           >
-            Projekt ansehen
+            {en ? 'View project' : 'Projekt ansehen'}
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
               <path d="M7 17L17 7M7 7h10v10"/>
             </svg>
           </a>
         ) : (
           <Link href={`/projekte/${activePrj.slug}`} style={viewLinkBase}>
-            Projekt ansehen
+            {en ? 'View project' : 'Projekt ansehen'}
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </Link>
         )}
 
-        <button onClick={next} style={navBtn} aria-label="Nächstes Projekt">
+        <button onClick={next} style={navBtn} aria-label={en ? 'Next project' : 'Nächstes Projekt'}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <path d="M5 12h14M13 6l6 6-6 6"/>
           </svg>
@@ -280,6 +283,9 @@ function PerspectiveProjectCarousel() {
 
 /* ─────────────────────────── ABOUT ─────────────────────────────── */
 function AboutContent() {
+  const { lang } = useLang();
+  const en = lang === 'en';
+  const t = (de: string, e: string) => (en ? e : de);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 
@@ -299,28 +305,29 @@ function AboutContent() {
             Hector Uribe Chacón
           </div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(15,41,64,0.82)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 6 }}>
-            Mediengestalter · UX/UI Designer
+            {t('Mediengestalter · UX/UI Designer', 'Media Designer · UX/UI Designer')}
           </div>
         </div>
       </div>
 
       {/* Bio */}
       <p style={{ fontSize: 15, lineHeight: 1.82, color: 'rgba(15,41,64,0.72)', margin: 0, padding: '0 2px' }}>
-        CPUX-F zertifizierter Designer mit 2+ Jahren Berufserfahrung in UX/UI-Design,
-        Produktfotografie und KI-gestützten Workflows. Nationalität: Mexikanisch / Deutsch.
-        Mein Fokus — nutzerzentrierte Produkte, die ästhetisch und funktional überzeugen.
+        {t(
+          'CPUX-F zertifizierter Designer mit 4+ Jahren Berufserfahrung in UX/UI-Design, Produktfotografie und KI-gestützten Workflows. Nationalität: Mexikanisch / Deutsch. Mein Fokus — nutzerzentrierte Produkte, die ästhetisch und funktional überzeugen.',
+          'CPUX-F certified designer with 4+ years of professional experience in UX/UI design, product photography and AI-assisted workflows. Nationality: Mexican / German. My focus — user-centered products that convince both aesthetically and functionally.'
+        )}
       </p>
 
       {/* Languages */}
       <div style={{ ...innerCard, padding: '14px 18px' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', marginBottom: 12 }}>Sprachen</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', marginBottom: 12 }}>{t('Sprachen', 'Languages')}</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 12px' }}>
           {languages.map(l => (
             <div key={l.lang} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 17, lineHeight: 1 }}>{l.flag}</span>
               <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13.5, color: 'rgba(15,41,64,0.88)' }}>{l.lang}</div>
-                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,41,64,0.72)', marginTop: 1 }}>{l.level}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13.5, color: 'rgba(15,41,64,0.88)' }}>{en ? l.langEn : l.lang}</div>
+                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,41,64,0.72)', marginTop: 1 }}>{en ? l.levelEn : l.level}</div>
               </div>
             </div>
           ))}
@@ -329,7 +336,7 @@ function AboutContent() {
 
       {/* Experience — both entries */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>Berufserfahrung</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>{t('Berufserfahrung', 'Experience')}</div>
       {experience.map((exp) => (
         <div key={exp.company} style={{ ...innerCard, padding: '16px 18px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
@@ -341,7 +348,7 @@ function AboutContent() {
                   boxShadow: `0 0 8px ${(exp as { accent?: string }).accent ?? '#fe8684'}88`,
                 }} />
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: '#0F2940' }}>
-                  {exp.role}
+                  {en ? ((exp as { roleEn?: string }).roleEn ?? exp.role) : exp.role}
                 </div>
               </div>
               <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)', paddingLeft: 16 }}>
@@ -360,7 +367,7 @@ function AboutContent() {
             </span>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5, paddingLeft: 16 }}>
-            {exp.bullets.slice(0, 3).map(b => (
+            {(en ? ((exp as { bulletsEn?: string[] }).bulletsEn ?? exp.bullets) : exp.bullets).slice(0, 3).map(b => (
               <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.64, color: 'rgba(15,41,64,0.72)' }}>
                 <span style={{ color: 'rgba(15,41,64,0.72)', flexShrink: 0, marginTop: 4, fontSize: 9 }}>▸</span>
                 {b}
@@ -373,11 +380,11 @@ function AboutContent() {
 
       {/* Education */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>Bildung</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>{t('Bildung', 'Education')}</div>
         {education.map(e => (
           <div key={e.institution} style={{ ...innerCard, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'rgba(15,41,64,0.88)' }}>{e.degree}</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'rgba(15,41,64,0.88)' }}>{en ? ((e as { degreeEn?: string }).degreeEn ?? e.degree) : e.degree}</div>
               <div style={{ fontSize: 12, color: 'rgba(15,41,64,0.72)', marginTop: 2 }}>{e.institution}</div>
             </div>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'rgba(15,41,64,0.72)', whiteSpace: 'nowrap', flexShrink: 0 }}>{e.period}</span>
@@ -390,7 +397,7 @@ function AboutContent() {
         {certifications.map(c => (
           <div key={c.name} style={{ ...innerCard, padding: '12px 16px', flex: 1, textAlign: 'center' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 15, color: '#0F2940' }}>{c.name}</div>
-            <div style={{ fontSize: 11.5, color: 'rgba(15,41,64,0.72)', marginTop: 3 }}>{c.issuer}</div>
+            <div style={{ fontSize: 11.5, color: 'rgba(15,41,64,0.72)', marginTop: 3 }}>{en ? ((c as { issuerEn?: string }).issuerEn ?? c.issuer) : c.issuer}</div>
             <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,41,64,0.72)', marginTop: 1 }}>{c.year}</div>
           </div>
         ))}
@@ -402,9 +409,11 @@ function AboutContent() {
 /* ─────────────────────────── ARBEITSWEISE ───────────────────────── */
 const PROCESS_STEPS = [
   {
-    num: '01', title: 'Verstehen', accent: '#83cae2',
+    num: '01', title: 'Verstehen', titleEn: 'Understand', accent: '#83cae2',
     desc: 'Nutzerforschung, Interviews und Anforderungsanalyse — verstehen, wer das Produkt nutzt und warum.',
+    descEn: 'User research, interviews and requirements analysis — understanding who uses the product and why.',
     tags: ['User Research', 'Interviews', 'Personas'],
+    tagsEn: ['User Research', 'Interviews', 'Personas'],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="7"/>
@@ -414,9 +423,11 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '02', title: 'Konzipieren', accent: '#fe8684',
+    num: '02', title: 'Konzipieren', titleEn: 'Conceptualize', accent: '#fe8684',
     desc: 'Ideation, User Flows und Low-Fidelity Wireframes — die Struktur vor dem Design.',
+    descEn: 'Ideation, user flows and low-fidelity wireframes — structure before design.',
     tags: ['User Flows', 'Wireframes', 'FigJam'],
+    tagsEn: ['User Flows', 'Wireframes', 'FigJam'],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2.5"/>
@@ -425,9 +436,11 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '03', title: 'Gestalten', accent: '#83cae2',
+    num: '03', title: 'Gestalten', titleEn: 'Design', accent: '#83cae2',
     desc: 'High-Fidelity Design, Prototyping und Micro-Animationen in Figma.',
+    descEn: 'High-fidelity design, prototyping and micro-animations in Figma.',
     tags: ['Figma', 'Prototyping', 'Motion'],
+    tagsEn: ['Figma', 'Prototyping', 'Motion'],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 19l7-7 3 3-7 7-3-3z"/>
@@ -437,9 +450,11 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '04', title: 'Testen & Iterieren', accent: '#fe8684',
+    num: '04', title: 'Testen & Iterieren', titleEn: 'Test & Iterate', accent: '#fe8684',
     desc: 'Usability-Tests, Feedback-Schleifen und kontinuierliche Verbesserung.',
+    descEn: 'Usability testing, feedback loops and continuous improvement.',
     tags: ['Usability-Tests', 'Maze', 'Iteration'],
+    tagsEn: ['Usability Testing', 'Maze', 'Iteration'],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -450,10 +465,13 @@ const PROCESS_STEPS = [
 ];
 
 function ArbeitsweiseContent() {
+  const { lang } = useLang();
+  const en = lang === 'en';
+  const t = (de: string, e: string) => (en ? e : de);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       <p style={{ fontSize: 15, lineHeight: 1.76, color: 'rgba(15,41,64,0.72)', margin: '0 0 2px' }}>
-        Nutzerzentriert und iterativ — von der ersten Idee bis zum finalen Produkt.
+        {t('Nutzerzentriert und iterativ — von der ersten Idee bis zum finalen Produkt.', 'User-centered and iterative — from the first idea to the final product.')}
       </p>
 
       {PROCESS_STEPS.map((s, i) => (
@@ -493,17 +511,17 @@ function ArbeitsweiseContent() {
                 <span style={{
                   fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15.5,
                   color: '#0F2940',
-                }}>{s.title}</span>
+                }}>{en ? s.titleEn : s.title}</span>
               </div>
 
               {/* Description */}
               <div style={{ fontSize: 13.5, lineHeight: 1.68, color: 'rgba(15,41,64,0.72)', marginBottom: 10 }}>
-                {s.desc}
+                {en ? s.descEn : s.desc}
               </div>
 
               {/* Tags */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                {s.tags.map(t => (
+                {(en ? s.tagsEn : s.tags).map(t => (
                   <span key={t} style={{
                     fontFamily: 'var(--font-mono)', fontSize: 10.5,
                     background: `${s.accent}14`,
@@ -533,21 +551,21 @@ function ArbeitsweiseContent() {
         <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 130, background: 'linear-gradient(90deg, rgba(254,134,132,0.09) 0%, transparent 100%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.60)', marginBottom: 12 }}>
-            Aus dem Arbeitszeugnis · Vicampo.de GmbH
+            {t('Aus dem Arbeitszeugnis · Vicampo.de GmbH', 'From the reference letter · Vicampo.de GmbH')}
           </div>
           <blockquote style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.58, fontStyle: 'italic', fontWeight: 600, color: '#0F2940' }}>
-              „Sein Aufgabengebiet beherrschte er in jeder Hinsicht perfekt.“
+              {t('„Sein Aufgabengebiet beherrschte er in jeder Hinsicht perfekt.“', '“He mastered his area of responsibility perfectly in every respect.”')}
             </p>
             <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.66, color: 'rgba(15,41,64,0.74)' }}>
-              „Herr Uribe zeigte stets höchste Eigenmotivation, beachtliches Engagement und ein ausgeprägtes Pflichtbewusstsein … ein hohes Maß an Selbstständigkeit, Zuverlässigkeit sowie intensiven Arbeitseinsatz, wodurch seine Arbeitsergebnisse jederzeit von sehr guter Qualität waren.“
+              {t('„Herr Uribe zeigte stets höchste Eigenmotivation, beachtliches Engagement und ein ausgeprägtes Pflichtbewusstsein … ein hohes Maß an Selbstständigkeit, Zuverlässigkeit sowie intensiven Arbeitseinsatz, wodurch seine Arbeitsergebnisse jederzeit von sehr guter Qualität waren.“', '“Mr. Uribe consistently showed the highest self-motivation, remarkable commitment and a strong sense of duty … a high degree of independence, reliability and intensive dedication, so that his work results were always of very good quality.”')}
             </p>
             <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.66, color: 'rgba(15,41,64,0.74)' }}>
-              „Mit Herrn Uribe verlieren wir einen wertvollen Mitarbeiter.“
+              {t('„Mit Herrn Uribe verlieren wir einen wertvollen Mitarbeiter.“', '“With Mr. Uribe we are losing a valuable employee.”')}
             </p>
           </blockquote>
           <div style={{ marginTop: 14, display: 'flex', gap: 7, flexWrap: 'wrap' }}>
-            {['Gesamtnote: sehr gut', '07/2023 – 09/2025', 'Grafik · UX · Print-Marketing'].map((t) => (
+            {(en ? ['Overall grade: very good', '07/2023 – 09/2025', 'Graphics · UX · Print Marketing'] : ['Gesamtnote: sehr gut', '07/2023 – 09/2025', 'Grafik · UX · Print-Marketing']).map((t) => (
               <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, background: 'rgba(254,134,132,0.12)', border: '1px solid rgba(254,134,132,0.30)', borderRadius: 999, padding: '3px 10px', color: 'rgba(15,41,64,0.74)', letterSpacing: '0.04em' }}>{t}</span>
             ))}
           </div>
@@ -559,6 +577,8 @@ function ArbeitsweiseContent() {
 
 /* ─────────────────────────── SKILLS ────────────────────────────── */
 function SkillsContent() {
+  const { lang } = useLang();
+  const en = lang === 'en';
   let globalIdx = 0;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -568,7 +588,7 @@ function SkillsContent() {
             fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700,
             letterSpacing: '0.18em', textTransform: 'uppercase',
             color: 'rgba(15,41,64,0.72)', marginBottom: 12,
-          }}>{group.title}</div>
+          }}>{en ? group.titleEn : group.title}</div>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(72px, 1fr))',
@@ -606,18 +626,20 @@ const HOBBY_ICONS: Record<string, string> = {
 };
 
 function HobbiesContent() {
+  const { lang } = useLang();
+  const en = lang === 'en';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
       {/* Gym hero photo */}
       <div style={{ borderRadius: 18, overflow: 'hidden', marginBottom: 6, background: '#0F2940' }}>
         <img
           src="/img/hector-gym.jpg"
-          alt="Krafttraining"
+          alt={en ? 'Strength Training' : 'Krafttraining'}
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </div>
       <p style={{ fontSize: 15, lineHeight: 1.80, color: 'rgba(15,41,64,0.72)', margin: '0 0 2px' }}>
-        Abseits vom Bildschirm treiben mich diese Leidenschaften an:
+        {en ? 'Away from the screen, these passions keep me going:' : 'Abseits vom Bildschirm treiben mich diese Leidenschaften an:'}
       </p>
       {hobbies.map((h, i) => (
         <div key={h} style={{ ...innerCard, display: 'flex', alignItems: 'center', gap: 16, padding: '13px 18px' }}>
@@ -628,7 +650,7 @@ function HobbiesContent() {
             {String(i + 1).padStart(2, '0')}
           </span>
           <span style={{ fontSize: 18, flexShrink: 0 }} aria-hidden>{HOBBY_ICONS[h] ?? '★'}</span>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15.5, color: 'rgba(15,41,64,0.88)' }}>{h}</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15.5, color: 'rgba(15,41,64,0.88)' }}>{en ? (hobbiesEn[h] ?? h) : h}</span>
         </div>
       ))}
     </div>
@@ -651,6 +673,9 @@ function PanelBody({ sectionKey }: { sectionKey: string }) {
    INFOPANEL
    ══════════════════════════════════════════════════════════════════ */
 export default function InfoPanel({ sectionKey, onClose }: Props) {
+  const { lang } = useLang();
+  const en = lang === 'en';
+  const label = LABELS[sectionKey]?.[en ? 'en' : 'de'] ?? sectionKey;
   const width = CARD_WIDTHS[sectionKey] ?? 520;
   const isGalerie = sectionKey === 'galerie';
 
@@ -693,7 +718,7 @@ export default function InfoPanel({ sectionKey, onClose }: Props) {
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={LABELS[sectionKey] ?? sectionKey}
+          aria-label={label}
           initial={{ opacity: 0, scale: 0.90, y: 20 }}
           animate={{ opacity: 1, scale: 1,    y: 0  }}
           exit={{    opacity: 0, scale: 0.94,  y: 10 }}
@@ -724,7 +749,7 @@ export default function InfoPanel({ sectionKey, onClose }: Props) {
           {/* ── X Close ──────────────────────────────────────────── */}
           <button
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={en ? 'Close' : 'Schließen'}
             style={{
               position: 'absolute', top: 16, right: 16,
               width: 32, height: 32, borderRadius: '50%',
@@ -761,7 +786,7 @@ export default function InfoPanel({ sectionKey, onClose }: Props) {
               margin: 0,
               paddingRight: 44,
             }}>
-              {LABELS[sectionKey] ?? sectionKey}
+              {label}
             </h2>
           </div>
 

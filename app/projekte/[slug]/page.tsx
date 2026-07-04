@@ -217,10 +217,10 @@ export default async function ProjectPage({ params }: Props) {
             }}
           >
             {[
-              { k: 'Kategorie', v: data.category },
-              { k: 'Tools', v: data.tools },
-              { k: 'Rolle', v: data.role },
-              { k: 'Zeitraum', v: data.year },
+              { k: t('Kategorie', 'Category'), v: data.category },
+              { k: t('Tools', 'Tools'), v: data.tools },
+              { k: t('Rolle', 'Role'), v: data.role },
+              { k: t('Zeitraum', 'Period'), v: data.year },
             ].map(({ k, v }) => (
               <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <span style={{ fontSize: '9.5px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
@@ -247,7 +247,7 @@ export default async function ProjectPage({ params }: Props) {
                 boxShadow: '0 12px 26px -6px rgba(254,134,132,0.55), inset 0 1px 0 rgba(255,255,255,0.40)',
               }}
             >
-              {data.liveLabel ?? 'Live ansehen'}
+              {data.liveLabel ?? t('Live ansehen', 'View live')}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M9 7h8v8" /></svg>
             </a>
           )}

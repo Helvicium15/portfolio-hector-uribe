@@ -4,6 +4,7 @@ export interface Project {
   slug: string;
   name: string;
   cat: string;
+  catEn?: string;
   desc: string;
   img: string;
   accent: string;
@@ -19,6 +20,7 @@ export const projects: Project[] = [
     slug: 'studybuddy',
     name: 'StudyBuddy',
     cat: 'UX/UI · Mobil · CPUX',
+    catEn: 'UX/UI · Mobile · CPUX',
     desc: 'Capstone-Projekt: Lern-App mit strukturierten Blöcken, Fokus-Timer und Reflexion.',
     img: '/img/projects/studybuddy-thumbnail.webp',
     accent: '#fe8684',
@@ -54,6 +56,7 @@ export const projects: Project[] = [
     slug: 'schwimmspass',
     name: 'SchwimmSpass',
     cat: 'UX/UI · Mobil',
+    catEn: 'UX/UI · Mobile',
     desc: 'App-Redesign für einen Mainzer Schwimmkursanbieter — optimiert für Eltern mit Kindern im Vorschulalter.',
     img: '/img/projects/schwimmspass-thumbnail.webp',
     accent: '#83cae2',
@@ -88,6 +91,7 @@ export const projects: Project[] = [
     slug: 'obsidian',
     name: 'Obsidian',
     cat: 'UX/UI · Landingpage',
+    catEn: 'UX/UI · Landing Page',
     desc: 'Crypto-Landingpage mit dunkler, Premium-UI und glassmorphischem Design.',
     img: '/img/projects/obsidian-thumbnail.webp',
     accent: '#fe8684',
@@ -100,6 +104,7 @@ export const projects: Project[] = [
     slug: 'vegetables-calendar',
     name: 'Vegetables Calendar',
     cat: 'Grafikdesign · Druck',
+    catEn: 'Graphic Design · Print',
     desc: 'Saisonaler Gemüsekalender 2024 — Printdesign mit illustrierten Motiven.',
     img: '/img/projects/vegetables-calendar.png',
     accent: '#83cae2',
@@ -112,6 +117,7 @@ export const projects: Project[] = [
     slug: 'photography',
     name: 'Photography',
     cat: 'Fotografie · Unsplash',
+    catEn: 'Photography · Unsplash',
     desc: 'Kreative Porträt- und Street-Fotografie — veröffentlicht auf Unsplash.',
     img: '/img/projects/photography.webp',
     accent: '#fe8684',
@@ -124,6 +130,7 @@ export const projects: Project[] = [
     slug: 'branding',
     name: 'Branding',
     cat: 'Grafikdesign · Logo',
+    catEn: 'Graphic Design · Logo',
     desc: 'Drei vollständige Brand-Identities: AeroLeaf, NordWand und SüßMund Pâtisserie.',
     img: '/img/projects/branding-thumbnail.webp',
     accent: '#83cae2',
@@ -135,6 +142,7 @@ export const projects: Project[] = [
     slug: 'posters',
     name: 'Posters',
     cat: 'Grafikdesign · Poster',
+    catEn: 'Graphic Design · Poster',
     desc: 'Grafikdesign-Posterserie mit kühner Typografie und experimenteller Ästhetik.',
     img: '/img/projects/posters.webp',
     accent: '#fe8684',
@@ -160,18 +168,22 @@ export const projects: Project[] = [
 export const skillGroups = [
   {
     title: 'Adobe Creative Cloud',
+    titleEn: 'Adobe Creative Cloud',
     skills: ['Adobe Photoshop', 'Adobe Illustrator', 'InDesign', 'Adobe After Effects', 'Adobe XD'],
   },
   {
     title: 'UI / Web',
+    titleEn: 'UI / Web',
     skills: ['Figma', 'HTML5', 'CSS3'],
   },
   {
     title: '3D & Motion',
+    titleEn: '3D & Motion',
     skills: ['Autodesk Maya', 'Autodesk 3ds Max', 'Motion Design'],
   },
   {
     title: 'UX & KI-Tools',
+    titleEn: 'UX & AI Tools',
     skills: ['UX Research', 'UI Design', 'Usability Testing', 'Wireframing', 'Midjourney', 'Freepik AI', 'CPUX-F Zertifizierung'],
   },
 ];
@@ -192,6 +204,7 @@ export const experience = [
     period: '07/2023 – 09/2025',
     location: 'Mainz',
     role: 'Junior Grafik- & UX-Designer',
+    roleEn: 'Junior Graphic & UX Designer',
     company: 'Vicampo.de GmbH',
     accent: '#fe8684',
     bullets: [
@@ -201,11 +214,19 @@ export const experience = [
       'HTML5/CSS-Umsetzung von Newsletter-Templates',
       'Gesamtnote im Abschlusszeugnis: sehr gut',
     ],
+    bulletsEn: [
+      'Product photography with the Orbitvu Alphashot system',
+      'AI-assisted image production with Midjourney & Freepik AI',
+      'UX optimization based on A/B tests and web analytics',
+      'HTML5/CSS implementation of newsletter templates',
+      'Final reference grade: very good',
+    ],
   },
   {
     period: '08/2021 – 07/2023',
     location: 'Mainz',
     role: 'Ausbildung Mediengestalter Digital & Print',
+    roleEn: 'Apprenticeship — Media Designer (Digital & Print)',
     company: 'Smartfox Media Group',
     accent: '#83cae2',
     bullets: [
@@ -214,27 +235,40 @@ export const experience = [
       'Layoutkonzepte für Web- und Printprodukte',
       'Bildbearbeitung und Composing in Adobe Photoshop',
     ],
+    bulletsEn: [
+      'Vector illustrations and infographics for marketing campaigns',
+      'Motion design and video editing with After Effects',
+      'Layout concepts for web and print products',
+      'Image editing and compositing in Adobe Photoshop',
+    ],
   },
 ];
 
 export const education = [
-  { period: '2020 – 2023', institution: 'Berufsbildende Schule 1, Mainz', degree: 'Mediengestalter Digital & Print' },
-  { period: '2014 – 2016', institution: 'U-tad, Madrid', degree: '3D-Animation & Game Design' },
+  { period: '2020 – 2023', institution: 'Berufsbildende Schule 1, Mainz', degree: 'Mediengestalter Digital & Print', degreeEn: 'Media Designer (Digital & Print)' },
+  { period: '2014 – 2016', institution: 'U-tad, Madrid', degree: '3D-Animation & Game Design', degreeEn: '3D Animation & Game Design' },
 ];
 
 export const certifications = [
-  { name: 'CPUX-F', issuer: 'UXQB', year: '2026' },
-  { name: 'Google UX', issuer: 'Grundlagen UX Design', year: '2023' },
+  { name: 'CPUX-F', issuer: 'UXQB', issuerEn: 'UXQB', year: '2026' },
+  { name: 'Google UX', issuer: 'Grundlagen UX Design', issuerEn: 'UX Design Fundamentals', year: '2023' },
 ];
 
 export const languages = [
-  { lang: 'Spanisch', level: 'Muttersprache', flag: '🇲🇽' },
-  { lang: 'Deutsch',  level: 'C1 · Fließend',  flag: '🇩🇪' },
-  { lang: 'Englisch', level: 'B2',              flag: '🇬🇧' },
-  { lang: 'Italiano', level: 'B2',              flag: '🇮🇹' },
+  { lang: 'Spanisch', langEn: 'Spanish', level: 'Muttersprache', levelEn: 'Native',       flag: '🇲🇽' },
+  { lang: 'Deutsch',  langEn: 'German',  level: 'C1 · Fließend',  levelEn: 'C1 · Fluent',  flag: '🇩🇪' },
+  { lang: 'Englisch', langEn: 'English', level: 'B2',             levelEn: 'B2',            flag: '🇬🇧' },
+  { lang: 'Italiano', langEn: 'Italian', level: 'B2',             levelEn: 'B2',            flag: '🇮🇹' },
 ];
 
 export const hobbies = ['Krafttraining', 'Malen', 'Videospiele', 'Laufen', 'Kochen'];
+export const hobbiesEn: Record<string, string> = {
+  'Krafttraining': 'Strength Training',
+  'Malen':         'Painting',
+  'Videospiele':   'Video Games',
+  'Laufen':        'Running',
+  'Kochen':        'Cooking',
+};
 
 /* ── Diorama annotation chips ───────────────────────────────── */
 export const ANNOS = [
@@ -277,6 +311,10 @@ export interface LiveProject {
   accent: string;
   tags: string[];
   logo?: string;
+  orgEn?: string;
+  descEn?: string;
+  roleEn?: string;
+  tagsEn?: string[];
 }
 
 export const liveProjects: LiveProject[] = [
@@ -295,6 +333,9 @@ export const liveProjects: LiveProject[] = [
     accent: '#fe8684',
     tags: ['Produktfotografie', 'KI-Workflow', 'UX-Optimierung', 'HTML/CSS'],
     logo: '/img/logos/vicampo.svg',
+    descEn: 'Two years as Junior Graphic & UX Designer at one of Germany\'s largest online wine retailers — product photography, AI image production and UX optimization in the live shop.',
+    roleEn: 'Junior Graphic & UX Designer',
+    tagsEn: ['Product Photography', 'AI Workflow', 'UX Optimization', 'HTML/CSS'],
   },
   {
     slug: 'weinfuerst',
@@ -311,6 +352,10 @@ export const liveProjects: LiveProject[] = [
     accent: '#83cae2',
     tags: ['Grafikdesign', 'Web', 'Kampagne', 'Branding'],
     logo: '/img/logos/weinfuerst.svg',
+    orgEn: 'Weinfürst · Online Wine Retail',
+    descEn: 'Design work around the Gold Status loyalty programme of the online wine retailer Weinfürst — best-price guarantee, exclusive range and campaign assets for the live shop.',
+    roleEn: 'Graphics & Design',
+    tagsEn: ['Graphic Design', 'Web', 'Campaign', 'Branding'],
   },
   {
     slug: 'tuv-nord-akademie',
@@ -327,6 +372,9 @@ export const liveProjects: LiveProject[] = [
     accent: '#fe8684',
     tags: ['Illustration', 'E-Learning', 'Animation', 'Whitepaper'],
     logo: '/img/logos/smartfox.svg',
+    descEn: 'Illustrations and motion for interactive e-learning courses of the TÜV Nord Akademie (occupational health & safety) plus digital articles and a whitepaper.',
+    roleEn: 'Illustration & Motion',
+    tagsEn: ['Illustration', 'E-Learning', 'Animation', 'Whitepaper'],
   },
   {
     slug: 'vinou',
@@ -343,5 +391,9 @@ export const liveProjects: LiveProject[] = [
     accent: '#83cae2',
     tags: ['UI-Design', 'Illustration', 'Mockups', 'Videoschnitt'],
     logo: '/img/logos/vinou.svg',
+    orgEn: 'Vinou · Wine Management',
+    descEn: 'Illustrations, UI design, mockups and website optimization for Vinou — digitalization partner for wine producers. Including production and editing of the brand videos.',
+    roleEn: 'UI Design, Illustration & Video',
+    tagsEn: ['UI Design', 'Illustration', 'Mockups', 'Video Editing'],
   },
 ];

@@ -399,11 +399,11 @@ export default function Home() {
       >
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
           <SectionHead
-            title="Das Studio"
-            sub="Klicke auf die Objekte — oder nutze den Dock unten."
+            title={tr('Das Studio', 'The Studio')}
+            sub={tr('Klicke auf die Objekte — oder nutze den Dock unten.', 'Click the objects — or use the dock below.')}
           />
         </div>
-        <DioramaScene onSectionOpen={handleDioramaOpen} isDark={false} lang="de" />
+        <DioramaScene onSectionOpen={handleDioramaOpen} isDark={false} lang={lang} />
       </section>
       </div>
 
@@ -412,17 +412,17 @@ export default function Home() {
       <section id="work" style={{ padding: '96px 0', position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 28px' }}>
           <SectionHead
-            title="Ausgewählte Projekte"
-            sub="UX/UI-Design, Branding und Produktfotografie aus 2+ Jahren Praxiserfahrung."
+            title={tr('Ausgewählte Projekte', 'Selected Projects')}
+            sub={tr('UX/UI-Design, Branding und Produktfotografie aus 4+ Jahren Praxiserfahrung.', 'UX/UI design, branding and product photography from 4+ years of hands-on experience.')}
           />
 
           {/* Live / real-world projects — online & visible */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#0F2940' }}>
-              Live &amp; in Produktion
+              {tr('Live & in Produktion', 'Live & in production')}
             </span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,41,64,0.72)' }}>
-              Berufliche Projekte, online sichtbar
+              {tr('Berufliche Projekte, online sichtbar', 'Professional projects, visible online')}
             </span>
             <div style={{ flex: 1, height: 1, background: 'rgba(15,41,64,0.12)' }} />
           </div>
@@ -431,10 +431,10 @@ export default function Home() {
           {/* Further work */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '48px 0 22px' }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#0F2940' }}>
-              Weitere Projekte
+              {tr('Weitere Projekte', 'More Projects')}
             </span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,41,64,0.72)' }}>
-              Studien, Konzepte &amp; eigene Arbeiten
+              {tr('Studien, Konzepte & eigene Arbeiten', 'Studies, concepts & personal work')}
             </span>
             <div style={{ flex: 1, height: 1, background: 'rgba(15,41,64,0.12)' }} />
           </div>
@@ -482,10 +482,10 @@ export default function Home() {
               fontSize: 'clamp(28px, 5vw, 38px)', letterSpacing: '-0.02em',
               margin: '0 0 8px', color: '#0F2940',
             }}>
-              Kontakt aufnehmen
+              {tr('Kontakt aufnehmen', 'Get in touch')}
             </h2>
             <p style={{ fontSize: 16, color: 'rgba(15,41,64,0.72)', margin: 0, lineHeight: 1.6 }}>
-              Offen für Projekte, Kooperationen und Herausforderungen.
+              {tr('Offen für Projekte, Kooperationen und Herausforderungen.', 'Open to projects, collaborations and new challenges.')}
             </p>
           </div>
 
@@ -537,7 +537,7 @@ export default function Home() {
             letterSpacing: '.12em', fontFamily: 'var(--font-mono)',
           }}>
             <span style={{ flex: 1, height: 1, background: 'rgba(131,202,226,0.18)' }} />
-            ODER
+            {tr('ODER', 'OR')}
             <span style={{ flex: 1, height: 1, background: 'rgba(131,202,226,0.18)' }} />
           </div>
 
