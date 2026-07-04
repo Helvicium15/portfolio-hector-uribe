@@ -973,6 +973,30 @@ html {
 /* Mobile section menu under the diorama — hidden on desktop, shown ≤640px */
 .diorama-mobile-menu { display: none; }
 
+/* Emerge glow that flashes on the diorama when a mobile menu button is tapped */
+.diorama-glow {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 8;
+  background: radial-gradient(circle,
+    rgba(var(--gac), 0.60) 0%,
+    rgba(var(--gac), 0.26) 38%,
+    rgba(var(--gac), 0) 70%);
+  animation: dioramaGlowPop 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes dioramaGlowPop {
+  0%   { opacity: 0;   transform: translate(-50%, -50%) scale(0.25); }
+  35%  { opacity: 1; }
+  100% { opacity: 0;   transform: translate(-50%, -50%) scale(1.75); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diorama-glow { animation-duration: 0.01ms; opacity: 0; }
+}
+
 @media (max-width: 640px) {
 
   #hero {

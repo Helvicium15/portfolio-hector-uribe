@@ -91,7 +91,9 @@ export default function Home() {
   const { lang } = useLang();
   const tr = (de: string, en: string) => (lang === 'en' ? en : de);
   const [activePanel, setActivePanel] = useState<string | null>(null);
-  const handleDioramaOpen = useCallback((key: string) => {
+  const [panelOrigin, setPanelOrigin] = useState<{ x: number; y: number } | null>(null);
+  const handleDioramaOpen = useCallback((key: string, origin?: { x: number; y: number }) => {
+    setPanelOrigin(origin ?? null);
     setActivePanel(key);
   }, []);
 
@@ -609,6 +611,7 @@ export default function Home() {
           <InfoPanel
             key={activePanel}
             sectionKey={activePanel}
+            origin={panelOrigin}
             onClose={() => setActivePanel(null)}
           />
         )}

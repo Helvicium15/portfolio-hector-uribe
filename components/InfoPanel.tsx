@@ -10,6 +10,7 @@ import { useLang } from './LanguageProvider';
 interface Props {
   sectionKey: string;
   onClose: () => void;
+  origin?: { x: number; y: number } | null;
 }
 
 const LABELS: Record<string, { de: string; en: string }> = {
@@ -692,12 +693,18 @@ function PanelBody({ sectionKey }: { sectionKey: string }) {
 /* ══════════════════════════════════════════════════════════════════
    INFOPANEL
    ══════════════════════════════════════════════════════════════════ */
-export default function InfoPanel({ sectionKey, onClose }: Props) {
+export default function InfoPanel({ sectionKey, onClose, origin }: Props) {
   const { lang } = useLang();
   const en = lang === 'en';
   const label = LABELS[sectionKey]?.[en ? 'en' : 'de'] ?? sectionKey;
   const width = CARD_WIDTHS[sectionKey] ?? 520;
   const isGalerie = sectionKey === 'galerie';
+
+  // When opened from a diorama spot, the card emerges from that point and
+  // grows to center (and retracts back to it on close).
+  const emerge = origin && typeof window !== 'undefined'
+    ? { x: origin.x - window.innerWidth / 2, y: origin.y - window.innerHeight / 2 }
+    : null;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -716,7 +723,7 @@ export default function InfoPanel({ sectionKey, onClose }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.20 }}
+        transition={emerge ? { duration: 0.44, delay: 0.14 } : { duration: 0.20 }}
         onClick={onClose}
         aria-hidden="true"
         style={{
@@ -739,10 +746,12 @@ export default function InfoPanel({ sectionKey, onClose }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label={label}
-          initial={{ opacity: 0, scale: 0.90, y: 20 }}
-          animate={{ opacity: 1, scale: 1,    y: 0  }}
-          exit={{    opacity: 0, scale: 0.94,  y: 10 }}
-          transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+          initial={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.90, y: 20 }}
+          animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+          exit={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.94, y: 10 }}
+          transition={emerge
+            ? { type: 'spring', stiffness: 130, damping: 18, delay: 0.14, opacity: { duration: 0.3, delay: 0.14 } }
+            : { type: 'spring', stiffness: 420, damping: 34 }}
           style={{
             position: 'relative',
             width,

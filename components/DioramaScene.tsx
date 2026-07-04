@@ -60,7 +60,7 @@ function getAnnoIcon(key: string, isDark: boolean): React.ReactNode {
 }
 
 interface Props {
-  onSectionOpen: (key: string) => void;
+  onSectionOpen: (key: string, origin?: { x: number; y: number }) => void;
   isDark?: boolean;
   lang?: Lang;
 }
@@ -357,6 +357,9 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
   const svgRingsRef = useRef<(SVGCircleElement | null)[]>([]);
   const svgGradsRef = useRef<(SVGLinearGradientElement | null)[]>([]);
   const chipElsRef  = useRef<(HTMLButtonElement | null)[]>([]);
+  const annoScreenRef = useRef<Record<string, { ox: number; oy: number }>>({});
+  const pulseHotspotRef = useRef<(key: string) => void>(() => {});
+  const [glow, setGlow] = useState<{ x: number; y: number; ac: string; id: number } | null>(null);
   const [loaded, setLoaded] = useState(false);
   const threeRef = useRef<{
     renderer: THREE.WebGLRenderer;
@@ -565,6 +568,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
         const v = anchorVecs[i].clone().applyEuler(euler).project(cam);
         const ox = (v.x * 0.5 + 0.5) * cW;
         const oy = (-v.y * 0.5 + 0.5) * cH;
+        annoScreenRef.current[a.key] = { ox, oy };
         const isLeft = a.side === 'left';
 
         // Chip stays at its fixed lx/ly corner — never overlaps the 3D model
@@ -604,12 +608,26 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
       });
     }
 
+    // Scale-bounce a hotspot when its mobile-menu button is tapped
+    const pulseMap = new Map<string, number>();
+    pulseHotspotRef.current = (key: string) => { pulseMap.set(key, performance.now()); };
+
     let rafId = 0;
     const loop = (t: number) => {
       const idle = (performance.now() - lastInteract) > 2600;
       const sway = idle ? Math.sin(t * 0.00035) * 0.16 : 0;
       curRot += ((targetRot + sway) - curRot) * 0.08;
       room.rotation.y = curRot;
+      if (pulseMap.size) {
+        const nowP = performance.now();
+        pulseMap.forEach((start, key) => {
+          const g = hotspots.get(key);
+          if (!g) { pulseMap.delete(key); return; }
+          const p = (nowP - start) / 620;
+          if (p >= 1) { g.scale.setScalar(1); pulseMap.delete(key); return; }
+          g.scale.setScalar(1 + 0.13 * Math.sin(p * Math.PI));
+        });
+      }
       renderer.render(scene, cam);
       updateAnnos();
       rafId = requestAnimationFrame(loop);
@@ -642,6 +660,23 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
       if (mount.contains(el)) mount.removeChild(el);
     };
   }, [onSectionOpen, isDark]);
+
+  // Mobile menu tap → pop the 3D object, flash a glow on its spot, and open
+  // the panel so it appears to emerge from that part of the diorama.
+  const openFromDiorama = (key: string) => {
+    const pos = annoScreenRef.current[key];
+    const rect = containerRef.current?.getBoundingClientRect();
+    let origin: { x: number; y: number } | undefined;
+    if (pos && rect) {
+      origin = { x: rect.left + pos.ox, y: rect.top + pos.oy };
+      const ac = (CHIP_ACCENTS[key] ?? [131, 202, 226]).join(',');
+      const id = Date.now();
+      setGlow({ x: pos.ox, y: pos.oy, ac, id });
+      pulseHotspotRef.current?.(key);
+      window.setTimeout(() => setGlow(g => (g && g.id === id ? null : g)), 720);
+    }
+    onSectionOpen(key, origin);
+  };
 
   return (
     <>
@@ -796,6 +831,15 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M9 11V6a2 2 0 0 1 4 0v5"/><path d="M13 8a2 2 0 0 1 4 0v4"/><path d="M17 9.5a2 2 0 0 1 4 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.3-3.2L4.5 13a2 2 0 0 1 3.5-2"/></svg>
         {ui[lang].dioramaHint}
       </div>
+
+      {/* Emerge glow — lights up the tapped section's spot on the diorama */}
+      {glow && (
+        <span
+          key={glow.id}
+          className="diorama-glow"
+          style={{ left: glow.x, top: glow.y, ['--gac']: glow.ac } as React.CSSProperties}
+        />
+      )}
     </div>
 
     {/* Mobile-only labeled section menu — replaces the floating iso chips on
@@ -807,7 +851,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
           <button
             key={a.key}
             type="button"
-            onClick={() => onSectionOpen(a.key)}
+            onClick={() => openFromDiorama(a.key)}
             className="dm-btn"
             style={{ '--ac': ac } as React.CSSProperties}
           >
