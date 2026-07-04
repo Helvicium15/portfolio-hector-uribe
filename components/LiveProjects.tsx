@@ -10,7 +10,7 @@ export default function LiveProjects() {
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(min(440px, 100%), 1fr))',
       gap: 22,
       marginBottom: 28,
     }}>
