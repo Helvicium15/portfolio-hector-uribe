@@ -1014,9 +1014,12 @@ html {
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* On phones the language toggle moves to the LEFT so it doesn't collide with
-   the close (X) button of the diorama cards, which sits top-right of the modal. */
+   the close (X) button of the diorama cards, which sits top-right of the modal.
+   The project sub-page back link then moves to the RIGHT so it doesn't sit under
+   the toggle (both were top-left). */
 @media (max-width: 640px) {
   .lang-toggle { left: 14px !important; right: auto !important; }
+  .subpage-back { left: auto !important; right: 14px !important; }
 }
 
 /* Mobile section menu under the diorama — hidden on desktop, shown ≤640px */

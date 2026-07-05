@@ -78,6 +78,7 @@ export default async function ProjectPage({ params }: Props) {
       {/* Back button */}
       <Link
         href="/"
+        className="subpage-back"
         style={{
           position: 'fixed',
           top: 20,
