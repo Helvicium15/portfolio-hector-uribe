@@ -15,7 +15,7 @@ export default function LanguageToggle() {
     <div
       role="group"
       aria-label="Sprache / Language"
-      className="lg"
+      className="lg lang-toggle"
       style={{
         position: 'fixed',
         top: 16,

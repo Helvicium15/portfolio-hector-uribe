@@ -1013,6 +1013,12 @@ html {
    RESPONSIVE SYSTEM
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* On phones the language toggle moves to the LEFT so it doesn't collide with
+   the close (X) button of the diorama cards, which sits top-right of the modal. */
+@media (max-width: 640px) {
+  .lang-toggle { left: 14px !important; right: auto !important; }
+}
+
 /* Mobile section menu under the diorama — hidden on desktop, shown ≤640px */
 .diorama-mobile-menu { display: none; }
 
