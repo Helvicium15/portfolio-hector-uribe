@@ -156,7 +156,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
       {
         label: t('Mein Beitrag', 'My Contribution'),
         content: (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(340px,100%),1fr))', gap: 16 }}>
             {[
               { t: t('Produktfotografie', 'Product Photography'), b: t('Aufbau eines effizienten, qualitätskonsistenten Foto-Workflows mit der Orbitvu Alphashot-Fotobox. Freistellung, Retusche und Compositing in Adobe Photoshop — reproduzierbar und skalierbar.', 'Built an efficient, quality-consistent photo workflow with the Orbitvu Alphashot photo box. Clipping, retouching and compositing in Adobe Photoshop — reproducible and scalable.') },
               { t: t('KI-Bildproduktion', 'AI Image Production'), b: t('Einführung von Midjourney und Freepik AI in den Kampagnen-Workflow: Prompt-Engineering, Konsistenzprüfung und Qualitätssicherung der KI-generierten Assets.', 'Introduced Midjourney and Freepik AI into the campaign workflow: prompt engineering, consistency checks and quality assurance of the AI-generated assets.') },

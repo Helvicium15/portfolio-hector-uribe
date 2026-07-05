@@ -119,7 +119,7 @@ html {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 28px 13px 58px;
+  padding: 13px 26px;
   border-radius: 999px;
   background: rgba(255,255,255,0.84);
   backdrop-filter: blur(28px) saturate(1.2);
@@ -147,29 +147,15 @@ html {
   overflow: visible;
 }
 
+/* Clean glass specular (replaces the old chrome-marble orb) */
 .glass-btn::before {
   content: '';
   position: absolute;
-  left: 7px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  inset: 0;
+  border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(circle at 34% 26%,
-    rgba(131,202,226,0.90)  0%,
-    rgba(131,202,226,0.65) 20%,
-    rgba(15,41,64,0.50)   50%,
-    rgba(15,41,64,0.80)   100%);
-  box-shadow:
-    inset  6px  7px 22px rgba(255,255,255,0.32),
-    inset -3px -4px 14px rgba(0,0,0,0.30),
-    0 0 0 1.5px rgba(131,202,226,0.38),
-    0 6px 18px -2px rgba(15,41,64,0.20),
-    0 3px 8px rgba(15,41,64,0.14);
-  transition: box-shadow 0.28s ease,
-              transform 0.28s cubic-bezier(0.22,1,0.36,1);
+  background: radial-gradient(140% 60px at 28% -12%, rgba(255,255,255,0.6), transparent 68%);
+  transition: background 0.28s ease;
 }
 
 .glass-btn:hover {
@@ -185,13 +171,7 @@ html {
 }
 
 .glass-btn:hover::before {
-  box-shadow:
-    inset  6px  7px 26px rgba(255,255,255,0.40),
-    inset -3px -4px 16px rgba(0,0,0,0.22),
-    0 0 0 1.8px rgba(131,202,226,0.50),
-    0 8px 24px -2px rgba(15,41,64,0.24),
-    0 4px 10px rgba(15,41,64,0.16);
-  transform: translateY(-50%) translateY(-1px);
+  background: radial-gradient(150% 70px at 32% -12%, rgba(255,255,255,0.74), transparent 66%);
 }
 
 .glass-btn:active { transform: scale(0.97) translateY(0); }
@@ -262,25 +242,30 @@ html {
   transform: rotate(45deg);
 }
 
-/* Ghost / secondary — teal neutral */
+/* Ghost / secondary — liquid glass (matches the glass language, not a flat pill) */
 .layers-ghost {
-  background: rgba(255,255,255,0.80);
-  border: 1px solid rgba(131,202,226,0.22);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(18px) saturate(185%) brightness(1.05);
+  -webkit-backdrop-filter: blur(18px) saturate(185%) brightness(1.05);
+  border: 1px solid rgba(255,255,255,0.62);
   padding: 11px 24px;
   font-weight: 500;
   color: #0F2940;
   box-shadow:
-    0 4px 16px rgba(15,41,64,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.90);
+    0 6px 18px rgba(15,41,64,0.10),
+    inset 0 1.5px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(15,41,64,0.04);
   opacity: 1;
 }
 
 .layers-ghost:hover {
-  background: rgba(255,255,255,0.95);
-  border-color: rgba(131,202,226,0.36);
+  background: rgba(255,255,255,0.68);
+  border-color: rgba(255,255,255,0.8);
   box-shadow:
-    0 6px 20px rgba(15,41,64,0.10),
-    inset 0 1px 0 rgba(255,255,255,0.95);
+    0 10px 26px rgba(15,41,64,0.12),
+    inset 0 1.5px 0 rgba(255,255,255,0.98),
+    inset 0 -1px 0 rgba(15,41,64,0.05);
+  transform: translateY(-2px);
   opacity: 1;
 }
 
@@ -1020,6 +1005,23 @@ html {
 @media (max-width: 640px) {
   .lang-toggle { left: 14px !important; right: auto !important; }
   .subpage-back { left: auto !important; right: 14px !important; }
+
+  /* Subpage: tighter vertical rhythm on phones */
+  .sub-content { padding: 2.5rem 20px 1.25rem !important; }
+  .sub-section { margin-bottom: 2.75rem !important; }
+  .sub-footer  { padding: 3rem 20px 3rem !important; margin-top: 1.25rem !important; }
+}
+
+/* Auto-hide the fixed language toggle + subpage back-link on scroll-down
+   (in sync with the dock), so they don't float over content while reading. */
+.lang-toggle, .subpage-back {
+  transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
+}
+.nav-hidden .lang-toggle,
+.nav-hidden .subpage-back {
+  transform: translateY(-160%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Mobile section menu under the diorama — hidden on desktop, shown ≤640px */

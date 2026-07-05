@@ -119,7 +119,8 @@ export default async function ProjectPage({ params }: Props) {
           zIndex: 1,
         }}
       >
-        {/* Hero image */}
+        {/* Hero image — blurred to a soft texture so its text never competes
+            with the foreground copy; scaled up so the blur doesn't bleed at edges */}
         <img
           src={data.heroImg}
           alt=""
@@ -130,18 +131,19 @@ export default async function ProjectPage({ params }: Props) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: 0.10,
-            filter: 'saturate(0.5)',
+            opacity: 0.08,
+            filter: 'saturate(0.45) blur(5px)',
+            transform: 'scale(1.1)',
           }}
         />
 
-        {/* Hero gradient overlay */}
+        {/* Hero gradient overlay — stronger scrim at the top too */}
         <div
           aria-hidden
           style={{
             position: 'absolute',
             inset: 0,
-            background: `radial-gradient(ellipse 110% 90% at 50% -10%, ${data.accent}14 0%, transparent 60%), linear-gradient(to bottom, rgba(238,247,251,0.10) 0%, rgba(238,247,251,0.80) 65%, rgba(238,247,251,0.96) 100%)`,
+            background: `radial-gradient(ellipse 110% 90% at 50% -10%, ${data.accent}14 0%, transparent 60%), linear-gradient(to bottom, rgba(238,247,251,0.42) 0%, rgba(238,247,251,0.86) 55%, rgba(238,247,251,0.97) 100%)`,
           }}
         />
 
@@ -257,6 +259,7 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* ── CONTENT SECTIONS ─────────────────────────────── */}
       <main
+        className="sub-content"
         style={{
           maxWidth: 1100,
           margin: '0 auto',
@@ -267,7 +270,7 @@ export default async function ProjectPage({ params }: Props) {
       >
         {data.sections.map((section, i) => (
           <SectionReveal key={i} delay={i * 0.06}>
-            <section style={{ marginBottom: '5rem' }}>
+            <section className="sub-section" style={{ marginBottom: '5rem' }}>
               {/* Section divider label */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: '2rem' }}>
                 <span
@@ -357,6 +360,7 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* ── CONTACT FOOTER ───────────────────────────────── */}
       <footer
+        className="sub-footer"
         style={{
           position: 'relative',
           zIndex: 1,
