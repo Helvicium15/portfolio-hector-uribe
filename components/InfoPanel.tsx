@@ -760,18 +760,18 @@ export default function InfoPanel({ sectionKey, onClose, origin }: Props) {
             overflowY: isGalerie ? 'hidden' : 'auto',
             overflowX: 'hidden',
             pointerEvents: 'auto',
-            background: 'rgba(252,253,253,0.92)',
-            backdropFilter: 'blur(40px) saturate(160%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(160%)',
+            background: 'rgba(252,253,253,0.86)',
+            backdropFilter: 'blur(44px) saturate(190%) brightness(1.04)',
+            WebkitBackdropFilter: 'blur(44px) saturate(190%) brightness(1.04)',
             borderRadius: 28,
-            border: '1px solid rgba(131,202,226,0.16)',
-            boxShadow: '0 24px 80px rgba(15,41,64,0.16), 0 4px 16px rgba(15,41,64,0.08), inset 0 1px 0 rgba(255,255,255,0.95)',
+            border: '1px solid rgba(255,255,255,0.55)',
+            boxShadow: '0 26px 84px rgba(15,41,64,0.18), 0 4px 16px rgba(15,41,64,0.08), inset 0 1.5px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(15,41,64,0.04)',
           }}
         >
-          {/* Iridescent corner glow */}
+          {/* Iridescent specular + corner glow */}
           <div aria-hidden style={{
             position: 'absolute', inset: 0, pointerEvents: 'none', borderRadius: 'inherit',
-            background: 'radial-gradient(45% 40% at 20% 5%, rgba(254,134,132,0.08), transparent 60%), radial-gradient(60% 55% at 35% 3%, rgba(131,202,226,0.06), transparent 70%)',
+            background: 'radial-gradient(55% 40% at 26% -3%, rgba(255,255,255,0.55), transparent 62%), radial-gradient(45% 40% at 16% 4%, rgba(254,134,132,0.12), transparent 62%), radial-gradient(60% 55% at 82% 2%, rgba(131,202,226,0.10), transparent 70%)',
             filter: 'blur(8px)',
           }} />
 

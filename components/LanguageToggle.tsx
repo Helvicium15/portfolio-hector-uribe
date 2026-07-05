@@ -15,6 +15,7 @@ export default function LanguageToggle() {
     <div
       role="group"
       aria-label="Sprache / Language"
+      className="lg"
       style={{
         position: 'fixed',
         top: 16,
@@ -25,11 +26,11 @@ export default function LanguageToggle() {
         gap: 2,
         padding: 3,
         borderRadius: 999,
-        background: 'rgba(255,255,255,0.82)',
-        backdropFilter: 'blur(16px) saturate(1.4)',
-        WebkitBackdropFilter: 'blur(16px) saturate(1.4)',
-        border: '1px solid rgba(131,202,226,0.35)',
-        boxShadow: '0 4px 16px rgba(15,41,64,0.10), inset 0 1px 0 rgba(255,255,255,0.9)',
+        background: 'rgba(255,255,255,0.72)',
+        backdropFilter: 'blur(18px) saturate(185%) brightness(1.05)',
+        WebkitBackdropFilter: 'blur(18px) saturate(185%) brightness(1.05)',
+        border: '1px solid rgba(255,255,255,0.7)',
+        boxShadow: '0 6px 18px rgba(15,41,64,0.12), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(15,41,64,0.04)',
       }}
     >
       {LANGS.map((l) => {

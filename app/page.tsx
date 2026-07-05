@@ -450,7 +450,7 @@ export default function Home() {
       <div style={{ background: '#FFFFFF', borderTop: '1px solid rgba(15,41,64,0.05)' }}>
       <Section id="contact" style={{ paddingBottom: 160 }}>
         <motion.div
-          className="contact-panel"
+          className="contact-panel lg lg-coral"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -460,11 +460,11 @@ export default function Home() {
             position: 'relative',
             borderRadius: 30,
             padding: '42px 34px 36px',
-            background: 'linear-gradient(160deg, rgba(255,255,255,0.92), rgba(238,247,251,0.80) 50%, rgba(240,244,243,0.90))',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '0.5px solid rgba(131,202,226,0.22)',
-            boxShadow: '0 8px 40px rgba(15,41,64,0.10), 0 1px 4px rgba(15,41,64,0.06), inset 0 1px 0 rgba(255,255,255,0.90)',
+            background: 'linear-gradient(160deg, rgba(255,255,255,0.78), rgba(238,247,251,0.60) 52%, rgba(240,244,243,0.72))',
+            backdropFilter: 'blur(26px) saturate(185%) brightness(1.03)',
+            WebkitBackdropFilter: 'blur(26px) saturate(185%) brightness(1.03)',
+            border: '1px solid rgba(255,255,255,0.6)',
+            boxShadow: '0 14px 46px rgba(15,41,64,0.12), 0 2px 8px rgba(15,41,64,0.06), inset 0 1.5px 0 rgba(255,255,255,0.92), inset 0 -1px 0 rgba(15,41,64,0.04)',
             overflow: 'hidden',
           }}
         >

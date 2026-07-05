@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import LanguageToggle from '@/components/LanguageToggle';
+import GlassPointer from '@/components/GlassPointer';
 import type { Lang } from '@/lib/i18n';
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {lang === 'en' ? 'Skip to content' : 'Zum Inhalt springen'}
         </a>
         <LanguageProvider initial={lang}>
+          <GlassPointer />
           <LanguageToggle />
           <main id="main">{children}</main>
         </LanguageProvider>

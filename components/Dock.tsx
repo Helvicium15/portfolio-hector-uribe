@@ -205,15 +205,16 @@ export default function Dock() {
       }}
     >
       <motion.div
+        className="lg"
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
         style={{
-          background: 'rgba(255,255,255,0.68)',
-          backdropFilter: 'blur(32px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-          border: '1px solid rgba(255,255,255,0.65)',
-          boxShadow: '0 8px 32px rgba(15,41,64,0.16), 0 2px 8px rgba(15,41,64,0.10), inset 0 1px 1px rgba(255,255,255,0.90)',
+          background: 'rgba(255,255,255,0.62)',
+          backdropFilter: 'blur(30px) saturate(200%) brightness(1.06)',
+          WebkitBackdropFilter: 'blur(30px) saturate(200%) brightness(1.06)',
+          border: '1px solid rgba(255,255,255,0.7)',
+          boxShadow: '0 10px 34px rgba(15,41,64,0.18), 0 2px 8px rgba(15,41,64,0.10), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(15,41,64,0.04)',
           borderRadius: 9999,
           padding: isMobile ? '6px 8px' : '7px 10px',
         }}
