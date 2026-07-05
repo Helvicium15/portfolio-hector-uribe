@@ -812,6 +812,20 @@ html {
   .proj-hint-arrow { animation: none; }
 }
 
+/* Contact panel — single column on mobile, 2 columns filling the width on desktop */
+.contact-panel { max-width: 460px; margin: 0 auto; }
+@media (min-width: 920px) {
+  .contact-panel { max-width: 760px; padding: 48px 52px 44px !important; }
+  .contact-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: stretch;
+  }
+  .contact-or { display: none !important; }
+  .contact-email { margin-bottom: 0 !important; }
+}
+
 /* ── Focus visible ────────────────────────────────────────────── */
 *:focus-visible {
   outline: 2px solid #0F2940;
@@ -1101,6 +1115,9 @@ html {
     padding: 76px 32px 40px !important;
     justify-content: flex-end !important;
   }
+
+  /* Hide the scroll cue on tablet — the shorter hero makes it collide with the CTAs */
+  .scroll-cue { display: none !important; }
 
   #diorama { padding: 32px 0 16px !important; }
 

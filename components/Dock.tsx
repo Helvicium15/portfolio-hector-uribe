@@ -141,6 +141,29 @@ export default function Dock() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Auto-hide on scroll-down so the fixed dock never covers content while
+  // reading; reveal on scroll-up and near the top/bottom of the page.
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const nearBottom = window.innerHeight + y >= document.body.scrollHeight - 140;
+        if (y < 160 || nearBottom) setHidden(false);
+        else if (y > lastY + 6) setHidden(true);
+        else if (y < lastY - 6) setHidden(false);
+        lastY = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const iconSize = isMobile ? 40 : 52;
 
   const items: DockItemData[] = [
@@ -173,7 +196,13 @@ export default function Dock() {
   return (
     <nav
       aria-label="Hauptnavigation"
-      style={{ position: 'fixed', bottom: 22, left: '50%', transform: 'translateX(-50%)', zIndex: 100 }}
+      style={{
+        position: 'fixed', bottom: 22, left: '50%', zIndex: 100,
+        transform: hidden ? 'translateX(-50%) translateY(160%)' : 'translateX(-50%) translateY(0)',
+        opacity: hidden ? 0 : 1,
+        pointerEvents: hidden ? 'none' : 'auto',
+        transition: 'transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease',
+      }}
     >
       <motion.div
         initial={{ y: 24, opacity: 0 }}

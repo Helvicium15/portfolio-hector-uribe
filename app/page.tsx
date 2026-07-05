@@ -450,6 +450,7 @@ export default function Home() {
       <div style={{ background: '#FFFFFF', borderTop: '1px solid rgba(15,41,64,0.05)' }}>
       <Section id="contact" style={{ paddingBottom: 160 }}>
         <motion.div
+          className="contact-panel"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -457,8 +458,6 @@ export default function Home() {
           custom={0}
           style={{
             position: 'relative',
-            maxWidth: 460,
-            margin: '0 auto',
             borderRadius: 30,
             padding: '42px 34px 36px',
             background: 'linear-gradient(160deg, rgba(255,255,255,0.92), rgba(238,247,251,0.80) 50%, rgba(240,244,243,0.90))',
@@ -492,8 +491,11 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Email + links body (2 columns on desktop) */}
+          <div className="contact-body">
           {/* Email CTA — primary action */}
           <a
+            className="contact-email"
             href="mailto:hectoruch18@gmail.com"
             style={{
               position: 'relative',
@@ -532,7 +534,7 @@ export default function Home() {
           </a>
 
           {/* Divider */}
-          <div style={{
+          <div className="contact-or" style={{
             display: 'flex', alignItems: 'center', gap: 14,
             margin: '0 0 20px',
             position: 'relative', zIndex: 1,
@@ -545,6 +547,7 @@ export default function Home() {
           </div>
 
           {/* Social links */}
+          <div className="contact-links">
           {[
             { label: 'LinkedIn',  value: 'hectoruch18',       url: 'https://www.linkedin.com/in/hectoruch18/' },
             { label: 'Behance',   value: 'hectoruribe2',      url: 'https://www.behance.net/hectoruribe2' },
@@ -599,6 +602,8 @@ export default function Home() {
               </span>
             </a>
           ))}
+          </div>{/* contact-links */}
+          </div>{/* contact-body */}
         </motion.div>
       </Section>
       </div>{/* end contact bg */}
