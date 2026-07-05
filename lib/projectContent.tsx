@@ -420,6 +420,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     role: t('Solo — UX/UI Designer', 'Solo — UX/UI Designer'),
     year: '2023',
     heroImg: '/img/projects/schwimmspass-thumbnail.webp',
+    liveUrl: 'https://xd.adobe.com/view/686d220c-8ac2-4168-8435-e61ee5c05780-3d3e/',
+    liveLabel: t('Prototyp ansehen', 'View prototype'),
     intro: t('SchwimmSpass ist ein App-Redesign-Konzept für einen Mainzer Anbieter von Kinderschwimmkursen. Das Ziel: Die Kursanmeldung und -verwaltung für vielbeschäftigte Eltern so einfach wie möglich zu gestalten.', 'SchwimmSpass is an app redesign concept for a Mainz-based provider of children\'s swimming courses. The goal: to make course registration and management as simple as possible for busy parents.'),
     sections: [
       {
@@ -461,6 +463,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     role: t('Solo — UX/UI Designer', 'Solo — UX/UI Designer'),
     year: '2024',
     heroImg: '/img/projects/mosaic-savings.webp',
+    liveUrl: 'https://squishy-savings-app.vercel.app/',
+    liveLabel: t('Live ansehen', 'View live'),
     intro: t('Squishy Savings ist eine Mobile-Finance-App mit verspielter, weicher Ästhetik und einem klaren Ansatz: alle Finanzdaten lokal auf dem Gerät — maximale Privatsphäre, null Abhängigkeiten, keine Registrierung erforderlich.', 'Squishy Savings is a mobile finance app with a playful, soft aesthetic and a clear approach: all financial data stored locally on the device — maximum privacy, zero dependencies, no registration required.'),
     sections: [
       {
