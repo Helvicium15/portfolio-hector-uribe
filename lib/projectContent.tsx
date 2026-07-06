@@ -522,6 +522,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     role: t('Solo — UX/UI & Frontend Developer', 'Solo — UX/UI & Frontend Developer'),
     year: '2024',
     heroImg: '/img/projects/mosaic-sentinel.webp',
+    liveUrl: 'https://helvicium15-sentinel2025.vercel.app/',
+    liveLabel: t('Live ansehen', 'View live'),
     intro: t('Sentinel ist eine Web-App für das Echtzeit-Monitoring von Online-Shops — Verkaufszahlen, Lagerbestand und Traffic auf einen Blick, in einem klaren Dark-UI-Dashboard. Designed in Figma, entwickelt mit React und live auf Vercel deployed.', 'Sentinel is a web app for real-time monitoring of online shops — sales figures, inventory and traffic at a glance, in a clean dark-UI dashboard. Designed in Figma, built with React and deployed live on Vercel.'),
     sections: [
       {
