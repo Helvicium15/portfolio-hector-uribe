@@ -126,6 +126,103 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   const t = (de: string, en: string) => (lang === 'en' ? en : de);
   return {
 
+  /* ── ARVALOO — SMASH. ────────────────────────────────────── */
+  arvaloo: {
+    title: t('Arvaloo — Packaging & Produktkommunikation', 'Arvaloo — Packaging & Product Communication'),
+    description: t('Produkt-, Grafik- & Kommunikationsdesigner (seit 07/2026): Verpackungsdesign, Druckvorstufe und Produktkommunikation für die Marke SMASH.', 'Product, Graphic & Communication Designer (since 07/2026): packaging design, prepress and product communication for the SMASH. brand.'),
+    accent: '#fe8684',
+    category: t('Packaging · Druckvorstufe · Produktkommunikation', 'Packaging · Prepress · Product Communication'),
+    tools: 'Illustrator · Photoshop · InDesign · Pacdora · Nano Banana · Figma Weave',
+    role: t('Produkt-, Grafik- & Kommunikationsdesigner (Teilzeit)', 'Product, Graphic & Communication Designer (part-time)'),
+    year: t('07/2026 – heute', '07/2026 – present'),
+    heroImg: '/img/projects/arvaloo/banner.jpg',
+    heroImgPos: '50% 50%',
+    intro: t('Bei der Arvaloo GmbH in Mainz verantworte ich Verpackungsdesign, Druckvorstufe und Produktkommunikation der Marke SMASH. — Super Sauce, Cloud Sauce und CBD Pods — für die Märkte Deutschland, Österreich und Frankreich.', 'At Arvaloo GmbH in Mainz I am responsible for packaging design, prepress and product communication for the SMASH. brand — Super Sauce, Cloud Sauce and CBD Pods — for the German, Austrian and French markets.'),
+    sections: [
+      {
+        label: t('Kontext', 'Context'),
+        content: grid2(
+          <>{cardTitle(t('Das Unternehmen', 'The Company'))}{cardBody(t('Arvaloo GmbH ist ein Mainzer Konsumgüter-Unternehmen im Bereich CBD-Produkte. Mit der Marke SMASH. Vapes ist es im deutschsprachigen Raum und in Frankreich vertreten — im Handel, im eigenen Onlineshop und im B2B-Geschäft.', 'Arvaloo GmbH is a consumer-goods company from Mainz in the CBD product sector. With its SMASH. Vapes brand it is present in German-speaking markets and France — in retail, in its own online shop and in B2B.'))}</>,
+          <>{cardTitle(t('Meine Rolle', 'My Role'))}{cardBody(t('Als Produkt-, Grafik- & Kommunikationsdesigner begleite ich Produkte von der technischen Stanzkontur bis zum fertigen Packshot: Verpackung, Etikett, Druckdaten, Lokalisierung, Shop-Bilder und Kampagnen — in direkter Abstimmung mit Geschäftsführung, Druckereien und Kunden.', 'As Product, Graphic & Communication Designer I take products from the technical dieline to the finished packshot: packaging, labels, print files, localization, shop imagery and campaigns — in direct coordination with management, printers and clients.'))}</>,
+        ),
+      },
+      {
+        label: t('SMASH. Super Sauce Pods', 'SMASH. Super Sauce Pods'),
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {figCard(imgTile('/img/projects/arvaloo/banner.jpg', 'SMASH. Vapes Super Sauce Pods — Shop-Banner mit allen fünf Sorten', 14), t('Shop-Banner · Key Visual der Super Sauce Series mit allen fünf Sorten.', 'Shop banner · key visual of the Super Sauce Series with all five flavours.'), 'banner')}
+            {grid2(
+              <>{cardTitle(t('Das Produkt', 'The Product'))}{cardBody(t('Super Sauce ist die Prefilled-Pod-Linie von SMASH. Vapes: 2-ml-Pods mit Mesh Coil, ca. 600 Züge, nikotin- und THC-frei und kompatibel mit gängigen Akkuträgern — in fünf Sorten: Kaktus Feige Ice, Pinkberry Runtz, Cherry Bomb Ice, Blueberry Ice und Lemonade.', 'Super Sauce is the prefilled pod line of SMASH. Vapes: 2 ml pods with a mesh coil, approx. 600 puffs, nicotine- and THC-free and compatible with common battery devices — in five flavours: Kaktus Feige Ice, Pinkberry Runtz, Cherry Bomb Ice, Blueberry Ice and Lemonade.'))}</>,
+              <>{cardTitle(t('Die Aufgabe', 'The Challenge'))}{cardBody(t('Fünf Sorten sollten im Regal sofort unterscheidbar sein und trotzdem klar als eine Produktfamilie wirken — auf einer kleinen Faltschachtel, die zusätzlich alle gesetzlichen Pflichtangaben tragen muss.', 'Five flavours had to be instantly distinguishable on the shelf while clearly reading as one product family — on a small folding box that also has to carry all mandatory legal information.'))}</>,
+            )}
+            {card(
+              <div>
+                {cardTitle(t('Mein Vorgehen', 'My Approach'))}
+                <ol style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 10 }}>
+                  {[
+                    [t('Stanzkontur & Raster', 'Dieline & grid'), t('Aufbau der Faltschachtel auf der technischen Stanzkontur mit einem festen Raster für alle Sorten: Logo, „Nikotinfrei / THC-frei"-Siegel, Produktname, Kompatibilitäts-Box und EAN sitzen immer an derselben Stelle.', 'Built the folding box on the technical dieline with a fixed grid for every flavour: logo, "nicotine-free / THC-free" seal, product name, compatibility box and EAN always sit in the same place.')],
+                    [t('Farbwelt & Lettering', 'Colour world & lettering'), t('Variabel sind nur die fließende Farbwelt und das Sorten-Lettering — so entsteht Wiedererkennung über die Marke und Unterscheidung über die Farbe.', 'Only the flowing colour world and the flavour lettering change — recognition comes from the brand, differentiation from colour.')],
+                    [t('Pflichtangaben', 'Mandatory information'), t('CLP-Warnhinweis, Inhaltsstoffe, LOT/UFI-Codes, EAN und 18+-Kennzeichnung integriert, ohne den Markenauftritt zu stören.', 'Integrated CLP warning, ingredients, LOT/UFI codes, EAN and 18+ labelling without disrupting the brand look.')],
+                    [t('Druckvorstufe', 'Prepress'), t('Druckfertige PDF/X-Daten inkl. Sonderfarben und Spot-UV, abgestimmt mit der Druckerei.', 'Print-ready PDF/X files incl. spot colours and spot UV, coordinated with the printer.')],
+                    [t('Visualisierung & Kampagne', 'Visualization & campaign'), t('3D-Mockups und Packshots mit Pacdora, Nano Banana und Photoshop — daraus Poster, Shop-Banner, Social-Assets und ein B2B-One-Pager für den Großhandel.', '3D mockups and packshots with Pacdora, Nano Banana and Photoshop — turned into a poster, shop banner, social assets and a B2B one-pager for wholesale.')],
+                  ].map(([h, b], i) => (
+                    <li key={i} style={{ fontSize: 13.5, lineHeight: 1.7, color: 'rgba(15,41,64,0.72)' }}>
+                      <strong style={{ color: '#0F2940', fontFamily: 'var(--font-display)' }}>{h}</strong> — {b}
+                    </li>
+                  ))}
+                </ol>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 18 }}>
+                  {['Illustrator', 'Photoshop', 'InDesign', 'Pacdora', 'Nano Banana', 'Figma Weave'].map((tool) => (
+                    <span key={tool} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.04em', background: 'rgba(131,202,226,0.14)', border: '1px solid rgba(131,202,226,0.30)', borderRadius: 999, padding: '4px 11px', color: 'rgba(15,41,64,0.72)' }}>{tool}</span>
+                  ))}
+                </div>
+              </div>,
+            )}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(260px,100%),1fr))', gap: 16, alignItems: 'start' }}>
+              {figCard(imgTile('/img/projects/arvaloo/poster.jpg', 'SMASH. Vapes Super Sauce Poster „Fünf Sorten ein Chill"', 14), t('Launch-Poster · Schaufenster & POS.', 'Launch poster · shop window & POS.'), 'poster')}
+              {figCard(imgTile('/img/projects/arvaloo/onepager.jpg', 'SMASH. Vapes Super Sauce B2B-One-Pager mit Staffelpreisen', 14), t('B2B-One-Pager · Produktvorteile & Staffelpreise für den Großhandel.', 'B2B one-pager · product benefits & tiered pricing for wholesale.'), 'onepager')}
+              {figCard(imgTile('/img/projects/arvaloo/packshot.jpg', 'SMASH. Vapes Super Sauce Packshot mit Pod und Akkuträger', 14), t('Social-Media-Packshot · Verpackung, Pod und Key-Features.', 'Social media packshot · packaging, pod and key features.'), 'packshot')}
+            </div>
+          </div>
+        ),
+      },
+      {
+        label: t('Weitere Verantwortung', 'Further Responsibilities'),
+        content: (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap: 16 }}>
+            {[
+              { t: t('Verpackung & Druckvorstufe', 'Packaging & Prepress'), b: t('Neben den Pods: Thekendisplays, Doypacks und Kartuschen-Einlagen für Super Sauce, Cloud Sauce und CBD Pods — immer auf Basis technischer Stanzkonturen.', 'Beyond the pods: counter displays, doypacks and cartridge inserts for Super Sauce, Cloud Sauce and CBD Pods — always based on technical dielines.') },
+              { t: t('Lokalisierung DE · AT · FR', 'Localization DE · AT · FR'), b: t('Anpassung von Verpackungen und Werbemitteln für Frankreich und Österreich unter Einhaltung der CLP-Kennzeichnung und nationaler Vorgaben wie loi Toubon und Triman.', 'Adapting packaging and advertising material for France and Austria in line with CLP labelling and national requirements such as loi Toubon and Triman.') },
+              { t: t('Private Label · SABAI Medical Labs', 'Private Label · SABAI Medical Labs'), b: t('Verpackung und Etikett für SABAI Medical Labs (Kooperation mit DJ Tomekk) — entwickelt in direkter Abstimmung mit dem Kunden.', 'Packaging and label for SABAI Medical Labs (a collaboration with DJ Tomekk) — developed in direct coordination with the client.') },
+              { t: t('Packshots & Onlineshop', 'Packshots & Online Shop'), b: t('Produktbilder und Packshots für rund 40 Artikel zum Launch des neuen Onlineshops sowie Rohstoffpräsentationen für den B2B-Shop.', 'Product images and packshots for around 40 products for the launch of the new online shop, plus raw-material presentations for the B2B shop.') },
+              { t: t('B2B, Social & POS', 'B2B, Social & POS'), b: t('B2B-One-Pager, Social-Media-Kampagnen, Schaufensterplakate und POS-Materialien — konsistent im Markenauftritt von SMASH.', 'B2B one-pagers, social media campaigns, shop-window posters and POS materials — consistent with the SMASH. brand identity.') },
+              { t: t('KI-gestützte Workflows', 'AI-assisted Workflows'), b: t('Aufbau von Workflows für Mockups und Produktvisualisierung mit Nano Banana, Figma Weave, Pacdora und Photoshop — Abstimmungszyklen wurden dadurch deutlich verkürzt.', 'Built workflows for mockups and product visualization with Nano Banana, Figma Weave, Pacdora and Photoshop — which significantly shortened review cycles.') },
+            ].map((item, i) => card(<>{cardTitle(item.t)}{cardBody(item.b)}</>, undefined, i))}
+          </div>
+        ),
+      },
+      {
+        label: t('Auf einen Blick', 'At a Glance'),
+        content: (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
+            {[
+              { metric: '5', label: t('Sorten in einem modularen Verpackungssystem', 'Flavours in one modular packaging system') },
+              { metric: '~40', label: t('Packshots zum Launch des neuen Onlineshops', 'Packshots for the launch of the new online shop') },
+              { metric: '3', label: t('Märkte: Deutschland, Österreich, Frankreich', 'Markets: Germany, Austria, France') },
+            ].map((m) => (
+              <div key={m.metric} className="glass-card" style={{ padding: '28px 28px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: '#0F2940', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
+                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+    ],
+    nextSlug: 'vicampo',
+    nextName: 'Vicampo',
+  },
+
   /* ── VICAMPO ─────────────────────────────────────────────── */
   vicampo: {
     title: t('Vicampo — Grafik & UX', 'Vicampo — Graphics & UX'),

@@ -335,6 +335,9 @@ export default function Home() {
               transition={{ type: 'spring', stiffness: 380, damping: 26 }}
             >
               {tr('Projekte ansehen', 'View projects')}
+              <span className="cta-new-badge" aria-label={tr('Neues Projekt', 'New project')}>
+                {tr('Neu', 'New')}
+              </span>
               <span className="layers-orb">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M5 12h14M12 5l7 7-7 7" />

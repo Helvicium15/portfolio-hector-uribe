@@ -199,6 +199,24 @@ function PerspectiveProjectCarousel() {
                     : 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.20) 60%, transparent 100%)',
                 }} />
 
+                {p.isNew && (
+                  <span style={{
+                    position: 'absolute', top: isCenter ? 14 : 10, right: isCenter ? 14 : 10, zIndex: 2,
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    fontFamily: 'var(--font-mono)', fontSize: isCenter ? 10 : 8, fontWeight: 700,
+                    letterSpacing: '0.14em', textTransform: 'uppercase',
+                    background: 'rgba(255,255,255,0.90)',
+                    backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(131,202,226,0.35)',
+                    borderRadius: 999, padding: isCenter ? '5px 11px' : '3px 8px',
+                    color: '#0F2940',
+                    boxShadow: '0 4px 12px rgba(15,41,64,0.18)',
+                  }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fe8684', boxShadow: '0 0 8px #fe8684' }} />
+                    {en ? 'New' : 'Neu'}
+                  </span>
+                )}
+
                 {/* Accent glow on center card */}
                 {isCenter && (
                   <div aria-hidden style={{
@@ -384,7 +402,7 @@ function AboutContent() {
               borderRadius: 999, padding: '4px 10px',
               whiteSpace: 'nowrap', flexShrink: 0,
             }}>
-              {exp.period}
+              {t(exp.period, exp.periodEn ?? exp.period)}
             </span>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5, paddingLeft: 16 }}>

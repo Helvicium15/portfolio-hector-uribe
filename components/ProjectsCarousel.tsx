@@ -1,7 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { projects } from '@/lib/data';
+import { projects as allProjects, liveProjects } from '@/lib/data';
+
+// Projects already featured in "Live & in Produktion" aren't repeated here.
+const projects = allProjects.filter((p) => !liveProjects.some((l) => l.slug === p.slug));
 import { useLang } from './LanguageProvider';
 
 export default function ProjectsCarousel() {

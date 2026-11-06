@@ -16,6 +16,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'arvaloo',
+    slug: 'arvaloo',
+    name: 'SMASH. Super Sauce',
+    cat: 'Packaging · Kampagne',
+    catEn: 'Packaging · Campaign',
+    desc: 'Verpackungssystem und Launch-Kampagne für fünf Pod-Sorten der Marke SMASH. Vapes (Arvaloo GmbH).',
+    img: '/img/projects/arvaloo/poster-card.jpg',
+    accent: '#fe8684',
+    isNew: true,
+    tools: 'Illustrator · Photoshop · Pacdora',
+    year: '2026',
+  },
+  {
     id: 'studybuddy',
     slug: 'studybuddy',
     name: 'StudyBuddy',
@@ -201,6 +214,29 @@ export const socialLinks = [
 /* ── Experience ──────────────────────────────────────────────────── */
 export const experience = [
   {
+    period: '07/2026 – heute',
+    periodEn: '07/2026 – present',
+    location: 'Mainz',
+    role: 'Produkt-, Grafik- & Kommunikationsdesigner (Teilzeit)',
+    roleEn: 'Product, Graphic & Communication Designer (part-time)',
+    company: 'Arvaloo GmbH',
+    accent: '#fe8684',
+    bullets: [
+      'Verpackungsdesign & Druckvorstufe für SMASH. (DE, AT, FR)',
+      'Faltschachteln, Thekendisplays, Doypacks — druckfertige PDF/X-Daten inkl. Sonderfarben & Spot-UV',
+      'Lokalisierung nach CLP-Kennzeichnung, loi Toubon & Triman',
+      'Packshots für ~40 Artikel zum Launch des neuen Onlineshops',
+      'KI-gestützte Mockup-Workflows (Nano Banana, Figma Weave, Pacdora)',
+    ],
+    bulletsEn: [
+      'Packaging design & prepress for SMASH. (DE, AT, FR)',
+      'Folding boxes, counter displays, doypacks — print-ready PDF/X files incl. spot colours & spot UV',
+      'Localization under CLP labelling, loi Toubon & Triman',
+      'Packshots for ~40 products for the launch of the new online shop',
+      'AI-assisted mockup workflows (Nano Banana, Figma Weave, Pacdora)',
+    ],
+  },
+  {
     period: '07/2023 – 09/2025',
     location: 'Mainz',
     role: 'Junior Grafik- & UX-Designer',
@@ -304,8 +340,9 @@ export interface LiveProject {
   desc: string;
   img: string;
   imgPos?: string;
-  liveUrl: string;
-  liveLabel: string;
+  liveUrl?: string;
+  liveLabel?: string;
+  isNew?: boolean;
   role: string;
   year: string;
   accent: string;
@@ -318,6 +355,23 @@ export interface LiveProject {
 }
 
 export const liveProjects: LiveProject[] = [
+  {
+    slug: 'arvaloo',
+    name: 'Arvaloo — SMASH.',
+    org: 'Arvaloo GmbH · Mainz',
+    cat: 'Packaging · Druckvorstufe · Produktkommunikation',
+    desc: 'Verpackungsdesign, Druckvorstufe und Produktkommunikation für die Marke SMASH. (Super Sauce, Cloud Sauce, CBD Pods) — von Faltschachtel und Thekendisplay bis Packshot und POS, für die Märkte DE, AT und FR.',
+    img: '/img/projects/arvaloo/banner.jpg',
+    imgPos: '50% 50%',
+    role: 'Produkt-, Grafik- & Kommunikationsdesigner',
+    year: '2026–heute',
+    accent: '#fe8684',
+    isNew: true,
+    tags: ['Packaging', 'Druckvorstufe', 'Lokalisierung', 'KI-Workflow'],
+    descEn: 'Packaging design, prepress and product communication for the SMASH. brand (Super Sauce, Cloud Sauce, CBD Pods) — from folding boxes and counter displays to packshots and POS, for the German, Austrian and French markets.',
+    roleEn: 'Product, Graphic & Communication Designer',
+    tagsEn: ['Packaging', 'Prepress', 'Localization', 'AI Workflow'],
+  },
   {
     slug: 'vicampo',
     name: 'Vicampo.de',

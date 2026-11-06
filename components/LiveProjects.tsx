@@ -36,7 +36,7 @@ export default function LiveProjects() {
               color: '#0F2940',
             }}>
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#fe8684', boxShadow: '0 0 8px #fe8684' }} />
-              Live
+              {p.isNew ? (en ? 'New' : 'Neu') : 'Live'}
             </span>
             <span style={{
               position: 'absolute', top: 14, right: 14,

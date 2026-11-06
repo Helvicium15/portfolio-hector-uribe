@@ -242,6 +242,59 @@ html {
   transform: rotate(45deg);
 }
 
+/* "Neu / New" badge inside the primary CTA — navy glass chip with a sweeping shine */
+.cta-new-badge {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: -2px;
+  padding: 4px 9px 4px 8px;
+  border-radius: 999px;
+  background: rgba(15,41,64,0.90);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 2px 6px rgba(15,41,64,0.30);
+}
+.cta-new-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #83cae2;
+  box-shadow: 0 0 6px #83cae2;
+  animation: cta-new-pulse 2s ease-in-out infinite;
+}
+.cta-new-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: cta-new-shine 3.6s ease-in-out infinite;
+}
+@keyframes cta-new-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.75); }
+}
+@keyframes cta-new-shine {
+  0%, 60% { left: -60%; }
+  100%    { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-new-badge::before, .cta-new-badge::after { animation: none; }
+}
+
 /* Ghost / secondary — liquid glass (matches the glass language, not a flat pill) */
 .layers-ghost {
   background: rgba(255,255,255,0.55);
