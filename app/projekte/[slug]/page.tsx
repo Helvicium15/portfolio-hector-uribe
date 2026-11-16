@@ -70,48 +70,30 @@ export default async function ProjectPage({ params }: Props) {
       <div aria-hidden style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(238,247,251,0.94)',
+        background: 'rgba(158,163,169,0.95)',
         zIndex: 0,
         pointerEvents: 'none',
       }} />
 
-      {/* Back button */}
+      {/* Back button — secondary glass, 44px · radius 12 */}
       <Link
         href="/"
-        className="subpage-back"
-        style={{
-          position: 'fixed',
-          top: 20,
-          left: 20,
-          zIndex: 200,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 7,
-          padding: '9px 18px',
-          borderRadius: 999,
-          textDecoration: 'none',
-          fontSize: 12,
-          fontWeight: 600,
-          letterSpacing: '0.04em',
-          color: 'rgba(15,41,64,0.78)',
-          background: 'rgba(255,255,255,0.88)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          boxShadow: '0 0 0 1px rgba(131,202,226,0.18), inset 0 1px 0 rgba(255,255,255,0.90), 0 4px 14px rgba(15,41,64,0.08)',
-          transition: 'all 0.18s ease',
-        }}
+        className="btn btn-secondary lq btn-sm subpage-back"
+        style={{ position: 'fixed', top: 16, left: 16, zIndex: 200 }}
       >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M19 12H5M12 5l-7 7 7 7" />
         </svg>
         Portfolio
       </Link>
 
+
       {/* ── HERO ─────────────────────────────────────────── */}
       <section
+        className="sub-hero"
         style={{
           position: 'relative',
-          minHeight: '62vh',
+          minHeight: '62svh',
           display: 'flex',
           alignItems: 'flex-end',
           paddingBottom: '4.5rem',
@@ -143,7 +125,7 @@ export default async function ProjectPage({ params }: Props) {
           style={{
             position: 'absolute',
             inset: 0,
-            background: `radial-gradient(ellipse 110% 90% at 50% -10%, ${data.accent}14 0%, transparent 60%), linear-gradient(to bottom, rgba(238,247,251,0.42) 0%, rgba(238,247,251,0.86) 55%, rgba(238,247,251,0.97) 100%)`,
+            background: `radial-gradient(ellipse 110% 90% at 50% -10%, ${data.accent}14 0%, transparent 60%), linear-gradient(to bottom, rgba(30,31,34,0.62) 0%, rgba(30,31,34,0.9) 55%, rgba(30,31,34,0.96) 100%)`,
           }}
         />
 
@@ -168,7 +150,7 @@ export default async function ProjectPage({ params }: Props) {
               fontWeight: 700,
               letterSpacing: '0.26em',
               textTransform: 'uppercase',
-              color: 'rgba(15,41,64,0.72)',
+              color: 'var(--text-2)',
               marginBottom: '1.1rem',
               fontFamily: 'var(--font-mono)',
             }}
@@ -187,7 +169,7 @@ export default async function ProjectPage({ params }: Props) {
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
               fontSize: 'clamp(2.8rem, 8vw, 5.5rem)',
-              color: 'rgba(15,41,64,0.96)',
+              color: 'var(--text)',
               textWrap: 'balance',
             }}
           >
@@ -198,7 +180,7 @@ export default async function ProjectPage({ params }: Props) {
           <p
             className="hero-enter hero-enter-3"
             style={{
-              color: 'rgba(15,41,64,0.72)',
+              color: 'var(--text-2)',
               fontSize: '0.97rem',
               lineHeight: 1.78,
               maxWidth: 580,
@@ -216,7 +198,7 @@ export default async function ProjectPage({ params }: Props) {
               flexWrap: 'wrap',
               gap: '2rem 3rem',
               paddingTop: '1.6rem',
-              borderTop: '1px solid rgba(15,41,64,0.10)',
+              borderTop: '1px solid var(--line-strong)',
             }}
           >
             {[
@@ -226,10 +208,10 @@ export default async function ProjectPage({ params }: Props) {
               { k: t('Zeitraum', 'Period'), v: data.year },
             ].map(({ k, v }) => (
               <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <span style={{ fontSize: '9.5px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: '11.5px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--text-2)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
                   {k}
                 </span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(15,41,64,0.88)', fontFamily: 'var(--font-display)' }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-display)' }}>
                   {v}
                 </span>
               </div>
@@ -241,13 +223,10 @@ export default async function ProjectPage({ params }: Props) {
               href={data.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-enter hero-enter-4"
+              className="hero-enter hero-enter-4 btn btn-primary btn-md"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: '1.9rem',
-                background: 'linear-gradient(180deg, #fd7c7a 0%, #fe8684 100%)',
-                color: '#fff', fontWeight: 700, fontFamily: 'var(--font-display)',
-                fontSize: 15, textDecoration: 'none', padding: '12px 26px', borderRadius: 999,
-                boxShadow: '0 12px 26px -6px rgba(254,134,132,0.55), inset 0 1px 0 rgba(255,255,255,0.40)',
+                marginTop: '1.9rem',
+                boxShadow: '0 12px 26px -6px rgba(255,95,0,0.55), inset 0 1px 0 rgba(255,255,255,0.056)',
               }}
             >
               {data.liveLabel ?? t('Live ansehen', 'View live')}
@@ -280,12 +259,12 @@ export default async function ProjectPage({ params }: Props) {
                     fontWeight: 700,
                     letterSpacing: '0.28em',
                     textTransform: 'uppercase',
-                    color: 'rgba(15,41,64,0.72)',
+                    color: 'var(--text-2)',
                   }}
                 >
                   {section.label}
                 </span>
-                <div style={{ flex: 1, height: 1, background: 'rgba(15,41,64,0.12)' }} />
+                <div style={{ flex: 1, height: 1, background: 'var(--line)' }} />
               </div>
 
               {section.content}
@@ -317,11 +296,11 @@ export default async function ProjectPage({ params }: Props) {
                 <div
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: 9,
+                    fontSize: 11.5,
                     fontWeight: 700,
                     letterSpacing: '0.22em',
                     textTransform: 'uppercase',
-                    color: 'rgba(15,41,64,0.72)',
+                    color: 'var(--text-2)',
                     marginBottom: 8,
                   }}
                 >
@@ -332,13 +311,13 @@ export default async function ProjectPage({ params }: Props) {
                     fontFamily: 'var(--font-display)',
                     fontWeight: 800,
                     fontSize: 'clamp(1.4rem, 3vw, 2rem)',
-                    color: 'rgba(15,41,64,0.94)',
+                    color: 'var(--text)',
                     letterSpacing: '-0.03em',
                   }}
                 >
                   {nextProject.name}
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(15,41,64,0.72)', marginTop: 5 }}>
+                <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 5 }}>
                   {nextProject.cat}
                 </div>
               </div>
@@ -365,7 +344,7 @@ export default async function ProjectPage({ params }: Props) {
           position: 'relative',
           zIndex: 1,
           padding: '4rem 40px 3.5rem',
-          borderTop: '1px solid rgba(15,41,64,0.09)',
+          borderTop: '1px solid var(--line)',
           textAlign: 'center',
           marginTop: '3rem',
         }}
@@ -373,21 +352,17 @@ export default async function ProjectPage({ params }: Props) {
         <p
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: 10,
+            fontSize: 11.5,
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
-            color: 'rgba(15,41,64,0.72)',
+            color: 'var(--text-2)',
             marginBottom: 22,
           }}
         >
           {t('Interesse an einer Zusammenarbeit?', 'Interested in working together?')}
         </p>
-        <a
-          href="mailto:hectoruch18@gmail.com"
-          className="glass-btn"
-          style={{ fontSize: 14 }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ marginRight: 8 }}>
+        <a href="mailto:hectoruch18@gmail.com" className="btn btn-secondary lq">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
@@ -397,7 +372,7 @@ export default async function ProjectPage({ params }: Props) {
           style={{
             marginTop: 28,
             fontSize: 11,
-            color: 'rgba(15,41,64,0.72)',
+            color: 'var(--text-2)',
             fontFamily: 'var(--font-mono)',
             letterSpacing: '0.08em',
           }}

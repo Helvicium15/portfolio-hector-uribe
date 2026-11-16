@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLang } from './LanguageProvider';
 import type { Lang } from '@/lib/i18n';
 
@@ -8,31 +9,45 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
 ];
 
+/* Glass-bubble toggle: a sunken pill with a liquid-glass capsule that is ~20%
+   taller than the pill. On change the capsule slides to the other side
+   (550ms, elastic), stretches mid-way (scaleX 1.15 / scaleY .92) and bounces
+   on arrival. Each option is a real <button aria-pressed>. */
 export default function LanguageToggle() {
   const { lang, setLang } = useLang();
+  const bubbleRef = useRef<HTMLSpanElement>(null);
+  const prev = useRef<Lang>(lang);
+  const index = LANGS.findIndex(l => l.code === lang);
+
+  // place the bubble without animation on first paint
+  useLayoutEffect(() => {
+    bubbleRef.current?.style.setProperty('--bx', `${index * 100}%`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const el = bubbleRef.current;
+    if (!el || prev.current === lang) return;
+    const from = LANGS.findIndex(l => l.code === prev.current) * 100;
+    const to = index * 100;
+    prev.current = lang;
+    el.style.setProperty('--bx', `${to}%`);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !el.animate) return;
+    const mid = (from + to) / 2;
+    el.animate(
+      [
+        { transform: `translateX(${from}%) scale(1, 1)` },
+        { transform: `translateX(${mid}%) scale(1.15, .92)`, offset: 0.45 },
+        { transform: `translateX(${to + (to > from ? 6 : -6)}%) scale(.96, 1.04)`, offset: 0.78 },
+        { transform: `translateX(${to}%) scale(1, 1)` },
+      ],
+      { duration: 550, easing: 'cubic-bezier(.34,1.56,.64,1)' },
+    );
+  }, [lang, index]);
 
   return (
-    <div
-      role="group"
-      aria-label="Sprache / Language"
-      className="lg lang-toggle"
-      style={{
-        position: 'fixed',
-        top: 16,
-        right: 16,
-        zIndex: 500,
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 2,
-        padding: 3,
-        borderRadius: 999,
-        background: 'rgba(255,255,255,0.72)',
-        backdropFilter: 'blur(18px) saturate(185%) brightness(1.05)',
-        WebkitBackdropFilter: 'blur(18px) saturate(185%) brightness(1.05)',
-        border: '1px solid rgba(255,255,255,0.7)',
-        boxShadow: '0 6px 18px rgba(15,41,64,0.12), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(15,41,64,0.04)',
-      }}
-    >
+    <div role="group" aria-label="Sprache / Language" className="lang-toggle bubble-toggle">
+      <span ref={bubbleRef} className="bubble is-on" aria-hidden />
       {LANGS.map((l) => {
         const active = lang === l.code;
         return (
@@ -41,21 +56,7 @@ export default function LanguageToggle() {
             type="button"
             onClick={() => setLang(l.code)}
             aria-pressed={active}
-            style={{
-              border: 'none',
-              cursor: 'pointer',
-              outline: 'none',
-              fontFamily: 'var(--font-mono)',
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              padding: '6px 13px',
-              borderRadius: 999,
-              color: active ? '#fff' : 'rgba(15,41,64,0.70)',
-              background: active ? 'linear-gradient(180deg, #fd7c7a 0%, #fe8684 100%)' : 'transparent',
-              boxShadow: active ? '0 4px 12px -3px rgba(254,134,132,0.55)' : 'none',
-              transition: 'all 0.18s ease',
-            }}
+            className="bubble-opt"
           >
             {l.label}
           </button>

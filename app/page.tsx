@@ -7,6 +7,7 @@ import Dock from '@/components/Dock';
 import InfoPanel from '@/components/InfoPanel';
 import ProjectsCarousel from '@/components/ProjectsCarousel';
 import LiveProjects from '@/components/LiveProjects';
+import ProfileStrip from '@/components/ProfileStrip';
 import Preloader from '@/components/Preloader';
 import { useLang } from '@/components/LanguageProvider';
 
@@ -41,6 +42,22 @@ function Section({ id, children, style }: { id: string; children: React.ReactNod
   );
 }
 
+/* ── Copy e-mail — confirms in place and to screen readers ───────── */
+function CopyEmail({ label, done }: { label: string; done: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText('hectoruch18@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* clipboard blocked */ }
+  };
+  return (
+    <button type="button" className="btn btn-secondary lq btn-sm" onClick={copy}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        {copied ? <path d="M5 12l5 5L20 7" /> : <><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
+      </svg>
+      <span aria-live="polite">{copied ? done : label}</span>
+    </button>
+  );
+}
+
 /* ── Section heading ────────────────────────────────────────────── */
 function SectionHead({ title, sub }: { title: string; sub?: string }) {
   return (
@@ -60,7 +77,7 @@ function SectionHead({ title, sub }: { title: string; sub?: string }) {
           fontSize: 'clamp(40px, 5.5vw, 72px)',
           lineHeight: 1.04,
           letterSpacing: '-0.04em',
-          color: '#0F2940',
+          color: 'var(--text)',
           textWrap: 'balance',
         }}
       >
@@ -71,7 +88,7 @@ function SectionHead({ title, sub }: { title: string; sub?: string }) {
           style={{
             fontSize: 'clamp(16px, 1.4vw, 18px)',
             lineHeight: 1.72,
-            color: 'rgba(15,41,64,0.72)',
+            color: 'var(--text-2)',
             maxWidth: 540,
             margin: '18px auto 0',
             letterSpacing: '-0.01em',
@@ -116,15 +133,16 @@ export default function Home() {
           objectFit: 'cover',
           zIndex: 0,
           pointerEvents: 'none',
+          filter: 'grayscale(1)', /* neutral waves: no navy against the storm/black palette */
         }}
       >
         <source src="/bg_navy.mp4" type="video/mp4" />
       </video>
-      {/* ── Light overlay ── */}
+      {/* ── Matte-black veil: the video stays visible behind the hero ── */}
       <div aria-hidden style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(238,247,251,0.94)',
+        background: 'rgba(30,31,34,0.88)',
         zIndex: 0,
         pointerEvents: 'none',
       }} />
@@ -142,35 +160,9 @@ export default function Home() {
           textAlign: 'center',
           overflow: 'hidden',
           zIndex: 1,
-          background: 'radial-gradient(ellipse 80% 60% at 50% -5%, rgba(131,202,226,0.07) 0%, transparent 72%)',
+          padding: '76px 0 120px', /* top: language toggle · bottom: room for the fixed dock */
         }}
       >
-
-        {/* Badge — pinned top-center */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ position: 'absolute', top: 32, zIndex: 2 }}
-        >
-          <span
-            className="glass-pill"
-            style={{ color: '#0F2940', gap: 10, padding: '7px 18px' }}
-          >
-            <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: '#fe8684',
-                boxShadow: '0 0 8px #fe8684',
-                flexShrink: 0,
-                display: 'inline-block',
-              }}
-            />
-            {tr('Offen für neue Projekte', 'Open to new projects')}
-          </span>
-        </motion.div>
 
         {/* Bio heading + CTAs */}
         <div
@@ -194,18 +186,19 @@ export default function Home() {
             <h1 style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
-              fontSize: 'clamp(46px, 7.5vw, 96px)',
+              fontSize: 'clamp(46px, min(7.5vw, 10vh), 96px)',
               lineHeight: 1.08,
               letterSpacing: '-0.04em',
-              color: '#0F2940',
+              color: 'var(--text)',
               margin: 0,
             }}>
               {/* ── Line 1: Ich bin Hector [portrait] ── */}
               <span className="bio-line">
                 {tr('Ich bin ', "I'm ")}
-                <em style={{ fontStyle: 'italic', color: 'rgba(15,41,64,0.72)' }}>Hector</em>
+                <em style={{ fontStyle: 'italic', color: 'var(--text-2)' }}>Hector</em>
                 <motion.span
                   aria-hidden
+                  className="hero-pill"
                   whileHover={{ scale: 1.28, zIndex: 10 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   style={{
@@ -215,14 +208,14 @@ export default function Home() {
                     borderRadius: 999,
                     overflow: 'hidden',
                     margin: '0 0.10em 0.06em 0.32em',
-                    border: '1px solid rgba(131,202,226,0.30)',
-                    boxShadow: '0 4px 16px rgba(15,41,64,0.12), inset 0 1px 0 rgba(131,202,226,0.20)',
+                    border: '1px solid var(--line-strong)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.1)',
                     position: 'relative', top: '-0.03em',
                     cursor: 'zoom-in',
                   }}
                 >
                   <img
-                    src="/img/hector-profile-new.jpg"
+                    src="/img/hero-pill-hector.webp"
                     alt=""
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', objectPosition: '50% 12%' }}
                   />
@@ -234,6 +227,7 @@ export default function Home() {
                 {tr('ein UX/UI ', 'a UX/UI ')}
                 <motion.span
                   aria-hidden
+                  className="hero-pill"
                   whileHover={{ scale: 1.28, zIndex: 10 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   style={{
@@ -243,31 +237,32 @@ export default function Home() {
                     borderRadius: 999,
                     overflow: 'hidden',
                     margin: '0 0.10em 0.06em',
-                    border: '1px solid rgba(131,202,226,0.30)',
-                    boxShadow: '0 4px 16px rgba(15,41,64,0.12), inset 0 1px 0 rgba(131,202,226,0.20)',
+                    border: '1px solid var(--line-strong)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.1)',
                     position: 'relative', top: '-0.03em',
                     cursor: 'zoom-in',
                   }}
                 >
                   <img
-                    src="/img/projects/mosaic-sentinel.webp"
+                    src="/img/hero-pill-sentinel.webp"
                     alt=""
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', objectPosition: '66% 45%' }}
                   />
                 </motion.span>
-                <em style={{ fontStyle: 'italic', color: 'rgba(15,41,64,0.72)' }}>{' Designer'}</em>
+                <em style={{ fontStyle: 'italic', color: 'var(--text-2)' }}>{' Designer'}</em>
               </span>
 
               {/* ── Line 3: und Grafikdesigner ── */}
               <span className="bio-line">
-                <em style={{ fontStyle: 'italic', color: 'rgba(15,41,64,0.72)' }}>{tr('und Grafikdesigner', 'and Graphic Designer')}</em>
+                <em style={{ fontStyle: 'italic', color: 'var(--text-2)' }}>{tr('und Grafikdesigner', 'and Graphic Designer')}</em>
               </span>
 
               {/* ── Line 4: aus Mainz [Mainz pill] ── */}
               <span className="bio-line">
-                {tr('aus Mainz ', 'from Mainz ')}
+                {tr('aus ', 'from ')}<span className="grad-text">Mainz</span>{' '}
                 <motion.span
                   aria-hidden
+                  className="hero-pill"
                   whileHover={{ scale: 1.28, zIndex: 10 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   style={{
@@ -277,14 +272,14 @@ export default function Home() {
                     borderRadius: 999,
                     overflow: 'hidden',
                     margin: '0 0.04em 0.06em',
-                    border: '1px solid rgba(131,202,226,0.30)',
-                    boxShadow: '0 4px 16px rgba(15,41,64,0.12), inset 0 1px 0 rgba(131,202,226,0.20)',
+                    border: '1px solid var(--line-strong)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.1)',
                     position: 'relative', top: '-0.03em',
                     cursor: 'zoom-in',
                   }}
                 >
                   <img
-                    src="/img/mainz-cathedral.jpg"
+                    src="/img/hero-pill-mainz.webp"
                     alt=""
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', objectPosition: '50% 30%' }}
                   />
@@ -295,13 +290,14 @@ export default function Home() {
 
           {/* Bio paragraph */}
           <motion.p
+            className="hero-bio"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.42 }}
             style={{
               fontSize: 'clamp(17px, 1.5vw, 20px)',
               lineHeight: 1.72,
-              color: 'rgba(15,41,64,0.72)',
+              color: 'var(--text-2)',
               maxWidth: 500,
               margin: '28px auto 0',
               textAlign: 'center',
@@ -314,48 +310,40 @@ export default function Home() {
             )}
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTAs — primary (navy glass) + secondary (white glass), 56px · radius 14 */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.60 }}
+            className="hero-ctas"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 10,
+              gap: 12,
               marginTop: 36,
               flexWrap: 'wrap',
               justifyContent: 'center',
             }}
           >
-            <motion.a
-              href="#work"
-              className="layers-cta"
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 380, damping: 26 }}
-            >
+            <a href="#work" className="btn btn-primary" style={{ paddingRight: 14, paddingLeft: 26 }}>
               {tr('Projekte ansehen', 'View projects')}
-              <span className="cta-new-badge" aria-label={tr('Neues Projekt', 'New project')}>
-                {tr('Neu', 'New')}
-              </span>
-              <span className="layers-orb">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
+              <span className="btn-orb" aria-hidden>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M5 12l7 7 7-7" />
                 </svg>
               </span>
-            </motion.a>
+            </a>
 
-            <motion.a
-              href="/Lebenslauf_Hector_Uribe.pdf"
-              download
-              className="layers-cta layers-ghost"
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 380, damping: 26 }}
-            >
+            <a href={tr('/Lebenslauf_Hector_Uribe.pdf', '/CV_Hector_Uribe_EN.pdf')} download className="btn btn-secondary lq">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+              </svg>
               {tr('Lebenslauf', 'Download CV')}
-            </motion.a>
+              <span className="btn-suffix">PDF</span>
+            </a>
           </motion.div>
         </div>
+
 
         {/* Scroll cue */}
         <motion.a
@@ -375,9 +363,9 @@ export default function Home() {
             flexDirection: 'column',
             alignItems: 'center',
             gap: 7,
-            color: '#fe8684',
+            color: 'var(--accent)',
             textDecoration: 'none',
-            filter: 'drop-shadow(0 2px 8px rgba(254,134,132,0.45))',
+            filter: 'drop-shadow(0 2px 8px rgba(255,95,0,0.45))',
           }}
         >
           <span style={{
@@ -394,11 +382,14 @@ export default function Home() {
         </motion.a>
       </section>
 
+      {/* ── PROFILE AT A GLANCE (recruiter quick scan) ───────── */}
+      <ProfileStrip />
+
       {/* ── SECTIONS BELOW HERO ──────────────────────────────── */}
       <div style={{ position: 'relative' }}>
 
       {/* ── DIORAMA ──────────────────────────────────────────── */}
-      <div style={{ background: '#FFFFFF', borderTop: '1px solid rgba(15,41,64,0.06)' }}>
+      <div style={{ background: 'var(--bg)', borderTop: '1px solid var(--line)' }}>
       <section
         id="diorama"
         style={{ padding: '96px 0 48px', position: 'relative', zIndex: 1 }}
@@ -409,12 +400,12 @@ export default function Home() {
             sub={tr('Klicke auf die Objekte — oder nutze den Dock unten.', 'Click the objects — or use the dock below.')}
           />
         </div>
-        <DioramaScene onSectionOpen={handleDioramaOpen} isDark={false} lang={lang} />
+        <DioramaScene onSectionOpen={handleDioramaOpen} isDark={false} lang={lang} activeKey={activePanel} />
       </section>
       </div>
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
-      <div style={{ background: '#d6ebf2', borderTop: '1px solid rgba(15,41,64,0.05)' }}>
+      <div style={{ background: 'var(--bg-alt)', borderTop: '1px solid var(--line)' }}>
       <section id="work" style={{ padding: '96px 0', position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 28px' }}>
           <SectionHead
@@ -424,25 +415,25 @@ export default function Home() {
 
           {/* Live / real-world projects — online & visible */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#0F2940' }}>
+            <span className="sec-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--text)' }}>
               {tr('Live & in Produktion', 'Live & in production')}
             </span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,41,64,0.72)' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-2)' }}>
               {tr('Berufliche Projekte, online sichtbar', 'Professional projects, visible online')}
             </span>
-            <div style={{ flex: 1, height: 1, background: 'rgba(15,41,64,0.12)' }} />
+            <div style={{ flex: 1, height: 1, background: 'var(--line)' }} />
           </div>
           <LiveProjects />
 
           {/* Further work */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '48px 0 22px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: '#0F2940' }}>
+            <span className="sec-label" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--text)' }}>
               {tr('Weitere Projekte', 'More Projects')}
             </span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,41,64,0.72)' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-2)' }}>
               {tr('Studien, Konzepte & eigene Arbeiten', 'Studies, concepts & personal work')}
             </span>
-            <div style={{ flex: 1, height: 1, background: 'rgba(15,41,64,0.12)' }} />
+            <div style={{ flex: 1, height: 1, background: 'var(--line)' }} />
           </div>
           <ProjectsCarousel />
         </div>
@@ -450,10 +441,10 @@ export default function Home() {
       </div>{/* end projects bg */}
 
       {/* ── CONTACT ──────────────────────────────────────────── */}
-      <div style={{ background: '#FFFFFF', borderTop: '1px solid rgba(15,41,64,0.05)' }}>
+      <div style={{ background: 'var(--bg)', borderTop: '1px solid var(--line)' }}>
       <Section id="contact" style={{ paddingBottom: 160 }}>
         <motion.div
-          className="contact-panel lg lg-coral"
+          className="contact-panel lg"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -463,18 +454,18 @@ export default function Home() {
             position: 'relative',
             borderRadius: 30,
             padding: '42px 34px 36px',
-            background: 'linear-gradient(160deg, rgba(255,255,255,0.78), rgba(238,247,251,0.60) 52%, rgba(240,244,243,0.72))',
+            background: 'var(--grad-surface)',
             backdropFilter: 'blur(26px) saturate(185%) brightness(1.03)',
             WebkitBackdropFilter: 'blur(26px) saturate(185%) brightness(1.03)',
-            border: '1px solid rgba(255,255,255,0.6)',
-            boxShadow: '0 14px 46px rgba(15,41,64,0.12), 0 2px 8px rgba(15,41,64,0.06), inset 0 1.5px 0 rgba(255,255,255,0.92), inset 0 -1px 0 rgba(15,41,64,0.04)',
+            border: '1px solid rgba(255,255,255,0.084)',
+            boxShadow: '0 14px 46px rgba(0,0,0,0.36), 0 2px 8px rgba(0,0,0,0.18), inset 0 1.5px 0 rgba(255,255,255,0.129), inset 0 -1px 0 rgba(0,0,0,0.15)',
             overflow: 'hidden',
           }}
         >
-          {/* Terracotta halo */}
+          {/* Soft orange key light (orange on matte black only) */}
           <div aria-hidden style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
-            background: `radial-gradient(60% 50% at 30% 8%, rgba(254,134,132,0.10), transparent 70%)`,
+            background: `radial-gradient(60% 50% at 30% 8%, rgba(255,95,0,0.10), transparent 70%)`,
             filter: 'blur(30px)',
             opacity: 0.6,
             zIndex: 0,
@@ -483,128 +474,78 @@ export default function Home() {
           {/* Heading */}
           <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', marginBottom: 30 }}>
             <h2 style={{
-              fontFamily: 'var(--font-display)', fontWeight: 700,
-              fontSize: 'clamp(28px, 5vw, 38px)', letterSpacing: '-0.02em',
-              margin: '0 0 8px', color: '#0F2940',
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              fontSize: 'clamp(36px, 4.6vw, 56px)', letterSpacing: '-0.04em', lineHeight: 1.04,
+              margin: '0 0 12px', color: 'var(--text)',
             }}>
               {tr('Kontakt aufnehmen', 'Get in touch')}
             </h2>
-            <p style={{ fontSize: 16, color: 'rgba(15,41,64,0.72)', margin: 0, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 17, color: 'var(--text-2)', margin: 0, lineHeight: 1.6 }}>
               {tr('Offen für Projekte, Kooperationen und Herausforderungen.', 'Open to projects, collaborations and new challenges.')}
             </p>
           </div>
 
           {/* Email + links body (2 columns on desktop) */}
           <div className="contact-body">
-          {/* Email CTA — primary action */}
-          <a
-            className="contact-email"
-            href="mailto:hectoruch18@gmail.com"
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              display: 'flex', alignItems: 'center', gap: 14,
-              background: 'rgba(255,255,255,0.88)',
-              border: '1px solid rgba(131,202,226,0.18)',
-              borderRadius: 16, padding: '13px 13px 13px 20px',
-              boxShadow: '0 2px 10px rgba(15,41,64,0.06), inset 0 1px 0 rgba(255,255,255,0.90)',
-              textDecoration: 'none', marginBottom: 20,
-              transition: 'border-color .2s ease, box-shadow .2s ease',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(254,134,132,0.45)';
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 16px rgba(15,41,64,0.08), 0 0 0 3px rgba(254,134,132,0.10)';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(131,202,226,0.18)';
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 2px 10px rgba(15,41,64,0.06), inset 0 1px 0 rgba(255,255,255,0.90)';
-            }}
-          >
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <span style={{ fontSize: 12, color: 'rgba(15,41,64,0.72)', letterSpacing: '0.08em', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>E-Mail</span>
-              <span style={{ fontSize: 16, color: '#0F2940', fontWeight: 500 }}>hectoruch18@gmail.com</span>
+          {/* Main column — e-mail is the primary (orange) action, then copy + CV */}
+          <div className="contact-main" style={{ position: 'relative', zIndex: 1 }}>
+            <a className="btn btn-primary btn-row contact-email" href="mailto:hectoruch18@gmail.com">
+              <span className="btn-row-text">
+                <span className="btn-eyebrow">E-Mail</span>
+                <span className="btn-title">hectoruch18@gmail.com</span>
+              </span>
+              <span className="btn-orb" aria-hidden>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>
+              </span>
+            </a>
+            <div className="contact-actions">
+              <CopyEmail label={tr('Adresse kopieren', 'Copy address')} done={tr('Kopiert', 'Copied')} />
+              <a className="btn btn-secondary lq btn-sm" href={tr('/Lebenslauf_Hector_Uribe.pdf', '/CV_Hector_Uribe_EN.pdf')} download>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+                {tr('Lebenslauf', 'CV')} <span className="btn-suffix">PDF</span>
+              </a>
             </div>
-            <span style={{
-              width: 46, height: 46, borderRadius: '50%', flexShrink: 0,
-              display: 'grid', placeItems: 'center', color: 'rgba(255,255,255,0.92)',
-              background: 'linear-gradient(140deg, #fd7c7a, #fe8684)',
-              boxShadow: '0 6px 18px rgba(254,134,132,0.50), inset 0 1px 0 rgba(255,255,255,0.30)',
-            }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M13 6l6 6-6 6"/>
-              </svg>
-            </span>
-          </a>
+          </div>
+
 
           {/* Divider */}
           <div className="contact-or" style={{
             display: 'flex', alignItems: 'center', gap: 14,
             margin: '0 0 20px',
             position: 'relative', zIndex: 1,
-            color: 'rgba(15,41,64,0.72)', fontSize: 12,
+            color: 'var(--text-2)', fontSize: 12,
             letterSpacing: '.12em', fontFamily: 'var(--font-mono)',
           }}>
-            <span style={{ flex: 1, height: 1, background: 'rgba(131,202,226,0.18)' }} />
+            <span style={{ flex: 1, height: 1, background: 'var(--line-strong)' }} />
             {tr('ODER', 'OR')}
-            <span style={{ flex: 1, height: 1, background: 'rgba(131,202,226,0.18)' }} />
+            <span style={{ flex: 1, height: 1, background: 'var(--line-strong)' }} />
           </div>
 
-          {/* Social links */}
-          <div className="contact-links">
+          {/* Social links — secondary glass rows, 60px · radius 14 */}
+          <div className="contact-links" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {[
             { label: 'LinkedIn',  value: 'hectoruch18',       url: 'https://www.linkedin.com/in/hectoruch18/' },
             { label: 'Behance',   value: 'hectoruribe2',      url: 'https://www.behance.net/hectoruribe2' },
             { label: 'Instagram', value: '@hectoruribechacon', url: 'https://www.instagram.com/hectoruribechacon/' },
-          ].map((link, i) => (
+          ].map((link) => (
             <a
               key={link.label}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                position: 'relative',
-                display: 'flex', alignItems: 'center', gap: 14,
-                background: 'rgba(255,255,255,0.80)',
-                border: '1px solid rgba(131,202,226,0.14)',
-                borderRadius: 16, padding: '15px 13px 15px 20px',
-                boxShadow: '0 2px 8px rgba(15,41,64,0.05), inset 0 1px 0 rgba(255,255,255,0.90)',
-                textDecoration: 'none',
-                marginTop: i > 0 ? 10 : 0,
-                zIndex: 1,
-                transition: 'background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = 'rgba(255,255,255,0.96)';
-                el.style.borderColor = 'rgba(131,202,226,0.28)';
-                el.style.boxShadow = '0 4px 14px rgba(15,41,64,0.08), inset 0 1px 0 rgba(255,255,255,0.95)';
-                el.style.transform = 'translateY(-1px)';
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = 'rgba(255,255,255,0.80)';
-                el.style.borderColor = 'rgba(131,202,226,0.14)';
-                el.style.boxShadow = '0 2px 8px rgba(15,41,64,0.05), inset 0 1px 0 rgba(255,255,255,0.90)';
-                el.style.transform = 'none';
-              }}
+              className="btn btn-secondary lq btn-row btn-row-sm"
+              style={{ position: 'relative', zIndex: 1 }}
             >
-              <div style={{ flex: 1 }}>
-                <span style={{ fontSize: 15.5, color: '#0F2940', fontWeight: 500 }}>{link.label}</span>
-                <span style={{ fontSize: 13.5, color: 'rgba(15,41,64,0.72)', marginLeft: 6 }}>{link.value}</span>
-              </div>
-              <span style={{
-                width: 34, height: 34, borderRadius: '50%',
-                display: 'grid', placeItems: 'center',
-                border: '1px solid rgba(131,202,226,0.20)',
-                color: 'rgba(15,41,64,0.72)', flexShrink: 0,
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M13 6l6 6-6 6"/>
-                </svg>
+              <span className="btn-row-text">
+                <span>{link.label}</span>
+                <span className="btn-sub">{link.value}</span>
               </span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
             </a>
           ))}
+
           </div>{/* contact-links */}
           </div>{/* contact-body */}
         </motion.div>

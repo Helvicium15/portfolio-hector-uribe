@@ -22,7 +22,7 @@ export default function GlassPointer() {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const els = document.querySelectorAll<HTMLElement>('.lg');
+        const els = document.querySelectorAll<HTMLElement>('.lg, .lq, .btn-primary');
         for (let i = 0; i < els.length; i++) {
           const el = els[i];
           const r = el.getBoundingClientRect();

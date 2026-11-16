@@ -110,7 +110,7 @@ export default function ProjectsCarousel() {
                   borderRadius: 20,
                   overflow: 'hidden',
                   textDecoration: 'none',
-                  boxShadow: '0 4px 20px rgba(15,41,64,0.08), 0 0 0 1px rgba(131,202,226,0.14)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.24), 0 0 0 1px rgba(255,255,255,0.07)',
                 }}
               >
                 <img
@@ -132,10 +132,10 @@ export default function ProjectsCarousel() {
                     position: 'absolute', top: 14, right: 14,
                     fontFamily: 'var(--font-mono)', fontSize: 11,
                     letterSpacing: '0.10em', textTransform: 'uppercase',
-                    background: 'rgba(254,134,132,0.15)',
-                    border: '1px solid rgba(254,134,132,0.35)',
+                    background: 'rgba(255,95,0,0.15)',
+                    border: '1px solid rgba(255,95,0,0.35)',
                     borderRadius: 999, padding: '5px 12px',
-                    color: '#fd7c7a',
+                    color: 'var(--ember)',
                     backdropFilter: 'blur(8px)',
                   }}>{en ? 'New' : 'Neu'}</span>
                 )}
@@ -148,11 +148,11 @@ export default function ProjectsCarousel() {
                   }}>{en && p.catEn ? p.catEn : p.cat}</div>
                   <div style={{
                     fontFamily: 'var(--font-display)', fontWeight: 700,
-                    fontSize: 20, lineHeight: 1.2, color: '#fff',
+                    fontSize: 20, lineHeight: 1.2, color: 'var(--text)',
                   }}>{p.name}</div>
                   <div style={{
                     fontFamily: 'var(--font-mono)', fontSize: 12,
-                    color: 'rgba(255,255,255,0.60)', marginTop: 6,
+                    color: 'var(--text-2)', marginTop: 6,
                   }}>{p.tools}</div>
                 </div>
               </a>

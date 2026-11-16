@@ -33,13 +33,13 @@ export default function ProjectCard({ project, style }: ProjectCardProps) {
           flexDirection: 'column',
           overflow: 'hidden',
           borderRadius: 20,
-          background: 'linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.018))',
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01))',
           backdropFilter: 'blur(30px) saturate(140%)',
           WebkitBackdropFilter: 'blur(30px) saturate(140%)',
-          border: '1px solid rgba(255,255,255,.08)',
+          border: '1px solid rgba(255,255,255,0.011)',
           boxShadow: hovered
-            ? '0 24px 60px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,.14)'
-            : '0 16px 50px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.10)',
+            ? '0 24px 60px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,0.02)'
+            : '0 16px 50px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,0.014)',
           transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
           transition: 'box-shadow 0.28s ease, transform 0.28s ease',
         }}
@@ -56,7 +56,7 @@ export default function ProjectCard({ project, style }: ProjectCardProps) {
             height: 224,
             position: 'relative',
             overflow: 'hidden',
-            background: `linear-gradient(140deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)`,
+            background: `linear-gradient(140deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.01) 100%)`,
             flexShrink: 0,
           }}
         >
@@ -96,7 +96,7 @@ export default function ProjectCard({ project, style }: ProjectCardProps) {
                 fontSize: 9,
                 letterSpacing: '0.12em',
                 color: 'rgba(180,230,180,0.85)',
-                boxShadow: '0 0 0 1px rgba(180,230,180,0.25), inset 0 1px 0 rgba(255,255,255,0.35)',
+                boxShadow: '0 0 0 1px rgba(180,230,180,0.25), inset 0 1px 0 rgba(255,255,255,0.049)',
               }}
             >
               NEU

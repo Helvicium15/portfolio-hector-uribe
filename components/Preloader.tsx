@@ -39,7 +39,7 @@ export default function Preloader() {
           style={{
             position: 'fixed', inset: 0, zIndex: 10000,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'linear-gradient(160deg, #EEF7FB 0%, #d6ebf2 100%)',
+            background: 'var(--grad-accent)', /* safety-orange curtain — lifts visibly off the matte-black hero */
           }}
         >
           <div
@@ -48,7 +48,7 @@ export default function Preloader() {
               display: 'flex', alignItems: 'center',
               fontFamily: 'var(--font-display)', fontWeight: 800,
               fontSize: 'clamp(3.2rem, 13vw, 8rem)', letterSpacing: '-0.05em',
-              color: 'rgba(15,41,64,0.97)', lineHeight: 1.12,
+              color: 'var(--ink)', lineHeight: 1.12,
             }}
           >
             <AnimatePresence mode="wait">

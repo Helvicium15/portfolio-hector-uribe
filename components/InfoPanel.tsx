@@ -31,12 +31,12 @@ const CARD_WIDTHS: Record<string, number> = {
 
 /* ── Dark glass card tokens ──────────────────────────────────────── */
 const innerCard: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.80)',
+  background: 'var(--surface)',
   backdropFilter: 'blur(16px) saturate(140%)',
   WebkitBackdropFilter: 'blur(16px) saturate(140%)',
-  border: '1px solid rgba(131,202,226,0.20)',
+  border: '1px solid var(--line)',
   borderRadius: 16,
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.90), 0 2px 10px rgba(15,41,64,0.07)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.126), 0 2px 10px rgba(0,0,0,0.21)',
 };
 
 /* ─────────────────────── PERSPECTIVE PROJECTS CAROUSEL ─────────── */
@@ -48,30 +48,8 @@ const ROTY    = [0, 38, 58];
 const SCALES  = [1, 0.81, 0.63];
 const OPACS   = [1, 0.88, 0.66];
 
-const navBtn: React.CSSProperties = {
-  width: 36, height: 36, borderRadius: '50%',
-  border: '1px solid rgba(131,202,226,0.18)',
-  background: 'rgba(255,255,255,0.80)',
-  backdropFilter: 'blur(12px)',
-  color: 'rgba(15,41,64,0.72)',
-  cursor: 'pointer',
-  display: 'flex', alignItems: 'center', justifyContent: 'center',
-  fontSize: 14,
-  transition: 'background 0.18s ease, border-color 0.18s ease',
-  flexShrink: 0,
-};
-
-const viewLinkBase: React.CSSProperties = {
-  display: 'inline-flex', alignItems: 'center', gap: 6,
-  fontSize: 12, fontFamily: 'var(--font-mono)', letterSpacing: '0.08em',
-  color: 'rgba(15,41,64,0.72)',
-  textDecoration: 'none',
-  textTransform: 'uppercase',
-  border: '1px solid rgba(131,202,226,0.20)',
-  borderRadius: 999, padding: '7px 16px',
-  background: 'rgba(255,255,255,0.80)',
-  transition: 'background 0.2s ease, color 0.2s ease',
-};
+/* Carousel controls use the shared button system (.btn in globals.css):
+   prev/next → .btn-secondary.btn-icon (44px square), link → .btn-primary.btn-sm */
 
 function PerspectiveProjectCarousel() {
   const [active, setActive] = useState(0);
@@ -81,11 +59,32 @@ function PerspectiveProjectCarousel() {
   const n = projects.length;
   const stageRef = useRef<HTMLDivElement>(null);
   const wheelLock = useRef(false);
+  // Autoplay stops for good once the visitor takes over (swipe, wheel, arrows, dots)
+  const [userDriven, setUserDriven] = useState(false);
+  const swipe = useRef<{ x: number; y: number; id: number } | null>(null);
+  const swiped = useRef(false);
 
   useEffect(() => {
+    if (userDriven) return;
     const t = setInterval(() => setActive(a => (a + 1) % n), 4200);
     return () => clearInterval(t);
-  }, [n]);
+  }, [n, userDriven]);
+
+  // Touch / pen swipe: horizontal drag ≥ 40px moves one card; vertical stays page scroll (touch-action: pan-y)
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === 'mouse') return;
+    swipe.current = { x: e.clientX, y: e.clientY, id: e.pointerId };
+    swiped.current = false;
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    const s = swipe.current; swipe.current = null;
+    if (!s || s.id !== e.pointerId) return;
+    const dx = e.clientX - s.x, dy = e.clientY - s.y;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    swiped.current = true;
+    setUserDriven(true);
+    setActive(a => (dx < 0 ? (a + 1) % n : (a - 1 + n) % n));
+  };
 
   // Mouse-wheel navigation over the perspective stage (one notch = one card).
   useEffect(() => {
@@ -97,6 +96,7 @@ function PerspectiveProjectCarousel() {
       e.preventDefault();
       if (wheelLock.current) return;
       wheelLock.current = true;
+      setUserDriven(true);
       setActive(a => (delta > 0 ? (a + 1) % n : (a - 1 + n) % n));
       // Lock ≈ card transition (0.55s) so one wheel notch settles one card.
       window.setTimeout(() => { wheelLock.current = false; }, 480);
@@ -105,9 +105,9 @@ function PerspectiveProjectCarousel() {
     return () => el.removeEventListener('wheel', onWheel);
   }, [n]);
 
-  const prev = () => setActive(a => (a - 1 + n) % n);
-  const next = () => setActive(a => (a + 1) % n);
-  const go   = (i: number) => setActive(i);
+  const prev = () => { setUserDriven(true); setActive(a => (a - 1 + n) % n); };
+  const next = () => { setUserDriven(true); setActive(a => (a + 1) % n); };
+  const go   = (i: number) => { setUserDriven(true); setActive(i); };
 
   function navigateToProject(p: typeof projects[0]) {
     if (p.url) {
@@ -130,7 +130,14 @@ function PerspectiveProjectCarousel() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
 
       {/* ── Perspective stage ──────────────────────────────────── */}
-      <div ref={stageRef} style={{
+      <div
+        ref={stageRef}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => { swipe.current = null; }}
+        onClickCapture={e => { if (swiped.current) { e.stopPropagation(); e.preventDefault(); swiped.current = false; } }}
+        style={{
+        touchAction: 'pan-y',
         position: 'relative',
         width: '100%',
         height: CARD_H + 56,
@@ -141,7 +148,7 @@ function PerspectiveProjectCarousel() {
         {/* Side vignettes */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0, zIndex: 10, pointerEvents: 'none',
-          background: 'linear-gradient(to right, rgba(238,247,251,0.96) 0%, transparent 15%, transparent 85%, rgba(238,247,251,0.96) 100%)',
+          background: 'linear-gradient(to right, rgba(30,31,34,0.92) 0%, transparent 15%, transparent 85%, rgba(30,31,34,0.92) 100%)',
         }} />
 
         {/* Cards */}
@@ -205,14 +212,14 @@ function PerspectiveProjectCarousel() {
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     fontFamily: 'var(--font-mono)', fontSize: isCenter ? 10 : 8, fontWeight: 700,
                     letterSpacing: '0.14em', textTransform: 'uppercase',
-                    background: 'rgba(255,255,255,0.90)',
+                    background: 'var(--surface)',
                     backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(131,202,226,0.35)',
+                    border: '1px solid var(--line-strong)',
                     borderRadius: 999, padding: isCenter ? '5px 11px' : '3px 8px',
-                    color: '#0F2940',
-                    boxShadow: '0 4px 12px rgba(15,41,64,0.18)',
+                    color: 'var(--text)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.54)',
                   }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fe8684', boxShadow: '0 0 8px #fe8684' }} />
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }} />
                     {en ? 'New' : 'Neu'}
                   </span>
                 )}
@@ -232,9 +239,9 @@ function PerspectiveProjectCarousel() {
                 }}>
                   {isCenter && (
                     <div style={{
-                      fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.16em',
+                      fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.16em',
                       textTransform: 'uppercase',
-                      color: '#fff',
+                      color: 'var(--text)',
                       textShadow: '0 1px 6px rgba(0,0,0,0.65)',
                       marginBottom: 6,
                     }}>
@@ -245,7 +252,7 @@ function PerspectiveProjectCarousel() {
                     fontFamily: 'var(--font-display)',
                     fontSize: isCenter ? 17 : 11,
                     fontWeight: 700,
-                    color: isCenter ? '#fff' : 'rgba(255,255,255,0.66)',
+                    color: isCenter ? 'var(--text)' : 'rgba(255,255,255,0.092)',
                     lineHeight: 1.22,
                     textShadow: '0 2px 8px rgba(0,0,0,0.7)',
                   }}>
@@ -263,8 +270,8 @@ function PerspectiveProjectCarousel() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '4px 0 10px',
       }}>
-        <button onClick={prev} style={navBtn} aria-label={en ? 'Previous project' : 'Vorheriges Projekt'}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+        <button type="button" onClick={prev} className="btn btn-secondary lq btn-icon" aria-label={en ? 'Previous project' : 'Vorheriges Projekt'}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M19 12H5M11 6l-6 6 6 6"/>
           </svg>
         </button>
@@ -275,45 +282,51 @@ function PerspectiveProjectCarousel() {
             href={activePrj.url}
             target="_blank"
             rel="noopener noreferrer"
-            style={viewLinkBase}
+            className="btn btn-primary btn-sm"
           >
             {en ? 'View project' : 'Projekt ansehen'}
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M7 17L17 7M7 7h10v10"/>
             </svg>
           </a>
         ) : (
-          <Link href={`/projekte/${activePrj.slug}`} style={viewLinkBase}>
+          <Link href={`/projekte/${activePrj.slug}`} className="btn btn-primary btn-sm">
             {en ? 'View project' : 'Projekt ansehen'}
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </Link>
         )}
 
-        <button onClick={next} style={navBtn} aria-label={en ? 'Next project' : 'Nächstes Projekt'}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+        <button type="button" onClick={next} className="btn btn-secondary lq btn-icon" aria-label={en ? 'Next project' : 'Nächstes Projekt'}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M5 12h14M13 6l6 6-6 6"/>
           </svg>
         </button>
       </div>
 
       {/* ── Dot indicators ─────────────────────────────────────── */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 5, paddingBottom: 4 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 0, paddingBottom: 4 }}>
         {projects.map((_, i) => (
           <button
             key={i}
             onClick={() => go(i)}
             aria-label={`Projekt ${i + 1}`}
+            type="button"
+            /* the button is the 24px tap target; the span inside is the visible dot */
             style={{
-              width: i === active ? 20 : 6,
-              height: 6,
-              borderRadius: 999,
-              background: i === active ? '#fe8684' : 'rgba(131,202,226,0.30)',
-              border: 'none', cursor: 'pointer', padding: 0,
-              transition: 'all 0.30s cubic-bezier(0.22,1,0.36,1)',
+              width: (i === active ? 20 : 6) + 10, height: 24, padding: 0, border: 'none',
+              background: 'transparent', cursor: 'pointer', flexShrink: 0,
+              display: 'grid', placeItems: 'center',
+              transition: 'width 0.30s cubic-bezier(0.22,1,0.36,1)',
             }}
-          />
+          >
+            <span aria-hidden style={{
+              display: 'block', width: i === active ? 20 : 6, height: 6, borderRadius: 999,
+              backgroundColor: i === active ? 'var(--accent)' : 'rgba(255,255,255,0.28)',
+              transition: 'width 0.30s cubic-bezier(0.22,1,0.36,1), background-color 0.30s ease',
+            }} />
+          </button>
         ))}
       </div>
     </div>
@@ -333,6 +346,7 @@ function AboutContent() {
         <img
           src="/img/hector-portrait-pro.jpg"
           alt="Hector Uribe Chacón"
+          className="photo-warm-bw"
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
         {/* Name overlay */}
@@ -340,17 +354,17 @@ function AboutContent() {
           position: 'absolute', bottom: 0, left: 0, right: 0, padding: '60px 24px 22px',
           background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.50) 50%, transparent 100%)',
         }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 24, color: '#fff', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 24, color: 'var(--text)', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
             Hector Uribe Chacón
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(15,41,64,0.82)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 6 }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 6 }}>
             {t('Mediengestalter · UX/UI Designer', 'Media Designer · UX/UI Designer')}
           </div>
         </div>
       </div>
 
       {/* Bio */}
-      <p style={{ fontSize: 15, lineHeight: 1.82, color: 'rgba(15,41,64,0.72)', margin: 0, padding: '0 2px' }}>
+      <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', margin: 0, padding: '0 2px' }}>
         {t(
           'CPUX-F zertifizierter Designer mit 4+ Jahren Berufserfahrung in UX/UI-Design, Produktfotografie und KI-gestützten Workflows. Nationalität: Mexikanisch / Deutsch. Mein Fokus — nutzerzentrierte Produkte, die ästhetisch und funktional überzeugen.',
           'CPUX-F certified designer with 4+ years of professional experience in UX/UI design, product photography and AI-assisted workflows. Nationality: Mexican / German. My focus — user-centered products that convince both aesthetically and functionally.'
@@ -359,14 +373,14 @@ function AboutContent() {
 
       {/* Languages */}
       <div style={{ ...innerCard, padding: '14px 18px' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', marginBottom: 12 }}>{t('Sprachen', 'Languages')}</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--text-2)', marginBottom: 12 }}>{t('Sprachen', 'Languages')}</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 12px' }}>
           {languages.map(l => (
             <div key={l.lang} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 17, lineHeight: 1 }}>{l.flag}</span>
               <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13.5, color: 'rgba(15,41,64,0.88)' }}>{en ? l.langEn : l.lang}</div>
-                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,41,64,0.72)', marginTop: 1 }}>{en ? l.levelEn : l.level}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13.5, color: 'var(--text)' }}>{en ? l.langEn : l.lang}</div>
+                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-2)', marginTop: 1 }}>{en ? l.levelEn : l.level}</div>
               </div>
             </div>
           ))}
@@ -375,7 +389,7 @@ function AboutContent() {
 
       {/* Experience — both entries */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>{t('Berufserfahrung', 'Experience')}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--text-2)', paddingLeft: 2 }}>{t('Berufserfahrung', 'Experience')}</div>
       {experience.map((exp) => (
         <div key={exp.company} style={{ ...innerCard, padding: '16px 18px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
@@ -383,22 +397,22 @@ function AboutContent() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
                 <span style={{
                   width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
-                  background: (exp as { accent?: string }).accent ?? '#fe8684',
-                  boxShadow: `0 0 8px ${(exp as { accent?: string }).accent ?? '#fe8684'}88`,
+                  background: (exp as { accent?: string }).accent ?? 'var(--accent)',
+                  boxShadow: `0 0 8px ${(exp as { accent?: string }).accent ?? 'var(--accent)'}88`,
                 }} />
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: '#0F2940' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>
                   {en ? ((exp as { roleEn?: string }).roleEn ?? exp.role) : exp.role}
                 </div>
               </div>
-              <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)', paddingLeft: 16 }}>
+              <div style={{ fontSize: 13, color: 'var(--text-2)', paddingLeft: 16 }}>
                 {exp.company} · {exp.location}
               </div>
             </div>
             <span style={{
-              fontSize: 10.5, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em',
-              color: 'rgba(15,41,64,0.72)',
-              background: 'rgba(131,202,226,0.08)',
-              border: '1px solid rgba(131,202,226,0.20)',
+              fontSize: 11.5, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em',
+              color: 'var(--text-2)',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid var(--line)',
               borderRadius: 999, padding: '4px 10px',
               whiteSpace: 'nowrap', flexShrink: 0,
             }}>
@@ -406,9 +420,9 @@ function AboutContent() {
             </span>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5, paddingLeft: 16 }}>
-            {(en ? ((exp as { bulletsEn?: string[] }).bulletsEn ?? exp.bullets) : exp.bullets).slice(0, 3).map(b => (
-              <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.64, color: 'rgba(15,41,64,0.72)' }}>
-                <span style={{ color: 'rgba(15,41,64,0.72)', flexShrink: 0, marginTop: 4, fontSize: 9 }}>▸</span>
+            {(en ? ((exp as { bulletsEn?: string[] }).bulletsEn ?? exp.bullets) : exp.bullets).slice(0, 3).map((b, bi) => (
+              <li key={b} style={{ display: 'flex', alignItems: 'baseline', gap: 10, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>
+                <span aria-hidden style={{ color: 'var(--accent-hi)', flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, letterSpacing: '0.04em' }}>{String(bi + 1).padStart(2, '0')}</span>
                 {b}
               </li>
             ))}
@@ -419,14 +433,14 @@ function AboutContent() {
 
       {/* Education */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', paddingLeft: 2 }}>{t('Bildung', 'Education')}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--text-2)', paddingLeft: 2 }}>{t('Bildung', 'Education')}</div>
         {education.map(e => (
           <div key={e.institution} style={{ ...innerCard, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'rgba(15,41,64,0.88)' }}>{en ? ((e as { degreeEn?: string }).degreeEn ?? e.degree) : e.degree}</div>
-              <div style={{ fontSize: 12, color: 'rgba(15,41,64,0.72)', marginTop: 2 }}>{e.institution}</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 14, color: 'var(--text)' }}>{en ? ((e as { degreeEn?: string }).degreeEn ?? e.degree) : e.degree}</div>
+              <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 2 }}>{e.institution}</div>
             </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'rgba(15,41,64,0.72)', whiteSpace: 'nowrap', flexShrink: 0 }}>{e.period}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-2)', whiteSpace: 'nowrap', flexShrink: 0 }}>{e.period}</span>
           </div>
         ))}
       </div>
@@ -435,9 +449,9 @@ function AboutContent() {
       <div style={{ display: 'flex', gap: 8 }}>
         {certifications.map(c => (
           <div key={c.name} style={{ ...innerCard, padding: '12px 16px', flex: 1, textAlign: 'center' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 15, color: '#0F2940' }}>{c.name}</div>
-            <div style={{ fontSize: 11.5, color: 'rgba(15,41,64,0.72)', marginTop: 3 }}>{en ? ((c as { issuerEn?: string }).issuerEn ?? c.issuer) : c.issuer}</div>
-            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,41,64,0.72)', marginTop: 1 }}>{c.year}</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 15, color: 'var(--text)' }}>{c.name}</div>
+            <div style={{ fontSize: 11.5, color: 'var(--text-2)', marginTop: 3 }}>{en ? ((c as { issuerEn?: string }).issuerEn ?? c.issuer) : c.issuer}</div>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-2)', marginTop: 1 }}>{c.year}</div>
           </div>
         ))}
       </div>
@@ -448,7 +462,7 @@ function AboutContent() {
 /* ─────────────────────────── ARBEITSWEISE ───────────────────────── */
 const PROCESS_STEPS = [
   {
-    num: '01', title: 'Verstehen', titleEn: 'Understand', accent: '#83cae2',
+    num: '01', title: 'Verstehen', titleEn: 'Understand', accent: '#FF9A5A',
     desc: 'Nutzerforschung, Interviews und Anforderungsanalyse — verstehen, wer das Produkt nutzt und warum.',
     descEn: 'User research, interviews and requirements analysis — understanding who uses the product and why.',
     tags: ['User Research', 'Interviews', 'Personas'],
@@ -462,7 +476,7 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '02', title: 'Konzipieren', titleEn: 'Conceptualize', accent: '#fe8684',
+    num: '02', title: 'Konzipieren', titleEn: 'Conceptualize', accent: '#FF5F00',
     desc: 'Ideation, User Flows und Low-Fidelity Wireframes — die Struktur vor dem Design.',
     descEn: 'Ideation, user flows and low-fidelity wireframes — structure before design.',
     tags: ['User Flows', 'Wireframes', 'FigJam'],
@@ -475,7 +489,7 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '03', title: 'Gestalten', titleEn: 'Design', accent: '#83cae2',
+    num: '03', title: 'Gestalten', titleEn: 'Design', accent: '#FF9A5A',
     desc: 'High-Fidelity Design, Prototyping und Micro-Animationen in Figma.',
     descEn: 'High-fidelity design, prototyping and micro-animations in Figma.',
     tags: ['Figma', 'Prototyping', 'Motion'],
@@ -489,7 +503,7 @@ const PROCESS_STEPS = [
     ),
   },
   {
-    num: '04', title: 'Testen & Iterieren', titleEn: 'Test & Iterate', accent: '#fe8684',
+    num: '04', title: 'Testen & Iterieren', titleEn: 'Test & Iterate', accent: '#FF5F00',
     desc: 'Usability-Tests, Feedback-Schleifen und kontinuierliche Verbesserung.',
     descEn: 'Usability testing, feedback loops and continuous improvement.',
     tags: ['Usability-Tests', 'Maze', 'Iteration'],
@@ -509,7 +523,7 @@ function ArbeitsweiseContent() {
   const t = (de: string, e: string) => (en ? e : de);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <p style={{ fontSize: 15, lineHeight: 1.76, color: 'rgba(15,41,64,0.72)', margin: '0 0 2px' }}>
+      <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', margin: '0 0 2px' }}>
         {t('Nutzerzentriert und iterativ — von der ersten Idee bis zum finalen Produkt.', 'User-centered and iterative — from the first idea to the final product.')}
       </p>
 
@@ -544,17 +558,17 @@ function ArbeitsweiseContent() {
               {/* Header row */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 5 }}>
                 <span style={{
-                  fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700,
-                  color: 'rgba(15,41,64,0.72)', letterSpacing: '0.14em',
+                  fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700,
+                  color: 'var(--text-2)', letterSpacing: '0.14em',
                 }}>{s.num}</span>
                 <span style={{
                   fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15.5,
-                  color: '#0F2940',
+                  color: 'var(--text)',
                 }}>{en ? s.titleEn : s.title}</span>
               </div>
 
               {/* Description */}
-              <div style={{ fontSize: 13.5, lineHeight: 1.68, color: 'rgba(15,41,64,0.72)', marginBottom: 10 }}>
+              <div style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', marginBottom: 10 }}>
                 {en ? s.descEn : s.desc}
               </div>
 
@@ -562,11 +576,11 @@ function ArbeitsweiseContent() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {(en ? s.tagsEn : s.tags).map(t => (
                   <span key={t} style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 10.5,
+                    fontFamily: 'var(--font-mono)', fontSize: 11.5,
                     background: `${s.accent}14`,
                     border: `1px solid ${s.accent}28`,
                     borderRadius: 999, padding: '3px 9px',
-                    color: 'rgba(15,41,64,0.72)',
+                    color: 'var(--text-2)',
                     letterSpacing: '0.04em',
                   }}>{t}</span>
                 ))}
@@ -586,26 +600,26 @@ function ArbeitsweiseContent() {
       ))}
 
       {/* Reference quote — Vicampo Arbeitszeugnis */}
-      <div style={{ ...innerCard, padding: '18px 20px', position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(254,134,132,0.35)' }}>
-        <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 130, background: 'linear-gradient(90deg, rgba(254,134,132,0.09) 0%, transparent 100%)', pointerEvents: 'none' }} />
+      <div style={{ ...innerCard, padding: '18px 20px', position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(255,95,0,0.35)' }}>
+        <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 130, background: 'linear-gradient(90deg, rgba(255,95,0,0.09) 0%, transparent 100%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.60)', marginBottom: 12 }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-2)', marginBottom: 12 }}>
             {t('Aus dem Arbeitszeugnis · Vicampo.de GmbH', 'From the reference letter · Vicampo.de GmbH')}
           </div>
           <blockquote style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <p style={{ margin: 0, fontSize: 15, lineHeight: 1.58, fontStyle: 'italic', fontWeight: 600, color: '#0F2940' }}>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, fontStyle: 'italic', fontWeight: 600, color: 'var(--text)' }}>
               {t('„Sein Aufgabengebiet beherrschte er in jeder Hinsicht perfekt.“', '“He mastered his area of responsibility perfectly in every respect.”')}
             </p>
-            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.66, color: 'rgba(15,41,64,0.74)' }}>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>
               {t('„Herr Uribe zeigte stets höchste Eigenmotivation, beachtliches Engagement und ein ausgeprägtes Pflichtbewusstsein … ein hohes Maß an Selbstständigkeit, Zuverlässigkeit sowie intensiven Arbeitseinsatz, wodurch seine Arbeitsergebnisse jederzeit von sehr guter Qualität waren.“', '“Mr. Uribe consistently showed the highest self-motivation, remarkable commitment and a strong sense of duty … a high degree of independence, reliability and intensive dedication, so that his work results were always of very good quality.”')}
             </p>
-            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.66, color: 'rgba(15,41,64,0.74)' }}>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>
               {t('„Mit Herrn Uribe verlieren wir einen wertvollen Mitarbeiter.“', '“With Mr. Uribe we are losing a valuable employee.”')}
             </p>
           </blockquote>
           <div style={{ marginTop: 14, display: 'flex', gap: 7, flexWrap: 'wrap' }}>
             {(en ? ['Overall grade: very good', '07/2023 – 09/2025', 'Graphics · UX · Print Marketing'] : ['Gesamtnote: sehr gut', '07/2023 – 09/2025', 'Grafik · UX · Print-Marketing']).map((t) => (
-              <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, background: 'rgba(254,134,132,0.12)', border: '1px solid rgba(254,134,132,0.30)', borderRadius: 999, padding: '3px 10px', color: 'rgba(15,41,64,0.74)', letterSpacing: '0.04em' }}>{t}</span>
+              <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, background: 'rgba(255,95,0,0.12)', border: '1px solid rgba(255,95,0,0.30)', borderRadius: 999, padding: '3px 10px', color: 'var(--text-2)', letterSpacing: '0.04em' }}>{t}</span>
             ))}
           </div>
         </div>
@@ -626,7 +640,7 @@ function SkillsContent() {
           <div style={{
             fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700,
             letterSpacing: '0.18em', textTransform: 'uppercase',
-            color: 'rgba(15,41,64,0.72)', marginBottom: 12,
+            color: 'var(--text-2)', marginBottom: 12,
           }}>{en ? group.titleEn : group.title}</div>
           <div style={{
             display: 'grid',
@@ -640,7 +654,7 @@ function SkillsContent() {
                   <SkillTile name={s} index={idx} size={56} />
                   <span style={{
                     fontSize: 11.5, fontFamily: 'var(--font-mono)',
-                    color: 'rgba(15,41,64,0.72)',
+                    color: 'var(--text-2)',
                     textAlign: 'center', lineHeight: 1.4,
                     display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
                     overflow: 'hidden', maxWidth: 72,
@@ -656,40 +670,32 @@ function SkillsContent() {
 }
 
 /* ─────────────────────────── HOBBIES ───────────────────────────── */
-const HOBBY_ICONS: Record<string, string> = {
-  'Krafttraining': '🏋️',
-  'Malen':         '🎨',
-  'Videospiele':   '🎮',
-  'Laufen':        '🏃',
-  'Kochen':        '🍳',
-};
-
 function HobbiesContent() {
   const { lang } = useLang();
   const en = lang === 'en';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
       {/* Gym hero photo */}
-      <div style={{ borderRadius: 18, overflow: 'hidden', marginBottom: 6, background: '#0F2940' }}>
+      <div style={{ borderRadius: 18, overflow: 'hidden', marginBottom: 6, background: 'var(--inset)' }}>
         <img
           src="/img/hector-gym.jpg"
           alt={en ? 'Strength Training' : 'Krafttraining'}
+          className="photo-warm-bw"
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </div>
-      <p style={{ fontSize: 15, lineHeight: 1.80, color: 'rgba(15,41,64,0.72)', margin: '0 0 2px' }}>
+      <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', margin: '0 0 2px' }}>
         {en ? 'Away from the screen, these passions keep me going:' : 'Abseits vom Bildschirm treiben mich diese Leidenschaften an:'}
       </p>
       {hobbies.map((h, i) => (
         <div key={h} style={{ ...innerCard, display: 'flex', alignItems: 'center', gap: 16, padding: '13px 18px' }}>
           <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700,
-            color: 'rgba(15,41,64,0.72)', letterSpacing: '0.10em', flexShrink: 0,
+            fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700,
+            color: 'var(--accent-hi)', letterSpacing: '0.08em', flexShrink: 0,
           }}>
             {String(i + 1).padStart(2, '0')}
           </span>
-          <span style={{ fontSize: 18, flexShrink: 0 }} aria-hidden>{HOBBY_ICONS[h] ?? '★'}</span>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15.5, color: 'rgba(15,41,64,0.88)' }}>{en ? (hobbiesEn[h] ?? h) : h}</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 17, color: 'var(--text)' }}>{en ? (hobbiesEn[h] ?? h) : h}</span>
         </div>
       ))}
     </div>
@@ -746,7 +752,7 @@ export default function InfoPanel({ sectionKey, onClose, origin }: Props) {
         aria-hidden="true"
         style={{
           position: 'fixed', inset: 0,
-          background: 'rgba(15,41,64,0.25)',
+          background: 'rgba(21,22,24,0.7)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           zIndex: 300,
@@ -764,57 +770,43 @@ export default function InfoPanel({ sectionKey, onClose, origin }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label={label}
-          initial={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.90, y: 20 }}
+          initial={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.96, y: 8 }}
           animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-          exit={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.94, y: 10 }}
+          exit={emerge ? { opacity: 0, scale: 0.12, x: emerge.x, y: emerge.y } : { opacity: 0, scale: 0.96, y: 8 }}
           transition={emerge
             ? { type: 'spring', stiffness: 130, damping: 18, delay: 0.14, opacity: { duration: 0.3, delay: 0.14 } }
-            : { type: 'spring', stiffness: 420, damping: 34 }}
+            : { duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: 'relative',
             width,
             maxWidth: '96vw',
-            maxHeight: '92vh',
+            maxHeight: '92dvh',
             overflowY: isGalerie ? 'hidden' : 'auto',
             overflowX: 'hidden',
+            overscrollBehavior: 'contain',
             pointerEvents: 'auto',
-            background: 'rgba(252,253,253,0.86)',
-            backdropFilter: 'blur(44px) saturate(190%) brightness(1.04)',
-            WebkitBackdropFilter: 'blur(44px) saturate(190%) brightness(1.04)',
-            borderRadius: 28,
-            border: '1px solid rgba(255,255,255,0.55)',
-            boxShadow: '0 26px 84px rgba(15,41,64,0.18), 0 4px 16px rgba(15,41,64,0.08), inset 0 1.5px 0 rgba(255,255,255,0.98), inset 0 -1px 0 rgba(15,41,64,0.04)',
+            background: 'var(--grad-surface)',
+            borderRadius: 24,
+            border: '1px solid var(--line-strong)',
+            boxShadow: '0 26px 84px rgba(0,0,0,0.54), 0 4px 16px rgba(0,0,0,0.24), inset 0 1.5px 0 rgba(255,255,255,0.137), inset 0 -1px 0 rgba(0,0,0,0.15)',
           }}
         >
           {/* Iridescent specular + corner glow */}
           <div aria-hidden style={{
             position: 'absolute', inset: 0, pointerEvents: 'none', borderRadius: 'inherit',
-            background: 'radial-gradient(55% 40% at 26% -3%, rgba(255,255,255,0.55), transparent 62%), radial-gradient(45% 40% at 16% 4%, rgba(254,134,132,0.12), transparent 62%), radial-gradient(60% 55% at 82% 2%, rgba(131,202,226,0.10), transparent 70%)',
+            background: 'radial-gradient(55% 40% at 26% -3%, rgba(255,255,255,0.077), transparent 62%), radial-gradient(45% 40% at 16% 4%, rgba(255,95,0,0.12), transparent 62%), radial-gradient(60% 55% at 82% 2%, rgba(255,255,255,0.05), transparent 70%)',
             filter: 'blur(8px)',
           }} />
 
           {/* ── X Close ──────────────────────────────────────────── */}
           <button
+            type="button"
             onClick={onClose}
             aria-label={en ? 'Close' : 'Schließen'}
-            style={{
-              position: 'absolute', top: 16, right: 16,
-              width: 32, height: 32, borderRadius: '50%',
-              border: '1px solid rgba(131,202,226,0.22)',
-              borderTopColor: 'rgba(131,202,226,0.38)',
-              background: 'rgba(255,255,255,0.80)',
-              backdropFilter: 'blur(12px)',
-              color: 'rgba(15,41,64,0.72)',
-              cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              zIndex: 10,
-              boxShadow: [
-                'inset 0 1px 0 rgba(255,255,255,0.90)',
-                '0 2px 8px rgba(15,41,64,0.08)',
-              ].join(', '),
-            }}
+            className="btn btn-secondary lq btn-icon"
+            style={{ position: 'absolute', top: 14, right: 14, zIndex: 10 }}
           >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden>
               <path d="M18 6 6 18M6 6l12 12" />
             </svg>
           </button>
@@ -822,14 +814,14 @@ export default function InfoPanel({ sectionKey, onClose, origin }: Props) {
           {/* ── Header ───────────────────────────────────────────── */}
           <div style={{
             padding: '30px 34px 20px',
-            borderBottom: '1px solid rgba(131,202,226,0.16)',
+            borderBottom: '1px solid var(--line)',
           }}>
             <h2 style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
               fontSize: 'clamp(20px, 2.4vw, 26px)',
               letterSpacing: '-0.03em',
-              color: '#0F2940',
+              color: 'var(--text)',
               margin: 0,
               paddingRight: 44,
             }}>

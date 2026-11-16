@@ -6,16 +6,17 @@ import { type Lang, annoLabels, ui } from '@/lib/i18n';
 
 /* Iridescent accent colors per chip — inspired by the glass-lettering palette */
 const CHIP_ACCENTS: Record<string, [number,number,number]> = {
-  info:    [131, 202, 226],   /* sky blue           */
-  galerie: [254, 134, 132],   /* coral accent       */
-  kontakt: [131, 202, 226],   /* sky blue           */
-  skills:  [131, 202, 226],   /* sky blue           */
-  hobbys:  [254, 134, 132],   /* coral accent       */
+  info:    [255, 179, 122],   /* sky blue           */
+  galerie: [255, 106, 19],   /* coral accent       */
+  kontakt: [255, 179, 122],   /* sky blue           */
+  skills:  [255, 179, 122],   /* sky blue           */
+  hobbys:  [255, 106, 19],   /* coral accent       */
 };
 
 // Theme-aware SVG icons for annotation chips
 function getAnnoIcon(key: string, isDark: boolean): React.ReactNode {
-  const c = isDark ? 'white' : 'rgba(35,38,68,0.72)';
+  // Light theme inherits the tile colour (navy, or white when the hotspot is pressed)
+  const c = isDark ? 'white' : 'currentColor';
   switch (key) {
     case 'info':
       return (
@@ -63,6 +64,8 @@ interface Props {
   onSectionOpen: (key: string, origin?: { x: number; y: number }) => void;
   isDark?: boolean;
   lang?: Lang;
+  /** Key of the section panel currently open — its hotspot button renders pressed */
+  activeKey?: string | null;
 }
 
 // """ helpers (same as remake) """""""""""""""""""""""""""""""""""""""""""""""""
@@ -349,7 +352,7 @@ function buildRoom(room: THREE.Group, hotspots: Map<string, THREE.Group>, isDark
 }
 
 // """ COMPONENT """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de' }: Props) {
+export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de', activeKey = null }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const svgLinesRef = useRef<(SVGLineElement | null)[]>([]);
@@ -563,8 +566,9 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
       const cH = container!.clientHeight;
       if (!cW || !cH) return;
       const euler = new THREE.Euler(0, curRot, 0);
-      const CHIP_W = 186;
       ANNOS.forEach((a, i) => {
+        // Chips size to their label now — measure the real width (offsetWidth ignores the hover scale)
+        const CHIP_W = chipElsRef.current[i]?.offsetWidth || 200;
         const v = anchorVecs[i].clone().applyEuler(euler).project(cam);
         const ox = (v.x * 0.5 + 0.5) * cW;
         const oy = (-v.y * 0.5 + 0.5) * cH;
@@ -669,7 +673,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
     let origin: { x: number; y: number } | undefined;
     if (pos && rect) {
       origin = { x: rect.left + pos.ox, y: rect.top + pos.oy };
-      const ac = (CHIP_ACCENTS[key] ?? [131, 202, 226]).join(',');
+      const ac = (CHIP_ACCENTS[key] ?? [255, 179, 122]).join(',');
       const id = Date.now();
       setGlow({ x: pos.ox, y: pos.oy, ac, id });
       pulseHotspotRef.current?.(key);
@@ -680,15 +684,15 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
 
   return (
     <>
-    <div ref={containerRef} className="diorama-canvas" style={{ position: 'relative', width: '100%', height: 'min(740px, 78vh)' }}>
+    <div ref={containerRef} className="diorama-canvas" style={{ position: 'relative', width: '100%', height: 'min(740px, 78svh)' }}>
       {/* Three.js canvas */}
       <div ref={mountRef} style={{ position: 'absolute', inset: 0 }} />
 
       {/* Loading spinner */}
       {!loaded && (
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: isDark ? 'rgba(240,244,255,0.5)' : 'rgba(20,25,60,0.5)', fontSize: '13px', fontWeight: 600 }}>
-            <span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.2)', borderTopColor: '#7c3aed', animation: 'spin 0.8s linear infinite', display: 'inline-block' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: isDark ? 'var(--text-2)' : 'var(--text-2)', fontSize: '13px', fontWeight: 600 }}>
+            <span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.028)', borderTopColor: 'var(--accent)', animation: 'spin 0.8s linear infinite', display: 'inline-block' }} />
             Loading the room
           </div>
         </div>
@@ -708,7 +712,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
             <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="16" xChannelSelector="R" yChannelSelector="G" />
           </filter>
           {ANNOS.map((a, i) => {
-            const [r,g,b] = CHIP_ACCENTS[a.key] ?? [131,202,226];
+            const [r,g,b] = CHIP_ACCENTS[a.key] ?? [255, 179, 122];
             const hex = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
             return (
               <linearGradient
@@ -727,7 +731,7 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
         </defs>
 
         {ANNOS.map((a, i) => {
-          const [r,g,b] = CHIP_ACCENTS[a.key] ?? [131,202,226];
+          const [r,g,b] = CHIP_ACCENTS[a.key] ?? [255, 179, 122];
           const col    = `rgba(${r},${g},${b},0.80)`;
           const dotCol = `rgba(${Math.min(r+30,255)},${Math.min(g+30,255)},${Math.min(b+30,255)},0.95)`;
           const delay = `${i * 0.44}s`;
@@ -767,67 +771,41 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
 
       {/* Annotation chips " toggle glass style */}
       {ANNOS.map((a, i) => {
-        const ac = CHIP_ACCENTS[a.key] ?? [131, 202, 226];
+        const ac = CHIP_ACCENTS[a.key] ?? [255, 179, 122];
         const acStr = ac.join(',');
         return (
           <Fragment key={a.key}>
-            {/* Toggle-glass chip */}
+            {/* Hotspot button — 52px · radius 14 · icon tile + number + label + chevron.
+                Same fixed corner positions as before; only the look changed. */}
             <button
               ref={el => { chipElsRef.current[i] = el; }}
+              type="button"
               onClick={() => onSectionOpen(a.key)}
               aria-label={`Open ${annoLabels[a.key]?.[lang] ?? a.label} panel`}
-              className="lg-anno"
+              aria-pressed={activeKey === a.key}
+              className="lg-anno hs-btn lq"
               style={{
                 '--ac': acStr,
-                position: 'absolute',
                 left: `${a.lx * 100}%`,
                 top: `${a.ly * 100}%`,
-                transform: 'translate(0, -50%)',
-                display: 'inline-flex',
-                flexDirection: a.side === 'right' ? 'row-reverse' : 'row',
-                alignItems: 'center',
-                gap: '10px',
-                width: '186px',
-                height: '58px',
-                padding: a.side === 'right' ? '0 0 0 20px' : '0 20px 0 0',
-                borderRadius: '999px',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                zIndex: 10,
               } as React.CSSProperties}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLButtonElement).style.transform = 'translate(0, -50%) translateY(-4px)';
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLButtonElement).style.transform = 'translate(0, -50%)';
-              }}
             >
-              <span className="lg-anno-sphere" style={{
-                position: 'relative', zIndex: 3, flexShrink: 0,
-                width: 72, height: 72,
-                borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span className="lg-neon">{getAnnoIcon(a.key, isDark)}</span>
-              </span>
-              {/* Label */}
-              <span className="lg-anno-label" style={{
-                position: 'relative', zIndex: 2,
-                fontFamily: 'var(--font-display)', fontSize: '13.5px',
-                fontWeight: 700,
-                color: '#0F2940',
-                letterSpacing: '0.01em',
-                textShadow: '0 1px 3px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.65)',
-              }}>
+              <span className="hs-tile">{getAnnoIcon(a.key, isDark)}</span>
+              <span className="hs-text">
+                <span className="hs-num">{a.num}</span>
                 {annoLabels[a.key]?.[lang] ?? a.label}
               </span>
+              <svg className="hs-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M9 6l6 6-6 6" />
+              </svg>
             </button>
+
           </Fragment>
         );
       })}
 
       {/* Drag hint */}
-      <div className="lq-pill diorama-hint" style={{ position: 'absolute', left: '50%', bottom: '-36px', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '8px', padding: '7px 18px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: isDark ? 'rgba(240,244,255,0.88)' : 'rgba(20,25,60,0.72)', pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: isDark ? '0 0 16px rgba(120,80,255,0.18) inset, 0 4px 16px rgba(0,0,0,0.35)' : '0 4px 16px rgba(0,0,0,0.10)', animation: 'scrollBob 3s ease-in-out infinite' }}>
+      <div className="lq-pill diorama-hint" style={{ position: 'absolute', left: '50%', bottom: '-36px', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '8px', padding: '7px 18px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: isDark ? 'var(--text-2)' : 'var(--text-2)', pointerEvents: 'none', whiteSpace: 'nowrap', boxShadow: isDark ? '0 0 16px rgba(255,95,0,0.18) inset, 0 4px 16px rgba(0,0,0,0.35)' : '0 4px 16px rgba(0,0,0,0.10)', animation: 'scrollBob 3s ease-in-out infinite' }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M9 11V6a2 2 0 0 1 4 0v5"/><path d="M13 8a2 2 0 0 1 4 0v4"/><path d="M17 9.5a2 2 0 0 1 4 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.3-3.2L4.5 13a2 2 0 0 1 3.5-2"/></svg>
         {ui[lang].dioramaHint}
       </div>
@@ -846,13 +824,13 @@ export default function DioramaScene({ onSectionOpen, isDark = true, lang = 'de'
         phones, where they'd overlap unlabeled and taps are unreliable. */}
     <nav className="diorama-mobile-menu" aria-label={lang === 'en' ? 'Sections' : lang === 'es' ? 'Secciones' : 'Bereiche'}>
       {ANNOS.map((a) => {
-        const ac = (CHIP_ACCENTS[a.key] ?? [131, 202, 226]).join(',');
+        const ac = (CHIP_ACCENTS[a.key] ?? [255, 179, 122]).join(',');
         return (
           <button
             key={a.key}
             type="button"
             onClick={() => openFromDiorama(a.key)}
-            className="dm-btn"
+            className="dm-btn lq"
             style={{ '--ac': ac } as React.CSSProperties}
           >
             <span className="dm-ic">{getAnnoIcon(a.key, false)}</span>

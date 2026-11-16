@@ -40,16 +40,16 @@ const grid2 = (a: ReactNode, b: ReactNode) => (
 );
 
 const cardBody = (text: string) => (
-  <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.78, color: 'rgba(15,41,64,0.72)' }}>{text}</p>
+  <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>{text}</p>
 );
 
 const cardTitle = (t: string, _accent?: string) => (
-  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase' as const, marginBottom: 14, color: 'rgba(15,41,64,0.72)', fontFamily: 'var(--font-mono)' }}>{t}</div>
+  <div style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase' as const, marginBottom: 14, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{t}</div>
 );
 
 /* ── Responsive YouTube embed ──────────────────────────────────── */
 const ytEmbed = (id: string, title: string) => (
-  <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.28)', boxShadow: '0 8px 28px rgba(15,41,64,0.14)' }}>
+  <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', borderRadius: 14, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 8px 28px rgba(0,0,0,0.42)' }}>
     <iframe
       src={`https://www.youtube-nocookie.com/embed/${id}`}
       title={title}
@@ -64,16 +64,16 @@ const ytEmbed = (id: string, title: string) => (
 /* ── Screenshot / image card ───────────────────────────────────── */
 const shot = (src: string, alt: string, caption?: string, pos = '50% 0%') => (
   <figure style={{ margin: 0 }}>
-    <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.28)', boxShadow: '0 8px 28px rgba(15,41,64,0.12)', background: '#fff' }}>
+    <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 8px 28px rgba(0,0,0,0.36)', background: 'var(--inset)' }}>
       <img src={src} alt={alt} style={{ width: '100%', display: 'block', aspectRatio: '16 / 10', objectFit: 'cover', objectPosition: pos }} />
     </div>
-    {caption && <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'rgba(15,41,64,0.72)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>}
+    {caption && <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>}
   </figure>
 );
 
 /* ── Plain image tile (natural aspect ratio) ───────────────────── */
 const imgTile = (src: string, alt: string, radius = 12) => (
-  <div style={{ borderRadius: radius, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.28)', boxShadow: '0 6px 20px rgba(15,41,64,0.10)', background: '#fff' }}>
+  <div style={{ borderRadius: radius, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 6px 20px rgba(0,0,0,0.3)', background: 'var(--inset)' }}>
     <img src={src} alt={alt} loading="lazy" style={{ width: '100%', height: 'auto', display: 'block' }} />
   </div>
 );
@@ -98,25 +98,25 @@ const masonry = (items: { src: string; alt: string }[], colWidth = 250) => (
 const figCard = (node: ReactNode, caption: string, key?: number | string) => (
   <figure key={key} style={{ margin: 0 }}>
     {node}
-    <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'rgba(15,41,64,0.72)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>
+    <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>
   </figure>
 );
 
 /* ── Local (self-hosted) video card ────────────────────────────── */
 const videoCard = (src: string, caption?: string, key?: number | string) => (
   <figure key={key} style={{ margin: 0 }}>
-    <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.28)', boxShadow: '0 8px 28px rgba(15,41,64,0.12)', background: '#0a0e1e' }}>
+    <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 8px 28px rgba(0,0,0,0.36)', background: 'var(--surface)' }}>
       <video controls preload="metadata" style={{ width: '100%', display: 'block' }}>
         <source src={src} type="video/mp4" />
       </video>
     </div>
-    {caption && <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'rgba(15,41,64,0.72)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>}
+    {caption && <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{caption}</figcaption>}
   </figure>
 );
 
 /* ── Section intro paragraph ───────────────────────────────────── */
 const lead = (text: string) => (
-  <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.78, color: 'rgba(15,41,64,0.72)', maxWidth: 760 }}>{text}</p>
+  <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', maxWidth: 760 }}>{text}</p>
 );
 
 /* ══════════════════════════════════════════════════════════════
@@ -130,7 +130,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   arvaloo: {
     title: t('Arvaloo — Packaging & Produktkommunikation', 'Arvaloo — Packaging & Product Communication'),
     description: t('Produkt-, Grafik- & Kommunikationsdesigner (seit 07/2026): Verpackungsdesign, Druckvorstufe und Produktkommunikation für die Marke SMASH.', 'Product, Graphic & Communication Designer (since 07/2026): packaging design, prepress and product communication for the SMASH. brand.'),
-    accent: '#fe8684',
+    accent: '#FF5F00',
     category: t('Packaging · Druckvorstufe · Produktkommunikation', 'Packaging · Prepress · Product Communication'),
     tools: 'Illustrator · Photoshop · InDesign · Pacdora · Nano Banana · Figma Weave',
     role: t('Produkt-, Grafik- & Kommunikationsdesigner (Teilzeit)', 'Product, Graphic & Communication Designer (part-time)'),
@@ -166,14 +166,14 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
                     [t('Druckvorstufe', 'Prepress'), t('Druckfertige PDF/X-Daten inkl. Sonderfarben und Spot-UV, abgestimmt mit der Druckerei.', 'Print-ready PDF/X files incl. spot colours and spot UV, coordinated with the printer.')],
                     [t('Visualisierung & Kampagne', 'Visualization & campaign'), t('3D-Mockups und Packshots mit Pacdora, Nano Banana und Photoshop — daraus Poster, Shop-Banner, Social-Assets und ein B2B-One-Pager für den Großhandel.', '3D mockups and packshots with Pacdora, Nano Banana and Photoshop — turned into a poster, shop banner, social assets and a B2B one-pager for wholesale.')],
                   ].map(([h, b], i) => (
-                    <li key={i} style={{ fontSize: 13.5, lineHeight: 1.7, color: 'rgba(15,41,64,0.72)' }}>
-                      <strong style={{ color: '#0F2940', fontFamily: 'var(--font-display)' }}>{h}</strong> — {b}
+                    <li key={i} style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>
+                      <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}>{h}</strong> — {b}
                     </li>
                   ))}
                 </ol>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 18 }}>
                   {['Illustrator', 'Photoshop', 'InDesign', 'Pacdora', 'Nano Banana', 'Figma Weave'].map((tool) => (
-                    <span key={tool} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.04em', background: 'rgba(131,202,226,0.14)', border: '1px solid rgba(131,202,226,0.30)', borderRadius: 999, padding: '4px 11px', color: 'rgba(15,41,64,0.72)' }}>{tool}</span>
+                    <span key={tool} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, letterSpacing: '0.04em', background: 'rgba(255,255,255,0.07)', border: '1px solid var(--line-strong)', borderRadius: 999, padding: '4px 11px', color: 'var(--text-2)' }}>{tool}</span>
                   ))}
                 </div>
               </div>,
@@ -211,8 +211,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               { metric: '3', label: t('Märkte: Deutschland, Österreich, Frankreich', 'Markets: Germany, Austria, France') },
             ].map((m) => (
               <div key={m.metric} className="glass-card" style={{ padding: '28px 28px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: '#0F2940', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: 'var(--text)', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
               </div>
             ))}
           </div>
@@ -227,7 +227,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   vicampo: {
     title: t('Vicampo — Grafik & UX', 'Vicampo — Graphics & UX'),
     description: t('Junior Grafik- & UX-Designer (2023–2025): Produktfotografie, KI-Workflow, UX-Optimierung.', 'Junior Graphic & UX Designer (2023–2025): product photography, AI workflow, UX optimization.'),
-    accent: '#fe8684',
+    accent: '#FF5F00',
     category: t('Grafikdesign · UX/UI · Frontend', 'Graphic Design · UX/UI · Frontend'),
     tools: 'Photoshop · Figma · HTML/CSS · Midjourney · Freepik AI',
     role: t('Junior Grafik- & UX-Designer', 'Junior Graphic & UX Designer'),
@@ -280,7 +280,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
                 {cardTitle(t('Zentrale Findings', 'Key Findings'))}
                 <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 8 }}>
                   {[t('Service-Hotline prominenter platzieren — an ihrer bisherigen Stelle bietet sich ein Rabattcode an.', 'Place the service hotline more prominently — a discount code fits well in its former spot.'), t('Uneinheitliche Abstände zwischen Icons und Elementen vereinheitlichen.', 'Unify inconsistent spacing between icons and elements.'), t('Überdimensionierten Bannerbereich verschlanken; Banner und Icons als ein Block, störenden weißen Balken entfernen.', 'Slim down the oversized banner area; banner and icons as one block, remove the distracting white bar.'), t('Zu viele Elemente — teils erst bei Hover sichtbar — gezielt reduzieren.', 'Reduce too many elements — some only visible on hover.'), t('Primären CTA „Alle Weinpakete entdecken" klarer hervorheben.', 'Make the primary CTA "Discover all wine packages" stand out more clearly.')].map((tx, i) => (
-                    <li key={i} style={{ fontSize: 13, lineHeight: 1.6, color: 'rgba(15,41,64,0.72)' }}>{tx}</li>
+                    <li key={i} style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text-2)' }}>{tx}</li>
                   ))}
                 </ul>
               </div>,
@@ -322,8 +322,8 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               { metric: t('Sehr gut', 'Very good'), label: t('Gesamtnote im Abschlusszeugnis', 'Overall grade in the final reference') },
             ].map((m) => (
               <div key={m.metric} className="glass-card" style={{ padding: '28px 28px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: '#0F2940', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: 'var(--text)', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
               </div>
             ))}
           </div>
@@ -338,7 +338,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   studybuddy: {
     title: 'StudyBuddy — UX/UI',
     description: t('CPUX-Capstone: Mobile App mit strukturierten Lernblöcken, Fokus-Timer und Reflexion nach jeder Session.', 'CPUX capstone: mobile app with structured study blocks, a focus timer and reflection after each session.'),
-    accent: '#83cae2',
+    accent: '#FF9A5A',
     category: t('UX/UI · Mobile · CPUX', 'UX/UI · Mobile · CPUX'),
     tools: 'Figma · FigJam · Miro',
     role: t('Solo — UX Designer', 'Solo — UX Designer'),
@@ -360,17 +360,17 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: card(
           <div style={{ position: 'relative', zIndex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18, marginBottom: 20, flexWrap: 'wrap' }}>
-              <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(131,202,226,0.20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>👩‍🎓</div>
+              <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>👩‍🎓</div>
               <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: '#0F2940', marginBottom: 3 }}>Lena Hofmann, 23</div>
-                <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)' }}>{t('BWL, 4. Semester · iPhone — unterwegs und am Schreibtisch', 'Business, 4th semester · iPhone — on the go and at the desk')}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--text)', marginBottom: 3 }}>Lena Hofmann, 23</div>
+                <div style={{ fontSize: 13, color: 'var(--text-2)' }}>{t('BWL, 4. Semester · iPhone — unterwegs und am Schreibtisch', 'Business, 4th semester · iPhone — on the go and at the desk')}</div>
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 14 }}>
               {[[t('Ziel','Goal'),t('Effizient lernen ohne den Überblick zu verlieren','Study efficiently without losing track')],[t('Frustration','Frustration'),t('Weiß nach stundenlangem Lernen nicht, was erreicht wurde','After hours of studying, doesn\'t know what was achieved')],[t('Bedarf','Need'),t('Struktur — aber ohne zusätzlichen Stress','Structure — but without extra stress')],[t('Gerät','Device'),t('iPhone, unterwegs & am Schreibtisch','iPhone, on the go & at the desk')]].map(([k,v]) => (
                 <div key={k}>
-                  <div className="mono-label" style={{ marginBottom: 4, fontSize: 9 }}>{k}</div>
-                  <div style={{ fontSize: 13, color: 'rgba(15,41,64,0.72)' }}>{v}</div>
+                  <div className="mono-label" style={{ marginBottom: 4, fontSize: 11.5 }}>{k}</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-2)' }}>{v}</div>
                 </div>
               ))}
             </div>
@@ -389,11 +389,11 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)' }}>{step.n}</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)', background: 'rgba(131,202,226,0.12)', padding: '1px 7px', borderRadius: 4 }}>{step.h}</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-2)' }}>{step.n}</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-2)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 4 }}>{step.h}</div>
                 </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'rgba(15,41,64,0.90)', marginBottom: 8 }}>{step.t}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.6 }}>{step.b}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{step.t}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6 }}>{step.b}</div>
               </div>,
               { padding: '22px 22px' }, i,
             ))}
@@ -408,7 +408,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               {[t('Home','Home'),t('Block anlegen','Create block'),t('Bereit?','Ready?'),t('Timer','Timer'),t('Fertig!','Done!'),t('Home','Home')].map((step, i, arr) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span className="glass-pill" style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>{step}</span>
-                  {i < arr.length - 1 && <span style={{ color: 'rgba(15,41,64,0.55)', fontSize: 11 }}>→</span>}
+                  {i < arr.length - 1 && <span style={{ color: 'var(--text-3)', fontSize: 11 }}>→</span>}
                 </div>
               ))}
             </div>
@@ -437,7 +437,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   branding: {
     title: 'Brand Identities',
     description: t('Drei vollständige Brand-Identities: AeroLeaf, NordWand und SüßMund Pâtisserie.', 'Three complete brand identities: AeroLeaf, NordWand and SüßMund Pâtisserie.'),
-    accent: '#fe8684',
+    accent: '#FF5F00',
     category: t('Grafikdesign · Logodesign · Branding', 'Graphic Design · Logo Design · Branding'),
     tools: 'Adobe Illustrator · Photoshop',
     role: t('Solo — Brand Designer', 'Solo — Brand Designer'),
@@ -449,7 +449,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         label: 'AeroLeaf',
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.18)' }}>
+            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--line)' }}>
               <img src="/img/projects/AeroLeaf_01.webp" alt="AeroLeaf Brand Mockup" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
@@ -458,7 +458,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','AgriTech','Berlin','Sustainable'].map(t => (
-                <span key={t} style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', border: '1px solid rgba(131,202,226,0.30)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
+                <span key={t} style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-2)', border: '1px solid var(--line-strong)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
               ))}
             </div>
           </div>
@@ -468,7 +468,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         label: 'NordWand',
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.18)' }}>
+            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--line)' }}>
               <img src="/img/projects/NordWand_01.webp" alt="NordWand Brand Mockup" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
@@ -477,7 +477,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','Outdoor Fashion','Hamburg','Sustainable','Gorpcore'].map(t => (
-                <span key={t} style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', border: '1px solid rgba(131,202,226,0.30)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
+                <span key={t} style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-2)', border: '1px solid var(--line-strong)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
               ))}
             </div>
           </div>
@@ -487,7 +487,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         label: 'SüßMund Pâtisserie',
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.18)' }}>
+            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--line)' }}>
               <img src="/img/projects/Sussmund_03.webp" alt="SüßMund Pâtisserie" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
@@ -496,7 +496,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               {['Brand Identity','Logo Design','Style Guide','Gastronomy','Cologne','Mascot Design','Packaging'].map(t => (
-                <span key={t} style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(15,41,64,0.72)', border: '1px solid rgba(131,202,226,0.30)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
+                <span key={t} style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-2)', border: '1px solid var(--line-strong)', borderRadius: 4, padding: '3px 9px', fontFamily: 'var(--font-mono)' }}>{t}</span>
               ))}
             </div>
           </div>
@@ -511,7 +511,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   schwimmspass: {
     title: 'SchwimmSpass — UX/UI',
     description: t('App-Redesign für einen Mainzer Schwimmkursanbieter — optimiert für Eltern mit Kindern im Vorschulalter.', 'App redesign for a Mainz-based swimming-course provider — optimized for parents with preschool children.'),
-    accent: '#83cae2',
+    accent: '#FF9A5A',
     category: t('Mobile App · UX/UI', 'Mobile App · UX/UI'),
     tools: 'Figma · Maze · Miro',
     role: t('Solo — UX/UI Designer', 'Solo — UX/UI Designer'),
@@ -554,7 +554,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   'squishy-savings': {
     title: 'Squishy Savings',
     description: t('Mobile Finance-App mit lokaler Datenspeicherung — Sparkonten, Ausgaben-Tracking und Sparziele ohne Cloud oder Registrierung.', 'Mobile finance app with local data storage — savings accounts, expense tracking and savings goals without cloud or registration.'),
-    accent: '#fe8684',
+    accent: '#FF5F00',
     category: t('UX/UI · Mobile App · FinTech', 'UX/UI · Mobile App · FinTech'),
     tools: 'Figma · Procreate · FigJam',
     role: t('Solo — UX/UI Designer', 'Solo — UX/UI Designer'),
@@ -582,9 +582,9 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               { n: '04', t: t('Klickbarer Prototyp', 'Clickable Prototype'), b: t('Vollständiger interaktiver Prototyp: von der Kontoerstellung über Ausgaben-Tracking bis zur Zielübersicht.', 'Complete interactive prototype: from account creation through expense tracking to goal overview.') },
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)', marginBottom: 8 }}>{step.n}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'rgba(15,41,64,0.90)', marginBottom: 8 }}>{step.t}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.6 }}>{step.b}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-2)', marginBottom: 8 }}>{step.n}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{step.t}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6 }}>{step.b}</div>
               </div>,
               { padding: '22px 22px' }, i,
             ))}
@@ -613,7 +613,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   sentinel: {
     title: 'Sentinel — Dashboard',
     description: t('Web-App für das Echtzeit-Monitoring von Online-Shops — Verkäufe, Lagerbestand und Traffic in einem klaren Dark-UI-Dashboard.', 'Web app for real-time monitoring of online shops — sales, inventory and traffic in a clean dark-UI dashboard.'),
-    accent: '#83cae2',
+    accent: '#FF9A5A',
     category: t('UX/UI · Dashboard · Web App', 'UX/UI · Dashboard · Web App'),
     tools: 'Figma · React',
     role: t('Solo — UX/UI & Frontend Developer', 'Solo — UX/UI & Frontend Developer'),
@@ -641,9 +641,9 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               { n: '04', t: t('Live App', 'Live App'), b: t('Vollständige Web-App mit React entwickelt und auf Vercel deployed — Echtzeit-Daten, Alertsystem und responsives Dashboard-Layout.', 'Complete web app built with React and deployed on Vercel — real-time data, alert system and responsive dashboard layout.') },
             ].map((step, i) => card(
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(15,41,64,0.72)', marginBottom: 8 }}>{step.n}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'rgba(15,41,64,0.90)', marginBottom: 8 }}>{step.t}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(15,41,64,0.72)', lineHeight: 1.6 }}>{step.b}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-2)', marginBottom: 8 }}>{step.n}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{step.t}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6 }}>{step.b}</div>
               </div>,
               { padding: '22px 22px' }, i,
             ))}
@@ -672,7 +672,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   weinfuerst: {
     title: t('Weinfürst — Goldstatus', 'Weinfürst — Gold Status'),
     description: t('Grafik- und Designarbeit rund um das Goldstatus-Treueprogramm des Online-Weinhändlers Weinfürst.', 'Graphic and design work around the Gold Status loyalty programme of the online wine retailer Weinfürst.'),
-    accent: '#83cae2',
+    accent: '#FF9A5A',
     category: t('Grafik · Web · Kampagne', 'Graphics · Web · Campaign'),
     tools: 'Photoshop · Figma · Shopify',
     role: t('Grafik & Design', 'Graphics & Design'),
@@ -708,7 +708,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   'tuv-nord-akademie': {
     title: t('TÜV Nord Akademie — E-Learning', 'TÜV Nord Akademie — E-Learning'),
     description: t('Illustrationen, Animation und digitale Fachartikel für interaktive E-Learning-Kurse der TÜV Nord Akademie.', 'Illustrations, animation and digital articles for interactive e-learning courses of the TÜV Nord Akademie.'),
-    accent: '#fe8684',
+    accent: '#FF5F00',
     category: t('Illustration · E-Learning · Motion · 3D/VR', 'Illustration · E-Learning · Motion · 3D/VR'),
     tools: 'Illustrator · Photoshop · After Effects · SimLab · Blender',
     role: t('Illustration & Motion (bei Smartfox)', 'Illustration & Motion (at Smartfox)'),
@@ -745,18 +745,18 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {lead(t('Eine meiner ersten großen Aufgaben bei Smartfox: das Design der Website-Startseite — Aufbau, visuelle Hierarchie und Bildsprache für den Webauftritt der Agentur.', 'One of my first major tasks at Smartfox: designing the website homepage — structure, visual hierarchy and imagery for the agency\'s web presence.'))}
-            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(131,202,226,0.28)', boxShadow: '0 8px 28px rgba(15,41,64,0.12)', background: '#fff', maxWidth: 900 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 14px', borderBottom: '1px solid rgba(15,41,64,0.08)', background: 'rgba(238,247,251,0.7)' }}>
-                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(15,41,64,0.16)' }} />
-                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(15,41,64,0.16)' }} />
-                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(15,41,64,0.16)' }} />
-                <span style={{ marginLeft: 8, fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'rgba(15,41,64,0.5)' }}>smartfox-media.de</span>
+            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 8px 28px rgba(0,0,0,0.36)', background: 'var(--inset)', maxWidth: 900 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 14px', borderBottom: '1px solid var(--line)', background: 'rgba(30,31,34,0.6)' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(0,0,0,0.48)' }} />
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(0,0,0,0.48)' }} />
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(0,0,0,0.48)' }} />
+                <span style={{ marginLeft: 8, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(0,0,0,0.85)' }}>smartfox-media.de</span>
               </div>
               <div style={{ maxHeight: 540, overflowY: 'auto' }}>
                 <img src="/img/projects/smartfox/website-startseite.jpg" alt="Startseite der von mir gestalteten Smartfox-Website" style={{ width: '100%', display: 'block' }} loading="lazy" />
               </div>
             </div>
-            <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(15,41,64,0.55)', fontStyle: 'italic' }}>{t('Vollständige Startseite — im Rahmen scrollbar.', 'Full homepage — scrollable within the frame.')}</p>
+            <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-3)', fontStyle: 'italic' }}>{t('Vollständige Startseite — im Rahmen scrollbar.', 'Full homepage — scrollable within the frame.')}</p>
           </div>
         ),
       },
@@ -815,7 +815,10 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         content: card(
           <div>
             {cardBody(t('Neben den Kursen entstanden digitale Fachartikel und ein Whitepaper zu den Themen der Akademie. Das vollständige Projekt inkl. Leistungsumfang ist bei Smartfox dokumentiert.', 'Alongside the courses, digital articles and a whitepaper were created around the academy\'s topics. The full project including scope is documented at Smartfox.'))}
-            <a href="https://smartfox-website.webflow.io/projekte/tuv-nord-akademie-lernen-leicht-gemacht" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 16, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#0F2940', border: '1px solid rgba(131,202,226,0.40)', borderRadius: 999, padding: '9px 18px', textDecoration: 'none', fontWeight: 700 }}>{t('Projekt bei Smartfox ansehen ↗', 'View project at Smartfox ↗')}</a>
+            <a href="https://smartfox-website.webflow.io/projekte/tuv-nord-akademie-lernen-leicht-gemacht" target="_blank" rel="noopener noreferrer" className="btn btn-secondary lq btn-sm" style={{ marginTop: 16 }}>
+              {t('Projekt bei Smartfox ansehen', 'View project at Smartfox')}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17 17 7M8 7h9v9" /></svg>
+            </a>
           </div>
         ),
       },
@@ -828,7 +831,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
   vinou: {
     title: t('Vinou — Weinmanagement', 'Vinou — Wine Management'),
     description: t('UI-Design, Illustrationen, Mockups und Videoproduktion für Vinou — Digitalisierungspartner der Weinbranche.', 'UI design, illustrations, mockups and video production for Vinou — digitalization partner for the wine industry.'),
-    accent: '#83cae2',
+    accent: '#FF9A5A',
     category: t('UX/UI · Illustration · Video', 'UX/UI · Illustration · Video'),
     tools: 'Figma · Illustrator · After Effects · Premiere',
     role: t('UI-Design, Illustration & Video (bei Smartfox)', 'UI Design, Illustration & Video (at Smartfox)'),

@@ -30,7 +30,11 @@ interface DockItemData {
     label: string
     /** Icon component or image URL */
     icon: React.ReactNode
-    /** Click handler */
+    /** Link target — renders a real <a> (copy link, open in new tab, keyboard) */
+    href?: string
+    /** Open the link in a new tab */
+    external?: boolean
+    /** Click handler (used when there is no href) */
     onClick?: () => void
     /** Whether item is active */
     isActive?: boolean
@@ -57,7 +61,7 @@ function DockItem({
     showLabels,
     isVertical,
 }: DockItemProps) {
-    const ref = React.useRef<HTMLButtonElement>(null)
+    const ref = React.useRef<HTMLElement>(null)
     const [isHovered, setIsHovered] = React.useState(false)
 
     // Calculate distance from mouse to center of item
@@ -84,16 +88,23 @@ function DockItem({
     const y = useTransform(smoothScale, (s) => (s - 1) * -10)
     const smoothY = useSpring(y, springConfig)
 
+    // A link renders as <a>, an action as <button>; both carry the label as their accessible name
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const Comp: any = item.href ? motion.a : motion.button
+    const linkProps = item.href
+        ? { href: item.href, ...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}) }
+        : { type: 'button', onClick: item.onClick }
     return (
-        <motion.button
+        <Comp
             ref={ref}
-            onClick={item.onClick}
+            {...linkProps}
+            aria-label={item.label}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className={cn(
                 "relative flex items-center justify-center",
                 "rounded-2xl transition-colors duration-200",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-white/50",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF7A26] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E1F22]",
                 item.isActive && "bg-neutral-200/50 dark:bg-white/10"
             )}
             style={{
@@ -169,9 +180,9 @@ function DockItem({
                             "pointer-events-none z-50"
                         )}
                         style={{
-                            background: 'rgba(15,41,64,0.92)',
-                            color: 'rgba(226,226,224,0.90)',
-                            border: '0.5px solid rgba(131,202,226,0.28)',
+                            background: 'var(--inset)',
+                            color: 'var(--surface)',
+                            border: '0.5px solid var(--line)',
                             boxShadow: '0 4px 16px rgba(0,0,0,0.40)',
                         }}
                     >
@@ -183,9 +194,9 @@ function DockItem({
                                 "w-2 h-2 rotate-45",
                             )}
                             style={{
-                                background: 'rgba(15,41,64,0.92)',
-                                borderRight: '0.5px solid rgba(131,202,226,0.28)',
-                                borderBottom: '0.5px solid rgba(131,202,226,0.28)',
+                                background: 'var(--inset)',
+                                borderRight: '0.5px solid var(--line)',
+                                borderBottom: '0.5px solid var(--line)',
                             }}
                         />
                     </motion.div>
@@ -197,12 +208,12 @@ function DockItem({
                 className="absolute inset-0 rounded-2xl pointer-events-none"
                 animate={{
                     boxShadow: isHovered
-                        ? "0 0 30px rgba(255,255,255,0.15)"
-                        : "0 0 0px rgba(255,255,255,0)",
+                        ? "0 0 30px rgba(255,255,255,0.021)"
+                        : "0 0 0px rgba(255,255,255,0.01)",
                 }}
                 transition={{ duration: 0.3 }}
             />
-        </motion.button>
+        </Comp>
     )
 }
 

@@ -123,14 +123,14 @@ export function GlassLozengeButton({ onClick, href, children, className = '', va
 
   if (href) {
     return (
-      <a href={href} className={`glass-btn ${className}`} style={baseStyle} {...handlers}>
+      <a href={href} className={`btn btn-secondary lq ${className}`} style={baseStyle} {...handlers}>
         {content}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className={`glass-btn ${className}`} style={baseStyle} {...handlers}>
+    <button type="button" onClick={onClick} className={`btn btn-secondary lq ${className}`} style={baseStyle} {...handlers}>
       {content}
     </button>
   );
@@ -144,7 +144,7 @@ export function GlassChip({ children, href, onClick, active }: {
   active?: boolean;
 }) {
   const style: React.CSSProperties = active
-    ? { boxShadow: '0 0 0 1px rgba(255,255,255,0.52), inset 0 1px 0 rgba(255,255,255,0.72), 0 4px 14px rgba(0,0,0,0.22)' }
+    ? { boxShadow: '0 0 0 1px rgba(255,255,255,0.073), inset 0 1px 0 rgba(255,255,255,0.101), 0 4px 14px rgba(0,0,0,0.22)' }
     : {};
 
   if (href) {

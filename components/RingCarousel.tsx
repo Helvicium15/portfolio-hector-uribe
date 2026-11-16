@@ -170,11 +170,11 @@ export default function RingCarousel({ projects }: Props) {
                   borderRadius: 18,
                   overflow: 'hidden',
                   position: 'relative',
-                  background: 'linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))',
+                  background: 'linear-gradient(180deg, rgba(255,236,220,0.01), rgba(255,236,220,0.01))',
                   backdropFilter: 'blur(24px) saturate(140%)',
                   WebkitBackdropFilter: 'blur(24px) saturate(140%)',
-                  border: '1px solid rgba(255,255,255,.10)',
-                  boxShadow: '0 24px 70px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.12)',
+                  border: '1px solid rgba(255,236,220,0.014)',
+                  boxShadow: '0 24px 70px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,236,220,0.017)',
                 }}>
                   {/* Iridescent corner glow */}
                   <div aria-hidden style={{
