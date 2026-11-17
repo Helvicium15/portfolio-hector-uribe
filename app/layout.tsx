@@ -35,7 +35,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const lang = ((cookieStore.get('lang')?.value as Lang) || 'de');
 
   return (
-    <html lang={lang}>
+    <html lang={lang} suppressHydrationWarning>
+      <head>
+        {/* Intro plays once per tab session: on repeat visits hide the curtain before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(location.pathname==='/'){if(sessionStorage.getItem('hu_preloaded'))document.documentElement.classList.add('pl-skip');else sessionStorage.setItem('hu_preloaded','1')}}catch(e){}" }} />
+      </head>
       <body>
         <a href="#main" className="skip-link">
           {lang === 'en' ? 'Skip to content' : 'Zum Inhalt springen'}

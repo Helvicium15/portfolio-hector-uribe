@@ -1,71 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-const WORDS = ['Hi!', '¡Hola!'];
+/* Intro curtain: "Hi!" → "¡Hola!" → the orange curtain lifts.
+   The whole sequence is pure CSS (see "PRELOADER" in globals.css), so it starts
+   on first paint instead of waiting for React to hydrate the 3D page — that wait
+   used to leave the curtain empty for ~2s on phones.
+   Plays once per tab session: an inline <head> script (layout.tsx) adds
+   html.pl-skip on repeat visits before the first paint, so no orange flash.
+   React only removes the node from the DOM once the CSS animation is over. */
+const TOTAL_MS = 3000; // ≥ curtain lift end (2.05s delay + 0.85s)
 
 export default function Preloader() {
-  const [stage, setStage] = useState(0);
-  const [show, setShow] = useState(true);
+  const [mounted, setMounted] = useState(true);
 
   useEffect(() => {
-    // Only play once per browser session
-    if (typeof window !== 'undefined' && sessionStorage.getItem('hu_preloaded')) {
-      setShow(false);
-      return;
-    }
-    document.body.style.overflow = 'hidden';
-    const t1 = setTimeout(() => setStage(1), 1000);   // Hi! → Hola!
-    const t2 = setTimeout(() => setShow(false), 2050); // lift curtain
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    if (document.documentElement.classList.contains('pl-skip')) { setMounted(false); return; }
+    // the animation clock started at first paint, not at hydration
+    const left = Math.max(0, TOTAL_MS - performance.now());
+    const t = setTimeout(() => setMounted(false), left);
+    return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    if (!show) {
-      document.body.style.overflow = '';
-      try { sessionStorage.setItem('hu_preloaded', '1'); } catch { /* ignore */ }
-    }
-  }, [show]);
-
+  if (!mounted) return null;
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          key="preloader"
-          initial={{ y: 0 }}
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 10000,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'var(--grad-accent)', /* safety-orange curtain — lifts visibly off the matte-black hero */
-          }}
-        >
-          <div
-            style={{
-              position: 'relative', overflow: 'hidden', height: '1.15em',
-              display: 'flex', alignItems: 'center',
-              fontFamily: 'var(--font-display)', fontWeight: 800,
-              fontSize: 'clamp(3.2rem, 13vw, 8rem)', letterSpacing: '-0.05em',
-              color: 'var(--ink)', lineHeight: 1.12,
-            }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={stage}
-                initial={{ y: '115%', opacity: 0 }}
-                animate={{ y: '0%', opacity: 1 }}
-                exit={{ y: '-115%', opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                style={{ display: 'inline-block' }}
-              >
-                {WORDS[stage]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div data-preloader aria-hidden className="preloader">
+      <div className="pl-stage">
+        <span className="pl-word pl-hi">Hi!</span>
+        <span className="pl-word pl-hola">¡Hola!</span>
+      </div>
+    </div>
   );
 }
