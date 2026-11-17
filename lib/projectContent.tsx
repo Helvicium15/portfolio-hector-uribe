@@ -219,6 +219,131 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
         ),
       },
     ],
+    nextSlug: 'smash-cbd',
+    nextName: 'SMASH. CBD',
+  },
+
+  /* ── SMASH. CBD — GORILLA GLUE & MANGO ICE ───────────────── */
+  'smash-cbd': {
+    title: t('SMASH. CBD — Gorilla Glue & Mango Ice', 'SMASH. CBD — Gorilla Glue & Mango Ice'),
+    description: t('Packaging, Druckvorstufe und Launch-Kampagne für die neue CBD-Linie von SMASH. — zwei Sorten, zwei Formate.', 'Packaging, prepress and launch campaign for the new SMASH. CBD line — two flavours, two formats.'),
+    accent: '#FF5F00',
+    category: t('Packaging · Etikett · Launch-Kampagne', 'Packaging · Label · Launch Campaign'),
+    tools: 'Illustrator · Photoshop · InDesign · Pacdora',
+    role: t('Produkt-, Grafik- & Kommunikationsdesigner · Arvaloo GmbH', 'Product, Graphic & Communication Designer · Arvaloo GmbH'),
+    year: '2026',
+    heroImg: '/img/projects/arvaloo/cbd/banner.jpg',
+    heroImgPos: '30% 50%',
+    intro: t('Für die neue CBD-Linie von SMASH. habe ich das bestehende Verpackungssystem auf zwei neue Sorten und ein neues Format übertragen: Gorilla Glue und Mango Ice — jeweils als Prefilled Pod und als 10-ml-Liquid. Von der technischen Stanzkontur über die Pflichtangaben bis zu Packshots, Shop-Banner und Launch-Story.', 'For the new SMASH. CBD line I extended the existing packaging system to two new flavours and a new format: Gorilla Glue and Mango Ice — each as a prefilled pod and as a 10 ml liquid. From the technical dieline and mandatory information to packshots, shop banner and launch story.'),
+    sections: [
+      {
+        label: t('Kontext', 'Context'),
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {figCard(imgTile('/img/projects/arvaloo/cbd/banner.jpg', t('SMASH. Vapes CBD Pods Gorilla Glue und Mango Ice — Shop-Banner „Purer Chill."', 'SMASH. Vapes CBD pods Gorilla Glue and Mango Ice — shop banner "Purer Chill."'), 14), t('Shop-Banner · Key Visual zum Launch beider Sorten mit den drei Produktvorteilen.', 'Shop banner · launch key visual for both flavours with the three product benefits.'), 'banner')}
+            {grid2(
+              <>{cardTitle(t('Das Produkt', 'The Product'))}{cardBody(t('Die CBD-Linie von SMASH. gibt es in zwei Sorten und zwei Formaten: als Prefilled Pod (2 ml, Mesh Coil, bis zu 600 Züge, kompatibel mit gängigen Akkuträgern) und als 10-ml-Liquid zum Nachfüllen — jeweils mit 6 % CBD, nikotin- und THC-frei.', 'The SMASH. CBD line comes in two flavours and two formats: as a prefilled pod (2 ml, mesh coil, up to 600 puffs, compatible with common battery devices) and as a 10 ml refill liquid — each with 6 % CBD, nicotine- and THC-free.'))}</>,
+              <>{cardTitle(t('Die Aufgabe', 'The Challenge'))}{cardBody(t('Zwei neue Sorten sollten sofort als SMASH. erkennbar sein, sich aber klar von der Super Sauce Series und voneinander abheben. Dazu kam ein zweites Format — Faltschachtel plus Flaschenetikett — mit eigenen Maßen und allen gesetzlichen Pflichtangaben.', 'Two new flavours had to be instantly recognisable as SMASH., yet clearly distinct from the Super Sauce Series and from each other. On top came a second format — folding box plus bottle label — with its own dimensions and all mandatory legal information.'))}</>,
+            )}
+          </div>
+        ),
+      },
+      {
+        label: t('Zwei Sorten, zwei Charaktere', 'Two Flavours, Two Characters'),
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {[
+              {
+                key: 'gorilla',
+                name: 'Gorilla Glue',
+                text: t('Tiefes Grün trifft Anthrazit: Der Gorilla mit dem X-Auge trägt die Sorte, das Graffiti-Lettering in Grün und Weiß macht sie im Regal sofort lesbar.', 'Deep green meets anthracite: the gorilla with the X eye carries the flavour, while the green-and-white graffiti lettering makes it instantly readable on the shelf.'),
+                imgs: [
+                  ['/img/projects/arvaloo/cbd/gorilla-pods-1.jpg', t('Pod-Faltschachtel · Vorderseite & Pflichtangaben', 'Pod folding box · front & mandatory information')],
+                  ['/img/projects/arvaloo/cbd/gorilla-pods-2.jpg', t('Pod-Faltschachtel · Siegel, EAN & Hersteller', 'Pod folding box · seal, EAN & manufacturer')],
+                  ['/img/projects/arvaloo/cbd/gorilla-liquid.jpg', t('10-ml-Liquid · Faltschachtel & Flaschenetikett', '10 ml liquid · folding box & bottle label')],
+                ],
+              },
+              {
+                key: 'mango',
+                name: 'Mango Ice',
+                text: t('Warmes Orange gegen eisiges Hellblau: Die Mango auf Eiswürfeln erzählt „fruchtig und kühl" auf einen Blick, das gelb-blaue Lettering greift beide Farben auf.', 'Warm orange against icy light blue: the mango on ice cubes says "fruity and cool" at a glance, and the yellow-and-blue lettering picks up both colours.'),
+                imgs: [
+                  ['/img/projects/arvaloo/cbd/mango-pods-1.jpg', t('Pod-Faltschachtel · Vorderseite & Pflichtangaben', 'Pod folding box · front & mandatory information')],
+                  ['/img/projects/arvaloo/cbd/mango-pods-2.jpg', t('Pod-Faltschachtel · Perspektive', 'Pod folding box · perspective view')],
+                  ['/img/projects/arvaloo/cbd/mango-liquid.jpg', t('10-ml-Liquid · Faltschachtel & Flaschenetikett', '10 ml liquid · folding box & bottle label')],
+                ],
+              },
+            ].map((f) => (
+              <div key={f.key} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {card(<>{cardTitle(f.name)}{cardBody(f.text)}</>)}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(220px,100%),1fr))', gap: 14, alignItems: 'start' }}>
+                  {f.imgs.map(([src, cap], i) => figCard(imgTile(src, `SMASH. ${f.name} — ${cap}`, 14), cap, i))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        label: t('Mein Vorgehen', 'My Approach'),
+        content: card(
+          <div>
+            <ol style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 10 }}>
+              {[
+                [t('System übertragen', 'Extending the system'), t('Raster, Logo-Position, „Nikotinfrei / THC-frei"-Siegel, Produktbezeichnung und Feature-Box aus der Super Sauce Series übernommen — die neue Linie gehört sichtbar zur Familie.', 'Carried over the grid, logo position, "nicotine-free / THC-free" seal, product name and feature box from the Super Sauce Series — the new line visibly belongs to the family.')],
+                [t('Charakter & Farbwelt', 'Character & colour world'), t('Pro Sorte eine eigene Illustration, Farbwelt und Graffiti-Lettering — Unterscheidung über Farbe und Motiv, Wiedererkennung über die Marke.', 'One illustration, colour world and graffiti lettering per flavour — differentiation through colour and motif, recognition through the brand.')],
+                [t('Zwei Formate', 'Two formats'), t('Pod-Faltschachtel und Liquid-Faltschachtel auf den jeweiligen technischen Stanzkonturen, dazu das Flaschenetikett für die 10-ml-Flasche; Sub-Brand „Vapes" bzw. „Liquids" zur klaren Format-Unterscheidung.', 'Pod and liquid folding boxes on their respective technical dielines, plus the label for the 10 ml bottle; "Vapes" and "Liquids" sub-brands keep the formats clearly apart.')],
+                [t('Pflichtangaben', 'Mandatory information'), t('CLP-Gefahrenpiktogramm, Inhaltsstoffe, gefährliche Bestandteile, technische Daten, LOT/UFI-Codes, EAN, Herstellerangaben und 18+-Kennzeichnung — integriert, ohne den Look zu stören.', 'CLP hazard pictogram, ingredients, hazardous components, technical data, LOT/UFI codes, EAN, manufacturer details and 18+ labelling — integrated without disrupting the look.')],
+                [t('Druckvorstufe', 'Prepress'), t('Druckfertige PDF/X-Daten für alle Faltschachteln und Etiketten, abgestimmt mit der Druckerei.', 'Print-ready PDF/X files for all folding boxes and labels, coordinated with the printer.')],
+                [t('Visualisierung & Launch', 'Visualization & launch'), t('3D-Packshots mit Pacdora und Photoshop — daraus Shop-Banner und eine Launch-Story mit B2B-Call-to-Action für den Großhandel.', '3D packshots with Pacdora and Photoshop — turned into a shop banner and a launch story with a B2B call to action for wholesale.')],
+              ].map(([h, b], i) => (
+                <li key={i} style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)' }}>
+                  <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}>{h}</strong> — {b}
+                </li>
+              ))}
+            </ol>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 18 }}>
+              {['Illustrator', 'Photoshop', 'InDesign', 'Pacdora'].map((tool) => (
+                <span key={tool} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, letterSpacing: '0.04em', background: 'rgba(255,255,255,0.07)', border: '1px solid var(--line-strong)', borderRadius: 999, padding: '4px 11px', color: 'var(--text-2)' }}>{tool}</span>
+              ))}
+            </div>
+          </div>,
+        ),
+      },
+      {
+        label: t('Launch-Kampagne', 'Launch Campaign'),
+        content: (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(280px,100%),1fr))', gap: 18, alignItems: 'center' }}>
+            <div style={{ maxWidth: 380, width: '100%', justifySelf: 'center' }}>
+              {figCard(imgTile('/img/projects/arvaloo/cbd/launch-story.jpg', t('SMASH. CBD Liquids Launch-Story „Purer Chill." mit Gorilla Glue und Mango Ice', 'SMASH. CBD liquids launch story "Purer Chill." with Gorilla Glue and Mango Ice'), 18), t('Instagram-Story 9:16 · Launch der Liquids mit B2B-Kontakt.', 'Instagram story 9:16 · liquids launch with B2B contact.'), 'story')}
+            </div>
+            {card(
+              <>
+                {cardTitle(t('Eine Botschaft, alle Kanäle', 'One message, every channel'))}
+                {cardBody(t('„Purer Chill." trägt den Launch: dieselbe Headline, dasselbe Graffiti-„Jetzt entdecken." und dieselben drei Produktvorteile — vom 2560-px-Shop-Banner bis zur 9:16-Story. Die Story richtet sich zusätzlich an Händler und führt direkt zum Wholesale-Kontakt.', '"Purer Chill." carries the launch: the same headline, the same graffiti "Jetzt entdecken." and the same three product benefits — from the 2560 px shop banner to the 9:16 story. The story also targets retailers and leads straight to the wholesale contact.'))}
+              </>,
+            )}
+          </div>
+        ),
+      },
+      {
+        label: t('Auf einen Blick', 'At a Glance'),
+        content: (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
+            {[
+              { metric: '2', label: t('Sorten mit eigenem Charakter und eigener Farbwelt', 'Flavours, each with its own character and colour world') },
+              { metric: '2', label: t('Formate: Prefilled Pod und 10-ml-Liquid', 'Formats: prefilled pod and 10 ml liquid') },
+              { metric: '6', label: t('Druckteile: 4 Faltschachteln und 2 Flaschenetiketten', 'Print items: 4 folding boxes and 2 bottle labels') },
+            ].map((m, i) => (
+              <div key={i} className="glass-card" style={{ padding: '28px 28px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(2rem,6vw,3.2rem)', letterSpacing: '-0.04em', color: 'var(--text)', lineHeight: 1, marginBottom: 12, position: 'relative', zIndex: 1 }}>{m.metric}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5, position: 'relative', zIndex: 1 }}>{m.label}</div>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+    ],
     nextSlug: 'vicampo',
     nextName: 'Vicampo',
   },
