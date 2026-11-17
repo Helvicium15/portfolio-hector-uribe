@@ -228,13 +228,13 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     title: t('SMASH. CBD — Gorilla Glue & Mango Ice', 'SMASH. CBD — Gorilla Glue & Mango Ice'),
     description: t('Packaging, Druckvorstufe und Launch-Kampagne für die neue CBD-Linie von SMASH. — zwei Sorten, zwei Formate.', 'Packaging, prepress and launch campaign for the new SMASH. CBD line — two flavours, two formats.'),
     accent: '#FF5F00',
-    category: t('Packaging · Etikett · Launch-Kampagne', 'Packaging · Label · Launch Campaign'),
+    category: t('Packaging · Illustration · Launch-Kampagne', 'Packaging · Illustration · Launch Campaign'),
     tools: 'Illustrator · Photoshop · InDesign · Pacdora',
     role: t('Produkt-, Grafik- & Kommunikationsdesigner · Arvaloo GmbH', 'Product, Graphic & Communication Designer · Arvaloo GmbH'),
     year: '2026',
     heroImg: '/img/projects/arvaloo/cbd/banner.jpg',
     heroImgPos: '30% 50%',
-    intro: t('Für die neue CBD-Linie von SMASH. habe ich das bestehende Verpackungssystem auf zwei neue Sorten und ein neues Format übertragen: Gorilla Glue und Mango Ice — jeweils als Prefilled Pod und als 10-ml-Liquid. Von der technischen Stanzkontur über die Pflichtangaben bis zu Packshots, Shop-Banner und Launch-Story.', 'For the new SMASH. CBD line I extended the existing packaging system to two new flavours and a new format: Gorilla Glue and Mango Ice — each as a prefilled pod and as a 10 ml liquid. From the technical dieline and mandatory information to packshots, shop banner and launch story.'),
+    intro: t('Für die neue CBD-Linie von SMASH. habe ich das bestehende Verpackungssystem auf zwei neue Sorten und ein neues Format übertragen: Gorilla Glue und Mango Ice — jeweils als Prefilled Pod und als 10-ml-Liquid. Von der technischen Stanzkontur über die Pflichtangaben bis zu Packshots, Shop-Banner und Launch-Story — inklusive eigener Illustrationen für beide Sorten.', 'For the new SMASH. CBD line I extended the existing packaging system to two new flavours and a new format: Gorilla Glue and Mango Ice — each as a prefilled pod and as a 10 ml liquid. From the technical dieline and mandatory information to packshots, shop banner and launch story — including my own illustrations for both flavours.'),
     sections: [
       {
         label: t('Kontext', 'Context'),
@@ -256,7 +256,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               {
                 key: 'gorilla',
                 name: 'Gorilla Glue',
-                text: t('Tiefes Grün trifft Anthrazit: Der Gorilla mit dem X-Auge trägt die Sorte, das Graffiti-Lettering in Grün und Weiß macht sie im Regal sofort lesbar.', 'Deep green meets anthracite: the gorilla with the X eye carries the flavour, while the green-and-white graffiti lettering makes it instantly readable on the shelf.'),
+                text: t('Tiefes Grün trifft Anthrazit: Der selbst gezeichnete Gorilla mit dem X-Auge trägt die Sorte, das Graffiti-Lettering in Grün und Weiß macht sie im Regal sofort lesbar.', 'Deep green meets anthracite: the gorilla with the X eye, which I drew myself, carries the flavour, while the green-and-white graffiti lettering makes it instantly readable on the shelf.'),
                 imgs: [
                   ['/img/projects/arvaloo/cbd/gorilla-pods-1.jpg', t('Pod-Faltschachtel · Vorderseite & Pflichtangaben', 'Pod folding box · front & mandatory information')],
                   ['/img/projects/arvaloo/cbd/gorilla-pods-2.jpg', t('Pod-Faltschachtel · Siegel, EAN & Hersteller', 'Pod folding box · seal, EAN & manufacturer')],
@@ -266,7 +266,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
               {
                 key: 'mango',
                 name: 'Mango Ice',
-                text: t('Warmes Orange gegen eisiges Hellblau: Die Mango auf Eiswürfeln erzählt „fruchtig und kühl" auf einen Blick, das gelb-blaue Lettering greift beide Farben auf.', 'Warm orange against icy light blue: the mango on ice cubes says "fruity and cool" at a glance, and the yellow-and-blue lettering picks up both colours.'),
+                text: t('Warmes Orange gegen eisiges Hellblau: Die selbst gezeichnete Mango auf Eiswürfeln erzählt „fruchtig und kühl" auf einen Blick, das gelb-blaue Lettering greift beide Farben auf.', 'Warm orange against icy light blue: the mango on ice cubes, also drawn by me, says "fruity and cool" at a glance, and the yellow-and-blue lettering picks up both colours.'),
                 imgs: [
                   ['/img/projects/arvaloo/cbd/mango-pods-1.jpg', t('Pod-Faltschachtel · Vorderseite & Pflichtangaben', 'Pod folding box · front & mandatory information')],
                   ['/img/projects/arvaloo/cbd/mango-pods-2.jpg', t('Pod-Faltschachtel · Perspektive', 'Pod folding box · perspective view')],
@@ -291,6 +291,7 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
             <ol style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 10 }}>
               {[
                 [t('System übertragen', 'Extending the system'), t('Raster, Logo-Position, „Nikotinfrei / THC-frei"-Siegel, Produktbezeichnung und Feature-Box aus der Super Sauce Series übernommen — die neue Linie gehört sichtbar zur Familie.', 'Carried over the grid, logo position, "nicotine-free / THC-free" seal, product name and feature box from the Super Sauce Series — the new line visibly belongs to the family.')],
+                [t('Eigene Illustrationen', 'Original illustrations'), t('Gorilla und Mango habe ich selbst gezeichnet: erst als Handskizze, dann in Illustrator nachgezeichnet und vektorisiert — skalierbar von der kleinen Pod-Schachtel bis zum Shop-Banner.', 'I drew the gorilla and the mango myself: first as a hand sketch, then traced and vectorized in Illustrator — scalable from the small pod box to the shop banner.')],
                 [t('Charakter & Farbwelt', 'Character & colour world'), t('Pro Sorte eine eigene Illustration, Farbwelt und Graffiti-Lettering — Unterscheidung über Farbe und Motiv, Wiedererkennung über die Marke.', 'One illustration, colour world and graffiti lettering per flavour — differentiation through colour and motif, recognition through the brand.')],
                 [t('Zwei Formate', 'Two formats'), t('Pod-Faltschachtel und Liquid-Faltschachtel auf den jeweiligen technischen Stanzkonturen, dazu das Flaschenetikett für die 10-ml-Flasche; Sub-Brand „Vapes" bzw. „Liquids" zur klaren Format-Unterscheidung.', 'Pod and liquid folding boxes on their respective technical dielines, plus the label for the 10 ml bottle; "Vapes" and "Liquids" sub-brands keep the formats clearly apart.')],
                 [t('Pflichtangaben', 'Mandatory information'), t('CLP-Gefahrenpiktogramm, Inhaltsstoffe, gefährliche Bestandteile, technische Daten, LOT/UFI-Codes, EAN, Herstellerangaben und 18+-Kennzeichnung — integriert, ohne den Look zu stören.', 'CLP hazard pictogram, ingredients, hazardous components, technical data, LOT/UFI codes, EAN, manufacturer details and 18+ labelling — integrated without disrupting the look.')],
