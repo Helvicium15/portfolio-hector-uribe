@@ -1249,8 +1249,8 @@ section[id] { scroll-margin-top: 24px; }
 
 /* ══════════════════════════════════════════════════════════════
    PRELOADER — CSS-only, starts on first paint (no hydration wait)
-   0.00–0.50s "Hi!" rises in · 1.00–1.30s it leaves · 1.05–1.55s "¡Hola!" rises in
-   2.05–2.90s the safety-orange curtain lifts off the matte-black hero
+   0.00–0.50s "Hi!" rises in · 0.95–1.30s it leaves completely · 1.35–1.85s "¡Hola!" rises in (never overlapping)
+   2.35–3.20s the safety-orange curtain lifts off the matte-black hero
    ══════════════════════════════════════════════════════════════ */
 .preloader {
   position: fixed;
@@ -1261,7 +1261,7 @@ section[id] { scroll-margin-top: 24px; }
   justify-content: center;
   background: var(--grad-accent);
   pointer-events: none;
-  animation: plLift .85s cubic-bezier(.76,0,.24,1) 2.05s both;
+  animation: plLift .85s cubic-bezier(.76,0,.24,1) 2.35s both;
 }
 .pl-skip .preloader { display: none; }
 .pl-stage {
@@ -1278,8 +1278,8 @@ section[id] { scroll-margin-top: 24px; }
   color: var(--ink);
 }
 .pl-word { grid-area: 1 / 1; display: inline-block; white-space: nowrap; }
-.pl-hi   { animation: plIn .5s cubic-bezier(.22,1,.36,1) 0s both, plOut .3s cubic-bezier(.55,0,.67,.2) 1s forwards; }
-.pl-hola { animation: plIn .5s cubic-bezier(.22,1,.36,1) 1.05s both; }
+.pl-hi   { animation: plIn .5s cubic-bezier(.22,1,.36,1) 0s both, plOut .35s cubic-bezier(.55,0,.67,.2) .95s forwards; }
+.pl-hola { animation: plIn .5s cubic-bezier(.22,1,.36,1) 1.35s both; }
 @keyframes plIn   { from { transform: translateY(115%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes plOut  { to { transform: translateY(-115%); opacity: 0; } }
 @keyframes plLift { from { transform: translateY(0); } to { transform: translateY(-100%); visibility: hidden; } }

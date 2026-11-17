@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
    Plays once per tab session: an inline <head> script (layout.tsx) adds
    html.pl-skip on repeat visits before the first paint, so no orange flash.
    React only removes the node from the DOM once the CSS animation is over. */
-const TOTAL_MS = 3000; // ≥ curtain lift end (2.05s delay + 0.85s)
+const TOTAL_MS = 3300; // ≥ curtain lift end (2.35s delay + 0.85s)
 
 export default function Preloader() {
   const [mounted, setMounted] = useState(true);
