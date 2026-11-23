@@ -118,12 +118,13 @@ export default function Home() {
   return (
     <>
       <Preloader />
-      {/* ── Fixed parallax background video ─────────────────── */}
+      {/* ── Fixed background video: orange honey poured between foam pads ── */}
       <video
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         aria-hidden
         style={{
           position: 'fixed',
@@ -133,16 +134,15 @@ export default function Home() {
           objectFit: 'cover',
           zIndex: 0,
           pointerEvents: 'none',
-          filter: 'grayscale(1)', /* neutral waves: no navy against the storm/black palette */
         }}
       >
-        <source src="/bg_navy.mp4" type="video/mp4" />
+        <source src="/video/background-orange.mp4" type="video/mp4" />
       </video>
-      {/* ── Matte-black veil: the video stays visible behind the hero ── */}
+      {/* ── Matte-black veil: keeps the background subtle under the content ── */}
       <div aria-hidden style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(30,31,34,0.88)',
+        background: 'rgba(30,31,34,0.72)',
         zIndex: 0,
         pointerEvents: 'none',
       }} />

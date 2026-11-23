@@ -53,6 +53,7 @@ export default async function ProjectPage({ params }: Props) {
         muted
         loop
         playsInline
+        preload="auto"
         aria-hidden
         style={{
           position: 'fixed',
@@ -64,13 +65,13 @@ export default async function ProjectPage({ params }: Props) {
           pointerEvents: 'none',
         }}
       >
-        <source src="/bg_navy.mp4" type="video/mp4" />
+        <source src="/video/background-orange.mp4" type="video/mp4" />
       </video>
-      {/* Dark navy overlay */}
+      {/* Storm-grey veil: content pages stay calm and readable */}
       <div aria-hidden style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(158,163,169,0.95)',
+        background: 'rgba(158,163,169,0.9)',
         zIndex: 0,
         pointerEvents: 'none',
       }} />
