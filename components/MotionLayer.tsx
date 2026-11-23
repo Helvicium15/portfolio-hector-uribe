@@ -12,7 +12,7 @@ import { useEffect } from 'react';
  *  5. Diorama parallax — the stage drifts up to 8px with the pointer.
  * Content is only hidden once JS has run, so nothing stays invisible without it.
  */
-const REVEAL = '.live-card, .proj-card, .contact-email, .contact-links > a, .sub-section, .sec-label, .glass-card';
+const REVEAL = '.live-card, .proj-card, .contact-email, .contact-links > a, .sub-section, .sec-label, .glass-card, .process-step';
 const TILT = '.live-card, .proj-card';
 const MAGNET = '.btn-primary';
 

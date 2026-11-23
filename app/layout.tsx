@@ -7,6 +7,7 @@ import GlassPointer from '@/components/GlassPointer';
 import LiquidGlassDefs from '@/components/LiquidGlassDefs';
 import MotionLayer from '@/components/MotionLayer';
 import type { Lang } from '@/lib/i18n';
+import { SITE_URL } from '@/lib/site';
 
 /* Mobile baseline: paint under the notch (content is padded back with env()),
    let the keyboard resize the layout, match the browser chrome to the matte-black top. */
@@ -20,6 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Hector Uribe — Mediengestalter & UX/UI Designer',
   description: 'Portfolio von Hector Uribe — Mediengestalter Digital & Print, UX/UI Designer aus Mainz. CPUX-F zertifiziert.',
   openGraph: {

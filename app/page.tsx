@@ -9,6 +9,7 @@ import ProjectsCarousel from '@/components/ProjectsCarousel';
 import LiveProjects from '@/components/LiveProjects';
 import ProfileStrip from '@/components/ProfileStrip';
 import Preloader from '@/components/Preloader';
+import ProcessSteps from '@/components/ProcessSteps';
 import { useLang } from '@/components/LanguageProvider';
 
 const DioramaScene = dynamic(() => import('@/components/DioramaScene'), { ssr: false });
@@ -440,6 +441,19 @@ export default function Home() {
       </section>
       </div>{/* end projects bg */}
 
+      {/* ── PROCESS (matte-black band) ───────────────────────── */}
+      <div className="theme-dark" style={{ background: 'var(--bg)', borderTop: '1px solid var(--line)' }}>
+      <section id="process" style={{ padding: '96px 0', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '0 28px' }}>
+          <SectionHead
+            title={tr('So arbeite ich', 'How I work')}
+            sub={tr('Nutzerzentriert und iterativ — von der ersten Idee bis zum finalen Produkt.', 'User-centered and iterative — from the first idea to the final product.')}
+          />
+          <ProcessSteps />
+        </div>
+      </section>
+      </div>{/* end process bg */}
+
       {/* ── CONTACT ──────────────────────────────────────────── */}
       <div style={{ background: 'var(--bg)', borderTop: '1px solid var(--line)' }}>
       <Section id="contact" style={{ paddingBottom: 160 }}>
@@ -473,6 +487,13 @@ export default function Home() {
 
           {/* Heading */}
           <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', marginBottom: 30 }}>
+            <p className="availability">
+              <span className="availability-dot" aria-hidden />
+              <span>
+                {tr('Offen für Freelance-Projekte', 'Open to freelance projects')}
+                <span className="availability-loc">{tr(' · Mainz / Remote', ' · Mainz / remote')}</span>
+              </span>
+            </p>
             <h2 style={{
               fontFamily: 'var(--font-display)', fontWeight: 800,
               fontSize: 'clamp(36px, 4.6vw, 56px)', letterSpacing: '-0.04em', lineHeight: 1.04,
