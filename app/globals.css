@@ -644,7 +644,6 @@ section[id] { scroll-margin-top: 24px; }
 
 /* Diorama stage: warm grade, contact shadow, pointer parallax (set by JS) */
 .diorama-canvas { translate: var(--px, 0px) var(--py, 0px); transition: translate .6s cubic-bezier(.22,1,.36,1); }
-.diorama-canvas canvas { filter: saturate(.82) contrast(1.04); }  /* cool grade to sit on storm grey — remove to show the raw colours */
 .diorama-canvas::after {
   content: '';
   position: absolute;
