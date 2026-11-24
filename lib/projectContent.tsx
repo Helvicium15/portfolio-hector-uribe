@@ -114,6 +114,33 @@ const videoCard = (src: string, caption?: string, key?: number | string) => (
   </figure>
 );
 
+/* ── Promo videos — autoplay muted + looped, controls to unmute ──
+   One video spans the full width; two sit side by side (stacked on phones). */
+const promoVideos = (items: { src: string; poster: string; caption: string; label: string }[]) => (
+  <div style={{ display: 'grid', gridTemplateColumns: items.length > 1 ? 'repeat(auto-fit,minmax(min(380px,100%),1fr))' : '1fr', gap: 18 }}>
+    {items.map((v) => (
+      <figure key={v.src} style={{ margin: 0 }}>
+        <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 14px 40px rgba(0,0,0,0.42)', background: 'var(--surface)', aspectRatio: '16 / 9' }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            preload="auto"
+            poster={v.poster}
+            aria-label={v.label}
+            style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
+          >
+            <source src={v.src} type="video/mp4" />
+          </video>
+        </div>
+        <figcaption style={{ margin: '10px 2px 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-2)', fontFamily: 'var(--font-mono)' }}>{v.caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+);
+
 /* ── Section intro paragraph ───────────────────────────────────── */
 const lead = (text: string) => (
   <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--text-2)', maxWidth: 760 }}>{text}</p>
@@ -139,6 +166,17 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     heroImgPos: '50% 50%',
     intro: t('Bei der Arvaloo GmbH in Mainz verantworte ich Verpackungsdesign, Druckvorstufe und Produktkommunikation der Marke SMASH. — Super Sauce, Cloud Sauce und CBD Pods — für die Märkte Deutschland, Österreich und Frankreich.', 'At Arvaloo GmbH in Mainz I am responsible for packaging design, prepress and product communication for the SMASH. brand — Super Sauce, Cloud Sauce and CBD Pods — for the German, Austrian and French markets.'),
     sections: [
+      {
+        label: t('Promo-Video', 'Promo Video'),
+        content: promoVideos([
+          {
+            src: '/video/smash-pods-promo.mp4',
+            poster: '/img/projects/arvaloo/pods-promo-poster.jpg',
+            label: t('Promo-Video SMASH. Super Sauce Pods — alle fünf Sorten', 'Promo video SMASH. Super Sauce Pods — all five flavours'),
+            caption: t('Promo-Video · Super Sauce Pods, alle fünf Sorten · Ton über die Steuerung einschalten.', 'Promo video · Super Sauce Pods, all five flavours · turn on sound in the controls.'),
+          },
+        ]),
+      },
       {
         label: t('Kontext', 'Context'),
         content: grid2(
@@ -236,6 +274,23 @@ export function getProjectContent(lang: Lang): Record<string, ProjectPageData> {
     heroImgPos: '30% 50%',
     intro: t('Für die neue CBD-Linie von SMASH. habe ich das bestehende Verpackungssystem auf zwei neue Sorten und ein neues Format übertragen: Gorilla Glue und Mango Ice — jeweils als Prefilled Pod und als 10-ml-Liquid. Von der technischen Stanzkontur über die Pflichtangaben bis zu Packshots, Shop-Banner und Launch-Story — inklusive eigener Illustrationen für beide Sorten.', 'For the new SMASH. CBD line I extended the existing packaging system to two new flavours and a new format: Gorilla Glue and Mango Ice — each as a prefilled pod and as a 10 ml liquid. From the technical dieline and mandatory information to packshots, shop banner and launch story — including my own illustrations for both flavours.'),
     sections: [
+      {
+        label: t('Promo-Videos', 'Promo Videos'),
+        content: promoVideos([
+          {
+            src: '/video/smash-cbd-promo-01.mp4',
+            poster: '/img/projects/arvaloo/cbd/promo-01-poster.jpg',
+            label: t('Promo-Video SMASH. CBD Liquids Gorilla Glue und Mango Ice — Splash', 'Promo video SMASH. CBD liquids Gorilla Glue and Mango Ice — splash'),
+            caption: t('Promo-Video · Gorilla Glue & Mango Ice, Splash-Version.', 'Promo video · Gorilla Glue & Mango Ice, splash version.'),
+          },
+          {
+            src: '/video/smash-cbd-promo-02.mp4',
+            poster: '/img/projects/arvaloo/cbd/promo-02-poster.jpg',
+            label: t('Promo-Video SMASH. CBD Liquids Gorilla Glue und Mango Ice — Studio', 'Promo video SMASH. CBD liquids Gorilla Glue and Mango Ice — studio'),
+            caption: t('Promo-Video · Gorilla Glue & Mango Ice, Studio-Version.', 'Promo video · Gorilla Glue & Mango Ice, studio version.'),
+          },
+        ]),
+      },
       {
         label: t('Kontext', 'Context'),
         content: (

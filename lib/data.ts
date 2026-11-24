@@ -353,6 +353,8 @@ export interface LiveProject {
   desc: string;
   img: string;
   imgPos?: string;
+  /** Looping card video (muted); img stays as its poster */
+  video?: string;
   liveUrl?: string;
   liveLabel?: string;
   isNew?: boolean;
@@ -375,6 +377,7 @@ export const liveProjects: LiveProject[] = [
     cat: 'Packaging · Druckvorstufe · Produktkommunikation',
     desc: 'Verpackungsdesign, Druckvorstufe und Produktkommunikation für die Marke SMASH. (Super Sauce, Cloud Sauce, CBD Pods) — von Faltschachtel und Thekendisplay bis Packshot und POS, für die Märkte DE, AT und FR.',
     img: '/img/projects/arvaloo/banner.jpg',
+    video: '/video/smash-pods-promo.mp4',
     imgPos: '50% 50%',
     role: 'Produkt-, Grafik- & Kommunikationsdesigner',
     year: '2026–heute',
@@ -392,6 +395,7 @@ export const liveProjects: LiveProject[] = [
     cat: 'Packaging · Druckvorstufe · Launch-Kampagne',
     desc: 'Neue CBD-Linie von SMASH. in zwei Sorten und zwei Formaten — mit eigenen Illustrationen: Faltschachteln für Prefilled Pods und 10-ml-Liquids samt Flaschenetikett — von der Stanzkontur bis zur Launch-Kampagne mit Shop-Banner und Story.',
     img: '/img/projects/arvaloo/cbd/live-card.jpg',
+    video: '/video/smash-cbd-promo-01.mp4',
     imgPos: '50% 50%',
     role: 'Produkt-, Grafik- & Kommunikationsdesigner',
     year: '2026',
@@ -448,6 +452,7 @@ export const liveProjects: LiveProject[] = [
     cat: 'Illustration · E-Learning · Motion',
     desc: 'Illustrationen und Motion für interaktive E-Learning-Kurse der TÜV Nord Akademie (Arbeits- & Gesundheitsschutz) sowie digitale Fachartikel und ein Whitepaper.',
     img: '/img/projects/smartfox/smartfox-card.jpg',
+    video: '/video/smartfox-elearning-intro.mp4',
     imgPos: '50% 0%',
     liveUrl: 'https://www.youtube.com/watch?v=RUcT0AwjBN0',
     liveLabel: 'Video ansehen',

@@ -1,8 +1,39 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { liveProjects } from '@/lib/data';
 import { useLang } from './LanguageProvider';
+
+/* Muted looping video in place of the card image. It only downloads and
+   plays while the card is on screen (pauses when scrolled away), and stays
+   on its poster under prefers-reduced-motion. */
+function CardVideo({ src, poster, label, pos }: { src: string; poster: string; label: string; pos?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { v.play().catch(() => {}); } else { v.pause(); }
+    }, { threshold: 0.25 });
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      muted
+      loop
+      playsInline
+      preload="none"
+      poster={poster}
+      aria-label={label}
+      style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover', objectPosition: pos ?? '50% 50%', display: 'block' }}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
 
 export default function LiveProjects() {
   const { lang } = useLang();
@@ -18,13 +49,15 @@ export default function LiveProjects() {
         <Link key={p.slug} href={`/projekte/${p.slug}`} className="live-card">
           {/* Image */}
           <div style={{ position: 'relative', overflow: 'hidden' }}>
-            <img
-              loading="lazy"
-              decoding="async"
-              src={p.img}
-              alt={p.name}
-              style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover', objectPosition: p.imgPos ?? '50% 50%', display: 'block' }}
-            />
+            {p.video
+              ? <CardVideo src={p.video} poster={p.img} label={p.name} pos={p.imgPos} />
+              : <img
+                  loading="lazy"
+                  decoding="async"
+                  src={p.img}
+                  alt={p.name}
+                  style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover', objectPosition: p.imgPos ?? '50% 50%', display: 'block' }}
+                />}
             {/* Live badge */}
             <span style={{
               position: 'absolute', top: 14, left: 14,
